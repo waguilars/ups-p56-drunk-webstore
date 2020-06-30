@@ -1,0 +1,20 @@
+{
+  "name": "drunk-webstore",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "cd frontend && ng serve"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WilsonAG/ups-p56-drunk-webstore.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/WilsonAG/ups-p56-drunk-webstore/issues"
+  },
+  "homepage": "https://github.com/WilsonAG/ups-p56-drunk-webstore#readme"
+}
