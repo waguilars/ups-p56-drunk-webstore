@@ -1,0 +1,14 @@
+.navbar {
+    color: aqua;
+    width: LaMedidaQueDeseas;
+    background-color: #229ac8;
+    font-size: 15px;
+    font-stretch: expanded;
+    color: #FFF;
+    background-image: linear-gradient(to bottom, #bb2d23, #cf2d21);
+}
+
+.logo {
+    display: block;
+    height: 28px;
+}
