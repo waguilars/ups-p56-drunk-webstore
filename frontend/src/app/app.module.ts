@@ -12,6 +12,7 @@ import { AboutComponent } from './components/pages/about/about.component';
 import { FooterHomeComponent } from './components/shared/footer-home/footer-home.component';
 import { RegisterComponent } from './components/pages/register/register.component';
 import { LoginComponent } from './components/pages/login/login.component';
+import { LicoresComponent } from './components/pages/licores/licores.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { LoginComponent } from './components/pages/login/login.component';
     AboutComponent,
     FooterHomeComponent,
     RegisterComponent,
-    LoginComponent
+    LoginComponent,
+    LicoresComponent
   ],
   imports: [
     BrowserModule,
