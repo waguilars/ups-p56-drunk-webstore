@@ -10,6 +10,8 @@ import { NavbarHomeComponent } from './components/shared/navbar-home/navbar-home
 import { HomeComponent } from './components/pages/home/home.component';
 import { AboutComponent } from './components/pages/about/about.component';
 import { FooterHomeComponent } from './components/shared/footer-home/footer-home.component';
+import { RegisterComponent } from './components/pages/register/register.component';
+import { LoginComponent } from './components/pages/login/login.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +19,9 @@ import { FooterHomeComponent } from './components/shared/footer-home/footer-home
     NavbarHomeComponent,
     HomeComponent,
     AboutComponent,
-    FooterHomeComponent
+    FooterHomeComponent,
+    RegisterComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
