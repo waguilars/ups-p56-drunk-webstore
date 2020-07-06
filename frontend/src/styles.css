@@ -42,9 +42,11 @@
   border-radius: 30px;
   padding: 10px;
 }
+.searchbar:hover {
+  background-color: var(--white);
+}
 
 .search_input {
-  color: white;
   font-size: 1em;
   border: 0;
   outline: 0;
@@ -58,12 +60,10 @@
   padding: 0 10px;
   width: 150px;
   transition: width 0.4s linear;
-  color: var(--secondary);
 }
 
 .searchbar:hover > .search_icon {
   background: var(--secondary);
-  color: var(--dark);
 }
 
 .search_icon {
