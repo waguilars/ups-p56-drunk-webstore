@@ -25,3 +25,10 @@
     /* posicionada en la esquina inferior derecha */
     right: 1rem;
 }
+
+.btn-search {
+    border: 0;
+    display: block;
+    margin-left: auto;
+    margin-right:  auto;
+}
