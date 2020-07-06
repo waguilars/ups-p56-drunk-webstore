@@ -1,39 +1,44 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary ">
-    <a class="navbar-brand" href="#"><img src="assets/img/dw2.PNG" width="60" height="30"></a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <a class="navbar-brand" href="#"
+    ><img src="assets/img/dw2.PNG" width="60" height="30"
+  /></a>
+  <button
+    class="navbar-toggler"
+    type="button"
+    data-toggle="collapse"
+    data-target="#navbarColor01"
+    aria-controls="navbarColor01"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
 
-    <div class="collapse navbar-collapse" id="navbarColor01">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item " routerLinkAcctive="active">
-                <a class="nav-link" [routerLink]="['home']">INICIO</a>
-            </li>
-            <li class="nav-item" routerLinkAcctive="active">
-                <a class="nav-link" [routerLink]="['about']">NOSOTROS</a>
-            </li>
-        </ul>
-    </div>
-    <form class="form-inline my-2 my-lg-0">
-        <div class="row">
-            <div class="col">
-                <input class=" mr-sm-2" type="text" placeholder="Buscar">
-                <button class="btn-secondary " type="submit">
-                    <i class="fas fa-search"></i> Buscar
-                </button>
-            </div>
-        </div>
-    </form>
-
-    <ul class="navbar-nav ml-5">
-        <li class="nav-item " routerLinkAcctive="active">
-            <a class="nav-link" [routerLink]="['login']">
-                <i class="fas fa-user"></i>LOG IN
-            </a>
-        </li>
-        <li class="nav-item" routerLinkAcctive="active">
-            <a class="nav-link" [routerLink]="['register']">REGISTRO</a>
-        </li>
+  <div class="collapse navbar-collapse" id="navbarColor01">
+    <ul class="navbar-nav text-center mr-auto">
+      <li class="nav-item" routerLinkAcctive="active">
+        <a class="nav-link" [routerLink]="['home']">INICIO</a>
+      </li>
+      <li class="nav-item" routerLinkAcctive="active">
+        <a class="nav-link" [routerLink]="['about']">NOSOTROS</a>
+      </li>
     </ul>
-
+    <form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="text" placeholder="Busca tu licor aqui.">
+      <button class="btn btn-outline-secondary btn-search my-2 my-sm-0" type="submit">
+        <i class="fas fa-search"></i>
+        Buscar
+      </button>
+    </form>
+    <ul class="navbar-nav text-center ml-3">
+      <li class="nav-item" routerLinkAcctive="active">
+        <a class="nav-link" [routerLink]="['login']">
+          <i class="fas fa-user mr-2"></i>LOG IN
+        </a>
+      </li>
+      <li class="nav-item" routerLinkAcctive="active">
+        <a class="nav-link" [routerLink]="['register']">REGISTRO</a>
+      </li>
+    </ul>
+  </div>
 </nav>

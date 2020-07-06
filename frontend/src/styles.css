@@ -4,24 +4,9 @@
     height: auto;
 }
 
-#content_div_one_photo {
-    height: 16rem;
-    width: 11rem;
-    border-radius: 10px;
-    border: 5px solid black;
-}
-
-#padre {
-    position: relative;
-    /* para poder posicionar el texto de forma absoluta */
-    display: inline-block;
-    /* para que solo ocupe el ancho de la imagen */
-}
-
-.card-title {
-    position: absolute;
-    /* posición absolute con respecto al padre */
-    bottom: 0;
-    /* posicionada en la esquina inferior derecha */
-    right: 1rem;
+.btn-search {
+    border: 0;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
