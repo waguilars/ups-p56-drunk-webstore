@@ -29,6 +29,18 @@
 }
 
 /* Navbar */
+.logo {
+  cursor: pointer;
+}
+
+.logo-icon {
+  color: #97302c;
+  margin-right: 15px;
+}
+
+.logo-title {
+  display: inline-block;
+}
 
 .searchbar {
   margin-bottom: auto;
