@@ -29,6 +29,10 @@
 }
 
 /* Navbar */
+.shopping-cart {
+  cursor: pointer;
+}
+
 .logo {
   cursor: pointer;
 }
@@ -36,6 +40,7 @@
 .logo-icon {
   color: #97302c;
   margin-right: 15px;
+  padding: 5px;
 }
 
 .logo-title {
@@ -130,6 +135,12 @@
 
 .img-product {
   width: 100%;
+}
+
+/* About */
+
+ul.styled > li {
+  padding-left: 3em;
 }
 
 /*longin code */
