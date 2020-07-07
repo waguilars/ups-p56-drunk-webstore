@@ -11,6 +11,7 @@ import { HomeComponent } from './components/home/home.component';
 import { FooterHomeComponent } from './shared/footer-home/footer-home.component';
 import { SliderComponent } from './components/slider/slider.component';
 import { NavbarHomeComponent } from './shared/navbar-home/navbar-home.component';
+import { ProductListComponent } from './components/product-list/product-list.component';
 
 // Routing
 import { AppRoutingModule } from './app.routing';
@@ -26,6 +27,7 @@ import { AppRoutingModule } from './app.routing';
     LoginComponent,
     LicoresComponent,
     SliderComponent,
+    ProductListComponent,
   ],
   imports: [BrowserModule, AppRoutingModule],
   providers: [],
