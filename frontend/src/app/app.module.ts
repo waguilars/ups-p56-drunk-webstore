@@ -1,15 +1,18 @@
+import { AppComponent } from './app.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 // Components
-import { AppComponent } from './app.component';
-import { NavbarHomeComponent } from './components/shared/navbar-home/navbar-home.component';
-import { HomeComponent } from './components/pages/home/home.component';
-import { AboutComponent } from './components/pages/about/about.component';
-import { FooterHomeComponent } from './components/shared/footer-home/footer-home.component';
-import { RegisterComponent } from './components/pages/register/register.component';
-import { LoginComponent } from './components/pages/login/login.component';
-import { LicoresComponent } from './components/pages/licores/licores.component';
+import { LicoresComponent } from './components/licores/licores.component';
+import { LoginComponent } from './components/login/login.component';
+import { RegisterComponent } from './components/register/register.component';
+import { AboutComponent } from './components/about/about.component';
+import { HomeComponent } from './components/home/home.component';
+import { FooterHomeComponent } from './shared/footer-home/footer-home.component';
+import { SliderComponent } from './components/slider/slider.component';
+import { NavbarHomeComponent } from './shared/navbar-home/navbar-home.component';
+
+// Routing
 import { AppRoutingModule } from './app.routing';
 
 @NgModule({
@@ -21,13 +24,11 @@ import { AppRoutingModule } from './app.routing';
     FooterHomeComponent,
     RegisterComponent,
     LoginComponent,
-    LicoresComponent
+    LicoresComponent,
+    SliderComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule
-  ],
+  imports: [BrowserModule, AppRoutingModule],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
