@@ -25,16 +25,31 @@
     </ul>
     <form class="form-inline my-2 my-lg-0">
       <div class="d-flex justify-content-center h-100">
-        <div class="searchbar">
-          <input class="search_input" type="text" name="" placeholder="Search...">
-          <a href="#" class="search_icon"><i class="fas fa-search"></i></a>
+        <div class="searchbar nav-item mr-0">
+          <input
+            class="search_input"
+            type="text"
+            name=""
+            placeholder="Search..."
+          />
+          <a href="javascript:void(0);" class="nav-link search_icon"
+            ><i class="icon fas fa-search"></i
+          ></a>
         </div>
       </div>
     </form>
+
     <ul class="navbar-nav text-center ml-3">
       <li class="nav-item" routerLinkAcctive="active">
+        <a class="nav-link">
+          <i class="icon fas fa-shopping-cart mr-2"></i>
+          <span class="badge badge-pill badge-danger cart-count">4</span>
+          Carrito
+        </a>
+      </li>
+      <li class="nav-item" routerLinkAcctive="active">
         <a class="nav-link" [routerLink]="['login']">
-          <i class="fas fa-user mr-2"></i>LOG IN
+          <i class="icon fas fa-user mr-2"></i>LOG IN
         </a>
       </li>
       <li class="nav-item" routerLinkAcctive="active">

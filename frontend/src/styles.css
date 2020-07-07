@@ -28,13 +28,6 @@
   height: auto;
 }
 
-.btn-search {
-  border: 0;
-  display: inline-block;
-  margin-left: auto;
-  margin-right: auto;
-}
-
 .searchbar {
   margin-bottom: auto;
   margin-top: auto;
@@ -47,7 +40,7 @@
 }
 
 .search_input {
-  font-size: 1em;
+  font-size: 1.25em;
   border: 0;
   outline: 0;
   background: none;
@@ -58,9 +51,14 @@
 
 .searchbar:hover > .search_input {
   padding: 0 10px;
-  width: 150px;
+  width: 200px;
   transition: width 0.4s linear;
 }
+
+.search_input:hover + .search_icon {
+  color: var(--dark)
+}
+
 
 .searchbar:hover > .search_icon {
   background: var(--secondary);
@@ -80,4 +78,20 @@
 
 .search_icon:hover {
   text-decoration: none;
+}
+
+.cart-count {
+  font-size: 12px;
+    padding: 0 5px;
+    vertical-align: top;
+    margin-left: -15px;
+    margin-top: -5px;
+}
+
+.icon {
+  font-size: inherit;
+}
+
+.nav-item .nav-link  {
+  font-size: 1.25em;
 }
