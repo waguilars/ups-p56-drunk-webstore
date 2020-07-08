@@ -27,7 +27,7 @@
         <a class="nav-link" [routerLink]="['about']">NOSOTROS</a>
       </li>
     </ul>
-    <form class="form-inline my-2 my-lg-0">
+    <form class="form-inline my-lg-0">
       <div class="d-flex justify-content-center h-100">
         <div class="searchbar nav-item mr-0">
           <input
@@ -43,7 +43,7 @@
       </div>
     </form>
 
-    <ul class="navbar-nav text-center ml-3">
+    <ul class="navbar-nav navbar-right" *ngIf="false">
       <li class="nav-item" routerLinkAcctive="active">
         <a class="nav-link shopping-cart">
           <i class="icon fas fa-shopping-cart mr-2"></i>
@@ -58,6 +58,43 @@
       </li>
       <li class="nav-item" routerLinkAcctive="active">
         <a class="nav-link" [routerLink]="['register']">REGISTRO</a>
+      </li>
+    </ul>
+
+    <ul class="navbar-nav navbar-right" *ngIf="true">
+      <li class="nav-item ml-2">
+        <div class="profile-img">
+          <img
+            src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80"
+            alt=""
+          />
+        </div>
+      </li>
+      <li class="nav-item dropdown pt-2">
+        <a
+          class="nav-link dropdown-toggle"
+          href="#"
+          id="navbarDropdown"
+          role="button"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          Username
+        </a>
+        <!-- Role user -->
+        <div
+          class="dropdown-menu dropdown-menu-lg-right"
+          aria-labelledby="dropdownMenuLink"
+        >
+          <a class="dropdown-item" href="#">Mi perfil</a>
+          <a class="dropdown-item" href="#">Mis compras</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#">
+            <i class="fas fa-sign-out-alt"></i>
+            Salir
+          </a>
+        </div>
       </li>
     </ul>
   </div>
