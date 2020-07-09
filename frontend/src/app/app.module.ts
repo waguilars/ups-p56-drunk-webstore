@@ -18,6 +18,8 @@ import { ProductListComponent } from './components/product-list/product-list.com
 // Routing
 import { AppRoutingModule } from './app.routing';
 import { NotFoundComponent } from './shared/not-found/not-found.component';
+import { CartComponent } from './components/cart/cart.component';
+
 
 @NgModule({
   declarations: [
@@ -32,6 +34,7 @@ import { NotFoundComponent } from './shared/not-found/not-found.component';
     SliderComponent,
     ProductListComponent,
     NotFoundComponent,
+    CartComponent,
   ],
   imports: [BrowserModule, AdminModule, AppRoutingModule, HttpClientModule],
   providers: [],
