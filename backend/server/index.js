@@ -1,7 +1,6 @@
 const express = require('express');
 const morgan = require('morgan');
-
-
+const bodyParser = require('body-parser')
 
 require('./config/env');
 
@@ -10,7 +9,9 @@ const app = express();
 
 // Midleware
 app.use(morgan('dev'))
-app.use(express.json())
+    // app.use(express.json())
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
 
 // Routers
 app.use('/api/user', require('./routes/user-routes'))
