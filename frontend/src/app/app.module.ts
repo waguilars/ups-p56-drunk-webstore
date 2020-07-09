@@ -2,6 +2,7 @@ import { AppComponent } from './app.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
+import { AdminModule } from './admin/admin.module';
 
 // Components
 import { LicoresComponent } from './components/licores/licores.component';
@@ -30,11 +31,7 @@ import { AppRoutingModule } from './app.routing';
     SliderComponent,
     ProductListComponent,
   ],
-  imports: [
-    HttpClientModule,
-    BrowserModule,
-     AppRoutingModule
-    ],
+  imports: [HttpClientModule, BrowserModule, AppRoutingModule],
   providers: [],
   bootstrap: [AppComponent],
 })
