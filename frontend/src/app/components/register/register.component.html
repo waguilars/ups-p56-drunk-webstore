@@ -11,8 +11,18 @@
         <div class="form group row mb-2">
           <div class="col-md-6">
             <label for="name" class="col-form-label">Nombre: </label>
-            <input type="text" name="name" id="name" class="form-control" />
+            <input
+              type="text"
+              name="name"
+              id="name"
+              class="form-control"
+              [class.is-invalid]="true"
+            />
+            <div class="text-danger">
+              <small>Ingrese su nombre.</small>
+            </div>
           </div>
+
           <div class="col-md-6">
             <label for="lastname" class="col-form-label">Apellido: </label>
             <input
@@ -20,14 +30,18 @@
               name="lastname"
               id="lastname"
               class="form-control"
+              [class.is-valid]="true"
             />
+            <div class="text-danger">
+              <small>Ingrese su apellido.</small>
+            </div>
           </div>
         </div>
 
         <div class="form-group">
           <label for="email">
             <i class="fas fa-envelope-open"></i>
-            Correo Electronico
+            Correo Electronico.
           </label>
           <input
             type="email"
@@ -36,12 +50,15 @@
             aria-describedby="emailHelp"
             placeholder="Ingresa tu correo"
           />
+          <div class="text-danger">
+            <small>Ingrese su correo.</small>
+          </div>
         </div>
 
         <div class="form-group">
           <label for="pass1">
             <i class="fas fa-key"></i>
-            Constraseña
+            Constraseña.
           </label>
           <input
             type="password"
@@ -49,12 +66,15 @@
             id="pass1"
             placeholder="Inserta tu contraseña"
           />
+          <div class="text-danger">
+            <small>Ingrese su contraseña.</small>
+          </div>
         </div>
 
         <div class="form-group">
           <label for="pass2">
             <i class="fas fa-redo"></i>
-            Confirma tu contraseña
+            Confirma tu contraseña.
           </label>
           <input
             type="password"
@@ -62,6 +82,9 @@
             id="pass2"
             placeholder="Inserta tu contraseña"
           />
+          <div class="text-danger">
+            <small>Las contraseñas deben ser iguales.</small>
+          </div>
         </div>
 
         <!--  Fecha de nacimiento -->
@@ -73,7 +96,7 @@
         </div> -->
 
         <div class="mt-3 text-center">
-          <button type="submit" class="btn btn-primary">Submit</button>
+          <button type="submit" class="btn btn-primary">Registrarse</button>
         </div>
       </fieldset>
     </form>
