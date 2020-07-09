@@ -1,16 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-slider',
   templateUrl: './slider.component.html',
-  styles: [
-  ]
+  styles: [],
 })
 export class SliderComponent implements OnInit {
+  @Input() showCaption: boolean;
 
-  constructor() { }
-
-  ngOnInit(): void {
+  constructor() {
+    this.showCaption = true;
   }
 
+  ngOnInit(): void {}
 }
