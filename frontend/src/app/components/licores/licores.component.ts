@@ -10,5 +10,8 @@ export class LicoresComponent implements OnInit {
 
   ngOnInit(): void {
   }
+  verLicores(idx:number){
+    console.log(idx);
+  }
 
 }

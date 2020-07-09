@@ -1,5 +1,5 @@
 <div class="card-deck">
-    <div class="card" *ngFor="let product of [1, 2, 3, 4]">
+    <div class="card" *ngFor="let product of [1, 2, 3, 4]; let i">
         <img class="card-img-top" src="assets/img/licor.jpg" alt="Card image cap" />
 
         <div class="card-body">
@@ -12,7 +12,8 @@
             <p class="card-text">
                 Some quick example text to build on the card title and make up the bulk of the card's content.
             </p>
-            <a [routerLink]="['licores',2]" class="btn btn-dark">Ver mas...</a>
+
+            <a [routerLink]="['/licores',i]" class="btn btn-dark">Ver mas...</a>
             <a href="#" class="btn btn-primary">
                 <i class="fas fa-cart-plus mr-2"></i> Agregar al carrito
             </a>

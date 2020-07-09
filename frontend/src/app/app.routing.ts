@@ -11,7 +11,7 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'about', component: AboutComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'licores:id', component: LicoresComponent },
+  { path: 'licores/:id', component: LicoresComponent },
   { path: 'register', component: RegisterComponent },
   { path: '**', pathMatch: 'full', redirectTo: 'home' },
 ];
