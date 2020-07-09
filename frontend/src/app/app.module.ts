@@ -30,7 +30,11 @@ import { AppRoutingModule } from './app.routing';
     SliderComponent,
     ProductListComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule],
+  imports: [
+    HttpClientModule,
+    BrowserModule,
+     AppRoutingModule
+    ],
   providers: [],
   bootstrap: [AppComponent],
 })
