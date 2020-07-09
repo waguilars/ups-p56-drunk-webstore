@@ -1,40 +1,46 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
-
 const user_model = require('../models/user-model');
-const { user } = require('../routes/user-routes');
-
 
 const UserCtr = {};
 
 
 UserCtr.getUser = async(req, res) => {
-    let users = await user.find();
-    // console.log(users);
+    let users = await user_model.find();
     res.json({
-        status: "true"
+        status: "true",
+        users
     });
 }
 
-UserCtr.createUser = (req, res) => {
+UserCtr.createUser = async(req, res) => {
     let body = req.body;
     body.password = bcrypt.hashSync(body.password, 10);
     let new_user = new user_model(body);
-    new_user.save((err, userDB) => {
+    let data = await user_model.find({}, 'email');
+    let band = data.find(date => date.email === new_user.email)
+    if (band === 'undefined') {
+        return res.json({
+            status: "BAD",
+            massage: "el correro esta repetido"
+        })
+    }
+    await new_user.save((err, userDB) => {
         if (err) {
             return res.status(400).json({
                 ok: false,
                 err
             })
         }
+
         res.json({
             status: "OK",
             user: userDB
         });
     });
-    // // body.password = bcrypt.hashSync(body.password, 10);
-    // let users = new user(req.body);
-
 };
+
+
+
 
 module.exports = UserCtr;

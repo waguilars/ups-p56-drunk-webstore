@@ -4,9 +4,9 @@ const userctr = require('../controllers/user-controller');
 
 const app = express();
 
-app.get('/users', userctr.getUser)
+app.get('/', userctr.getUser)
 
-app.post('/create', userctr.createUser);
+app.post('/', userctr.createUser);
 
 
 module.exports = app;
