@@ -20,3 +20,5 @@ const orderSchema = new Schema({
     default: 'ONLINE',
   },
 });
+
+module.exports = mongoose.model('Orden', orderSchema);
