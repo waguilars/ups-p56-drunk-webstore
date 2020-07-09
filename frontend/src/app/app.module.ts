@@ -17,6 +17,7 @@ import { ProductListComponent } from './components/product-list/product-list.com
 
 // Routing
 import { AppRoutingModule } from './app.routing';
+import { NotFoundComponent } from './shared/not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -30,8 +31,9 @@ import { AppRoutingModule } from './app.routing';
     LicoresComponent,
     SliderComponent,
     ProductListComponent,
+    NotFoundComponent,
   ],
-  imports: [HttpClientModule, BrowserModule, AppRoutingModule],
+  imports: [BrowserModule, AdminModule, AppRoutingModule, HttpClientModule],
   providers: [],
   bootstrap: [AppComponent],
 })
