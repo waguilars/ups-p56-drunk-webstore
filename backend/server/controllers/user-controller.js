@@ -1,6 +1,7 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
 const user_model = require('../models/user-model');
+const _ = require('underscore')
 
 const UserCtr = {};
 
@@ -40,6 +41,40 @@ UserCtr.createUser = async(req, res) => {
         });
     });
 };
+
+UserCtr.selectUser = async(req, res) => {
+    // console.log(req.params.id);
+    let user = await user_model.findById(req.params.id);
+    res.json({
+        status: 'recivido',
+        user
+    })
+}
+
+UserCtr.editUser = async(req, res) => {
+    let id = req.params.id;
+    let body = _.pick(req.body, ['name', 'email', 'lastname', 'role', 'estado'])
+    await user_model.findByIdAndUpdate(id, body, { new: true, runValidators: true, context: 'query' },
+        (err, userBD) => {
+            if (err) {
+                return res.status(400).json({
+                    status: false,
+                    err
+                });
+            }
+            res.json({
+                status: true,
+                // usuario: userBD
+            })
+        })
+
+};
+
+UserCtr.deleteUser = async(req, res) => {
+    await user_model.findByIdAndRemove(req.params.id);
+    res.json({ status: 'User deleted' });
+};
+
 
 
 

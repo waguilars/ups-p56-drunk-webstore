@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/WilsonAG/ups-p56-drunk-webstore/issues"
   },
-  "homepage": "https://github.com/WilsonAG/ups-p56-drunk-webstore#readme"
+  "homepage": "https://github.com/WilsonAG/ups-p56-drunk-webstore#readme",
+  "dependencies": {
+    "underscore": "^1.10.2"
+  }
 }
