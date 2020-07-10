@@ -7,6 +7,7 @@ const UserCtr = {};
 
 UserCtr.getUser = async(req, res) => {
     let users = await user_model.find();
+    console.log(users);
     res.json({
         status: "true",
         users
@@ -35,7 +36,7 @@ UserCtr.createUser = async(req, res) => {
 
         res.json({
             status: "OK",
-            user: userDB
+            // user: userDB
         });
     });
 };
