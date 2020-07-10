@@ -20,7 +20,6 @@ import { AppRoutingModule } from './app.routing';
 import { NotFoundComponent } from './shared/not-found/not-found.component';
 import { CartComponent } from './components/cart/cart.component';
 
-
 @NgModule({
   declarations: [
     AppComponent,

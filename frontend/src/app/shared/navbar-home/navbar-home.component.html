@@ -43,7 +43,7 @@
       </div>
     </form>
 
-    <ul class="navbar-nav navbar-right" *ngIf="false">
+    <ul class="navbar-nav navbar-right">
       <li class="nav-item" routerLinkAcctive="active">
         <a class="nav-link shopping-cart">
           <i class="icon fas fa-shopping-cart mr-2"></i>
@@ -51,6 +51,9 @@
           Carrito
         </a>
       </li>
+    </ul>
+
+    <ul class="navbar-nav navbar-right" *ngIf="false">
       <li class="nav-item" routerLinkAcctive="active">
         <a class="nav-link" [routerLink]="['login']">
           <i class="icon fas fa-user mr-2"></i>LOG IN
