@@ -3,7 +3,7 @@
 <hr />
 <div class="row">
   <div class="col-md-6">
-    <form>
+    <form [formGroup]="loginForm" (ngSubmit)="signIn()">
       <fieldset class="">
         <legend class="text-center">
           Ingresa tus credenciales
@@ -14,19 +14,44 @@
             <i class="fas fa-envelope"></i>
             Email:
           </label>
-          <input class="form-control" type="email" id="email" />
+          <input
+            class="form-control"
+            type="email"
+            id="email"
+            placeholder="Ingrese su correo"
+            formControlName="email"
+          />
+          <small *ngIf="email.invalid && email.touched" class="text-danger">
+            <div *ngIf="email.errors.required">
+              Por favor ingrese el email.
+            </div>
+            <div *ngIf="email.errors.pattern">
+              El correo ingresado no es valido.
+            </div>
+          </small>
         </div>
         <div class="form-group">
           <label for="password">
             <i class="fas fa-unlock"></i>
             Contraseña:
           </label>
-          <input class="form-control" type="password" id="password" />
+          <input
+            class="form-control"
+            type="password"
+            id="password"
+            placeholder="Ingrese su contraseña"
+            formControlName="password"
+          />
         </div>
+        <small *ngIf="password.invalid && password.touched" class="text-danger">
+          <div *ngIf="password.errors.required">
+            Por favor ingrese su contraseña.
+          </div>
+        </small>
+        <button type="submit" class="btn btn-primary d-block mx-auto mt-3">
+          Iniciar sesion
+        </button>
       </fieldset>
-      <button type="submit" class="btn btn-primary d-block mx-auto">
-        Iniciar sesion
-      </button>
     </form>
   </div>
   <div class="col-md-6 mt-4 p-4 justify-content-center">
