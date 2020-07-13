@@ -63,7 +63,12 @@ export class RegisterComponent implements OnInit {
       });
       return;
     }
+    this.user.name = this.name.value;
+    this.user.lastname = this.lastname.value;
+    this.user.email = this.email.value;
+    this.user.password = this.pass2.value;
 
+    console.log(this.user);
     /* post register */
   }
 
