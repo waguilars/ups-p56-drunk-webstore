@@ -12,4 +12,4 @@ if (process.env.NODE_ENV === 'dev') {
 const USER = process.env.MONGO_USER;
 const PASS = process.env.MONGO_PASS;
 
-process.env.MONGO_URI = `mongodb+srv://${USER}:${PASS}@cafe.wbaqo.mongodb.net/test`;
+process.env.MONGO_URI = `mongodb+srv://${USER}:${PASS}@cafe.wbaqo.mongodb.net/LICORES`;

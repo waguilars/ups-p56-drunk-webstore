@@ -2,6 +2,8 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const user_model = require('../models/user-model');
 const _ = require('underscore')
+const { validationResult } = require('express-validator');
+
 
 const UserCtr = {};
 
@@ -27,6 +29,7 @@ UserCtr.createUser = async(req, res) => {
             massage: "el correro esta repetido"
         })
     }
+
     await new_user.save((err, userDB) => {
         if (err) {
             return res.status(400).json({
@@ -64,7 +67,6 @@ UserCtr.editUser = async(req, res) => {
             }
             res.json({
                 status: true,
-                // usuario: userBD
             })
         })
 
@@ -75,6 +77,24 @@ UserCtr.deleteUser = async(req, res) => {
     res.json({ status: 'User deleted' });
 };
 
+UserCtr.insertUser = (req, res) => {
+    let errores = validationResult(req);
+    // console.log(errokr.errors);
+    if (errores.isEmpty()) {
+        res.json({
+            status: "OK",
+        });
+    } else {
+        errores.errors.forEach(element => {
+            element.value = undefined;
+            element.location = undefined;
+        });
+        res.status(400).json({
+            status: false,
+            errores
+        });
+    }
+}
 
 
 

@@ -9,7 +9,6 @@ const app = express();
 
 // Midleware
 app.use(morgan('dev'))
-    // app.use(express.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
