@@ -4,9 +4,15 @@ const user_model = require('../models/user-model');
 const _ = require('underscore')
 const { validationResult } = require('express-validator');
 
-
 const UserCtr = {};
 
+let order_text = (text) => {
+    let palabras = text.split(' ')
+    palabras.forEach((palabra, idx) => {
+        palabras[idx] = palabra.charAt(0).toUpperCase() + palabra.slice(1).toLowerCase()
+    });
+    return palabras.join(' ');
+}
 
 UserCtr.getUser = async(req, res) => {
     let users = await user_model.find();
@@ -77,13 +83,37 @@ UserCtr.deleteUser = async(req, res) => {
     res.json({ status: 'User deleted' });
 };
 
-UserCtr.insertUser = (req, res) => {
+UserCtr.insertUser = async(req, res) => {
     let errores = validationResult(req);
-    // console.log(errokr.errors);
     if (errores.isEmpty()) {
-        res.json({
-            status: "OK",
+        let body = req.body;
+        let param = {
+            name: order_text(body.name),
+            lastname: order_text(body.lastname),
+            password: bcrypt.hashSync(body.password, 10),
+            email: body.email
+        }
+        console.log(param);
+        // let new_user = new user_model(param);
+        // let data = await user_model.find({}, 'email');
+        // let flag = data.find(date => date.email === new_user.email)
+        // if (flag) {
+        //     return res.json({
+        //         msg: "Correo ya en uso"
+        //     })
+        // }
+        // await new_user.save((err, userDB) => {
+        //     if (err) {
+        //         return res.status(400).json({
+        //             status: false,
+        //             msg: err
+        //         })
+        //     }
+        res.status(200).json({
+            status: true,
+            msg: "Usuario Creado"
         });
+        // });
     } else {
         errores.errors.forEach(element => {
             element.value = undefined;
