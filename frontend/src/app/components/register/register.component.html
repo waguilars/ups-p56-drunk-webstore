@@ -3,7 +3,7 @@
 <hr />
 <div class="row">
   <div class="col-md-6">
-    <form>
+    <form [formGroup]="registerForm" (ngSubmit)="signUp()">
       <fieldset>
         <legend class="text-center">
           <i class="fas fa-id-card"></i> REGISTRO
@@ -13,12 +13,14 @@
             <label for="name" class="col-form-label">Nombre: </label>
             <input
               type="text"
-              name="name"
               id="name"
               class="form-control"
-              [class.is-invalid]="true"
+              placeholder="Nombre"
+              formControlName="name"
+              [class.is-invalid]="name.invalid && name.touched"
+              [class.is-valid]="name.valid && name.touched"
             />
-            <div class="text-danger">
+            <div *ngIf="name.invalid && name.touched" class="text-danger">
               <small>Ingrese su nombre.</small>
             </div>
           </div>
@@ -26,13 +28,18 @@
           <div class="col-md-6">
             <label for="lastname" class="col-form-label">Apellido: </label>
             <input
-              type="text"
-              name="lastname"
               id="lastname"
+              type="text"
               class="form-control"
-              [class.is-valid]="true"
+              placeholder="Apellido"
+              formControlName="lastname"
+              [class.is-invalid]="lastname.invalid && lastname.touched"
+              [class.is-valid]="lastname.valid && lastname.touched"
             />
-            <div class="text-danger">
+            <div
+              *ngIf="lastname.invalid && lastname.touched"
+              class="text-danger"
+            >
               <small>Ingrese su apellido.</small>
             </div>
           </div>
@@ -49,9 +56,15 @@
             id="email"
             aria-describedby="emailHelp"
             placeholder="Ingresa tu correo"
+            formControlName="email"
+            [class.is-invalid]="email.invalid && email.touched"
+            [class.is-valid]="email.valid && email.touched"
           />
-          <div class="text-danger">
-            <small>Ingrese su correo.</small>
+          <div *ngIf="email.invalid && email.touched" class="text-danger">
+            <small *ngIf="email.errors.required">Ingrese su correo.</small>
+            <small *ngIf="email.errors.pattern">
+              El correo ingresado no es valido.
+            </small>
           </div>
         </div>
 
@@ -61,12 +74,15 @@
             Constraseña.
           </label>
           <input
+            id="pass1"
             type="password"
             class="form-control"
-            id="pass1"
             placeholder="Inserta tu contraseña"
+            formControlName="pass1"
+            [class.is-invalid]="pass1.invalid && pass1.touched"
+            [class.is-valid]="pass1.valid && pass1.touched"
           />
-          <div class="text-danger">
+          <div *ngIf="pass1.invalid && pass1.touched" class="text-danger">
             <small>Ingrese su contraseña.</small>
           </div>
         </div>
@@ -77,12 +93,15 @@
             Confirma tu contraseña.
           </label>
           <input
+            id="pass2"
             type="password"
             class="form-control"
-            id="pass2"
             placeholder="Inserta tu contraseña"
+            formControlName="pass2"
+            [class.is-invalid]="pass2.invalid && pass2.touched"
+            [class.is-valid]="pass2.valid && pass2.touched"
           />
-          <div class="text-danger">
+          <div *ngIf="pass2.invalid && pass2.touched" class="text-danger">
             <small>Las contraseñas deben ser iguales.</small>
           </div>
         </div>
