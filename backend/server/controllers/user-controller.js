@@ -98,7 +98,6 @@ UserCtr.insertUser = (req, res) => {
             password: bcrypt.hashSync(body.password, 10),
             email: body.email,
         };
-
         let new_user = new user_model(param);
         user_model.find({}, 'email').then(resp => {
             let flag = resp.find(date => date.email === new_user.email)
@@ -121,15 +120,20 @@ UserCtr.insertUser = (req, res) => {
             });
         });
     } else {
+        let new_err = {};
         errores.errors.forEach((element) => {
-            element.value = undefined;
-            element.location = undefined;
+            let param = element.param
+            let msg_param = element.msg
+            new_err[param] = msg_param
         });
         return res.status(400).json({
             status: false,
-            errores,
+            msg: "Credenciales no admitidas",
+            error: new_err
         });
     }
 };
+
+// UserCtr.loginUser = (req, res)
 
 module.exports = UserCtr;
