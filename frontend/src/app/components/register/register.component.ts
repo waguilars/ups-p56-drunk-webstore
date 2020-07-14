@@ -6,6 +6,8 @@ import {
   AbstractControl,
 } from '@angular/forms';
 import { UserModel } from '../../models/user.model';
+import { UserService } from '../../services/user.service';
+import { ValidatorService } from '../../services/validator.service';
 
 @Component({
   selector: 'app-register',
@@ -16,7 +18,11 @@ export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
   user: UserModel;
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private userSv: UserService,
+    private val: ValidatorService
+  ) {
     this.user = new UserModel();
     this.createForm();
     this.loadFormData();
@@ -25,19 +31,27 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {}
 
   createForm(): void {
-    this.registerForm = this.fb.group({
-      name: ['', Validators.required],
-      lastname: ['', Validators.required],
-      email: [
-        '',
-        [
-          Validators.required,
-          Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}$'),
+    this.registerForm = this.fb.group(
+      {
+        name: ['', [Validators.required, Validators.pattern('^[A-Za-z ]+$')]],
+        lastname: [
+          '',
+          [Validators.required, Validators.pattern('^[A-Za-z ]+$')],
         ],
-      ],
-      pass1: ['', Validators.required],
-      pass2: ['', Validators.required],
-    });
+        email: [
+          '',
+          [
+            Validators.required,
+            Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}$'),
+          ],
+        ],
+        pass1: ['', [Validators.required]],
+        pass2: ['', Validators.required],
+      },
+      {
+        validators: this.val.passwordsMatch('pass1', 'pass2'),
+      }
+    );
   }
 
   loadFormData(): void {
@@ -63,13 +77,21 @@ export class RegisterComponent implements OnInit {
       });
       return;
     }
+
     this.user.name = this.name.value;
     this.user.lastname = this.lastname.value;
     this.user.email = this.email.value;
     this.user.password = this.pass2.value;
 
-    console.log(this.user);
     /* post register */
+    this.userSv.register(this.user).subscribe(
+      (res: any) => {
+        console.log(res);
+      },
+      (err) => {
+        console.log(err.errors);
+      }
+    );
   }
 
   get name(): AbstractControl {

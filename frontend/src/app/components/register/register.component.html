@@ -21,7 +21,12 @@
               [class.is-valid]="name.valid && name.touched"
             />
             <div *ngIf="name.invalid && name.touched" class="text-danger">
-              <small>Ingrese su nombre.</small>
+              <small *ngIf="name.errors.required">
+                Ingrese su nombre.
+              </small>
+              <small *ngIf="name.errors.pattern">
+                El nombre no debe incluir numeros ni caracteres especiales
+              </small>
             </div>
           </div>
 
@@ -40,7 +45,12 @@
               *ngIf="lastname.invalid && lastname.touched"
               class="text-danger"
             >
-              <small>Ingrese su apellido.</small>
+              <small *ngIf="lastname.errors.required">
+                Ingrese su apellido.
+              </small>
+              <small *ngIf="lastname.errors.pattern">
+                El apellido no debe incluir numeros ni caracteres especiales
+              </small>
             </div>
           </div>
         </div>
@@ -83,7 +93,11 @@
             [class.is-valid]="pass1.valid && pass1.touched"
           />
           <div *ngIf="pass1.invalid && pass1.touched" class="text-danger">
-            <small>Ingrese su contraseña.</small>
+            <small *ngIf="pass1.errors.required">Ingrese su contraseña.</small>
+            <small *ngIf="pass1.errors.pattern">
+              La constraseña debe tener al menos 8 caracteres incluyendo uno en
+              mayuscula,un numero y sin caracteres especiales
+            </small>
           </div>
         </div>
 
@@ -102,7 +116,12 @@
             [class.is-valid]="pass2.valid && pass2.touched"
           />
           <div *ngIf="pass2.invalid && pass2.touched" class="text-danger">
-            <small>Las contraseñas deben ser iguales.</small>
+            <small *ngIf="pass2.errors.notMatchPasswords">
+              Las contraseñas deben ser iguales.
+            </small>
+            <small *ngIf="pass2.errors.required">
+              Vuelve a escribir tu contraseña.
+            </small>
           </div>
         </div>
 
