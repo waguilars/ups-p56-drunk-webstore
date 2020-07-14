@@ -4,8 +4,7 @@ const { any } = require('underscore');
 const { body, check } = require('express-validator');
 const user_model = require('../models/user-model');
 const user_controller = require('../controllers/user-controller');
-const v = require('../models-validation/user-model-validation')
-
+const v = require('../helpers/user-model-validation');
 
 // Lista de Usuarios
 // router.get('/', user_controller.getUser)
@@ -19,6 +18,10 @@ router.put('/:id', user_controller.editUser);
 router.delete('/:id', user_controller.deleteUser);
 
 // Registrar un usuario
-router.post('/registro', [v.name, v.lastname, v.email, v.password], user_controller.insertUser);
+router.post(
+  '/registro',
+  [v.name, v.lastname, v.email, v.password],
+  user_controller.insertUser
+);
 
 module.exports = router;
