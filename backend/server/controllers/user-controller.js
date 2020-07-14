@@ -171,4 +171,12 @@ UserCtr.loginUser = (req, res) => {
   });
 };
 
+UserCtr.logedIn = (req, res) => {
+  return res.json({
+    status: true,
+    data: req.user,
+    msg: 'Sesion valida',
+  });
+};
+
 module.exports = UserCtr;

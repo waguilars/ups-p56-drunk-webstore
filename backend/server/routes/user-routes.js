@@ -5,6 +5,7 @@ const { body, check } = require('express-validator');
 const user_model = require('../models/user-model');
 const user_controller = require('../controllers/user-controller');
 const v = require('../helpers/user-model-validation');
+const { checkToken } = require('../middlewares/auth');
 
 // Lista de Usuarios
 // router.get('/', user_controller.getUser)
@@ -25,5 +26,7 @@ router.post(
 );
 
 router.post('/login', user_controller.loginUser);
+
+router.post('/auth', [checkToken], user_controller.logedIn);
 
 module.exports = router;
