@@ -19,9 +19,8 @@ router.delete('/:id', user_controller.deleteUser);
 
 // Registrar un usuario
 router.post(
-  '/registro',
-  [v.name, v.lastname, v.email, v.password],
-  user_controller.insertUser
+    '/registro', [v.name, v.lastname, v.email, v.password],
+    user_controller.insertUser
 );
 
 module.exports = router;
