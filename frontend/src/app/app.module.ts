@@ -1,7 +1,7 @@
 import { AppComponent } from './app.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { AdminModule } from './admin/admin.module';
 
@@ -21,6 +21,7 @@ import { LoginComponent } from './components/login/login.component';
 // Routing
 import { AppRoutingModule } from './app.routing';
 import { NotFoundComponent } from './shared/not-found/not-found.component';
+import { TokenInterceptor } from './interceptors/token.interceptor';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,13 @@ import { NotFoundComponent } from './shared/not-found/not-found.component';
     FormsModule,
     ReactiveFormsModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

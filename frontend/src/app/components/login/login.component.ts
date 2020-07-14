@@ -7,6 +7,8 @@ import {
 } from '@angular/forms';
 
 import { UserModel } from '../../models/user.model';
+import { UserService } from '../../services/user.service';
+import { AlertService } from '../../services/alert.service';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +18,11 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   user: UserModel;
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private userSv: UserService,
+    private alertSv: AlertService
+  ) {
     this.user = new UserModel();
     this.createForm();
     this.loadFormData();
@@ -44,8 +50,32 @@ export class LoginComponent implements OnInit {
     this.user.email = this.email.value;
     this.user.password = this.password.value;
 
-    this.loginForm.reset();
-    // console.log(this.loginForm);
+    // this.loginForm.reset();
+    this.alertSv.loading('Verificando credenciales.');
+    this.userSv.login(this.user).subscribe(
+      (res: any) => {
+        this.alertSv.showSuccess(res.user, 'Has iniciado sesion con exito.');
+        this.chechAuth();
+      },
+      (err: any) => {
+        this.alertSv.showError(err.error.msg);
+      }
+    );
+  }
+
+  chechAuth(): void {
+    this.userSv.isAuth().subscribe(
+      (res) => {
+        const timer = res.data.exp - Math.floor(new Date().getTime() / 1000);
+
+        setTimeout(() => {
+          // console.log(timer);
+          this.userSv.logout();
+          this.alertSv.showError('La sesion ha expirado');
+        }, timer * 1000);
+      },
+      (err) => {}
+    );
   }
 
   createForm(): void {

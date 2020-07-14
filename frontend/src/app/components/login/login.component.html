@@ -21,15 +21,16 @@
             placeholder="Ingrese su correo"
             formControlName="email"
           />
-          <small *ngIf="email.invalid && email.touched" class="text-danger">
-            <div *ngIf="email.errors.required">
+          <div *ngIf="email.invalid && email.touched" class="text-danger">
+            <small *ngIf="email.errors.required">
               Por favor ingrese el email.
-            </div>
-            <div *ngIf="email.errors.pattern">
+            </small>
+            <small *ngIf="email.errors.pattern">
               El correo ingresado no es valido.
-            </div>
-          </small>
+            </small>
+          </div>
         </div>
+
         <div class="form-group">
           <label for="password">
             <i class="fas fa-unlock"></i>
@@ -43,11 +44,12 @@
             formControlName="password"
           />
         </div>
-        <small *ngIf="password.invalid && password.touched" class="text-danger">
-          <div *ngIf="password.errors.required">
+        <div *ngIf="password.invalid && password.touched" class="text-danger">
+          <small *ngIf="password.errors.required">
             Por favor ingrese su contraseña.
-          </div>
-        </small>
+          </small>
+        </div>
+
         <button type="submit" class="btn btn-primary d-block mx-auto mt-3">
           Iniciar sesion
         </button>

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Output, EventEmitter } from '@angular/core';
 import Swal from 'sweetalert2';
 import { UserModel } from '../models/user.model';
 
@@ -8,10 +8,10 @@ import { UserModel } from '../models/user.model';
 export class AlertService {
   constructor() {}
 
-  async showSuccess(user: UserModel): Promise<any> {
+  async showSuccess(user: UserModel, msg: string): Promise<any> {
     return Swal.fire({
       title: `Bienvenido ${user.name}`,
-      text: 'Registro completado correctamente.',
+      text: msg,
       icon: 'success',
     });
   }
@@ -24,10 +24,10 @@ export class AlertService {
     });
   }
 
-  loading(): void {
+  loading(msg: string = null): void {
     Swal.fire({
       title: 'Espere',
-      text: 'Guardando informacion',
+      text: msg || 'Guardando informacion',
       icon: 'info',
       allowOutsideClick: false,
     });

@@ -94,7 +94,7 @@ export class RegisterComponent implements OnInit {
       (res: any) => {
         const newUser = res.user;
 
-        this.alertSv.showSuccess(newUser).then(() => {
+        this.alertSv.showSuccess(newUser, 'Registro completado.').then(() => {
           this.router.navigateByUrl('/login');
         });
       },
