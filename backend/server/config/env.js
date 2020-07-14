@@ -1,5 +1,5 @@
 // ========================================
-//                 PORT
+//                 DATABASE
 // ========================================
 process.env.PORT = process.env.PORT || 3000;
 
@@ -14,3 +14,11 @@ const PASS = process.env.MONGO_PASS;
 
 // console.log(USER);
 process.env.MONGO_URI = `mongodb+srv://${USER}:${PASS}@cafe.wbaqo.mongodb.net/LICORES`;
+
+// ========================================
+//                 JWT
+// ========================================
+
+process.env.SEED = process.env.SEED || 'development-seed-drunk-webstore';
+
+process.env.TOKEN_EXPIRATION = process.env.TOKEN_EXPIRATION || '10s';

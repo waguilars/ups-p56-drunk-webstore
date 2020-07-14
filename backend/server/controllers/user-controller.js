@@ -1,8 +1,10 @@
-const express = require('express');
 const bcrypt = require('bcrypt');
-const user_model = require('../models/user-model');
 const _ = require('underscore');
 const { validationResult } = require('express-validator');
+const jwt = require('jsonwebtoken');
+
+const user_model = require('../models/user-model');
+const userModel = require('../models/user-model');
 
 const UserCtr = {};
 
@@ -134,6 +136,39 @@ UserCtr.insertUser = (req, res) => {
   }
 };
 
-// UserCtr.loginUser = (req, res)
+UserCtr.loginUser = (req, res) => {
+  const body = req.body;
+
+  userModel.findOne({ email: body.email }, (err, userDB) => {
+    if (err)
+      return res.status(400).json({
+        status: false,
+        msg: 'Credenciales no validas.',
+      });
+
+    if (!userDB)
+      return res.status(400).json({
+        status: false,
+        msg: 'Credenciales no validas.',
+      });
+
+    if (!bcrypt.compareSync(body.password, userDB.password)) {
+      return res.json({
+        status: false,
+        msg: 'Credenciales no validas',
+      });
+    }
+    // console.log(process.env.TOKEN_EXPIRATION, process.env.SEED);
+    const userToken = jwt.sign({ user: userDB }, process.env.SEED, {
+      expiresIn: process.env.TOKEN_EXPIRATION,
+    });
+
+    return res.json({
+      status: true,
+      user: userDB,
+      token: userToken,
+    });
+  });
+};
 
 module.exports = UserCtr;
