@@ -9,6 +9,7 @@ import {
 import { UserModel } from '../../models/user.model';
 import { UserService } from '../../services/user.service';
 import { AlertService } from '../../services/alert.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +22,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private userSv: UserService,
-    private alertSv: AlertService
+    private alertSv: AlertService,
+    private router: Router
   ) {
     this.user = new UserModel();
     this.createForm();
@@ -55,7 +57,7 @@ export class LoginComponent implements OnInit {
     this.userSv.login(this.user).subscribe(
       (res: any) => {
         this.alertSv.showSuccess(res.user, 'Has iniciado sesion con exito.');
-        this.chechAuth();
+        this.checkAuth();
       },
       (err: any) => {
         this.alertSv.showError(err.error.msg);
@@ -63,7 +65,7 @@ export class LoginComponent implements OnInit {
     );
   }
 
-  chechAuth(): void {
+  checkAuth(): void {
     this.userSv.isAuth().subscribe(
       (res) => {
         const timer = res.data.exp - Math.floor(new Date().getTime() / 1000);
@@ -71,7 +73,9 @@ export class LoginComponent implements OnInit {
         setTimeout(() => {
           // console.log(timer);
           this.userSv.logout();
-          this.alertSv.showError('La sesion ha expirado');
+          this.alertSv.showError('La sesion ha expirado').then(() => {
+            this.router.navigateByUrl('/home');
+          });
         }, timer * 1000);
       },
       (err) => {}
