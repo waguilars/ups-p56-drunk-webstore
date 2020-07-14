@@ -8,6 +8,8 @@ import {
 import { UserModel } from '../../models/user.model';
 import { UserService } from '../../services/user.service';
 import { ValidatorService } from '../../services/validator.service';
+import { AlertService } from '../../services/alert.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -17,11 +19,14 @@ import { ValidatorService } from '../../services/validator.service';
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
   user: UserModel;
+  errors: boolean;
 
   constructor(
     private fb: FormBuilder,
     private userSv: UserService,
-    private val: ValidatorService
+    private val: ValidatorService,
+    private alertSv: AlertService,
+    private router: Router
   ) {
     this.user = new UserModel();
     this.createForm();
@@ -84,12 +89,20 @@ export class RegisterComponent implements OnInit {
     this.user.password = this.pass2.value;
 
     /* post register */
+    this.alertSv.loading();
     this.userSv.register(this.user).subscribe(
       (res: any) => {
-        console.log(res);
+        const newUser = res.user;
+
+        this.alertSv.showSuccess(newUser).then(() => {
+          this.router.navigateByUrl('/login');
+        });
       },
       (err) => {
-        console.log(err.errors);
+        console.log(err);
+        this.alertSv.showError(err.error.msg).then(() => {
+          this.errors = true;
+        });
       }
     );
   }
