@@ -129,12 +129,19 @@ UserCtr.getUsers = (req, res) => {
 
 
 UserCtr.getUser = (req, res) => {
-    let id = req.param.id
-    let user = user_model.findById({ id }, (err, data) => {
-        console.log(data);
-    });
-    res.json({
-        status: true,
+    let id = req.params.id
+        // console.log(id);
+    user_model.findById(id, (err, data) => {
+        if (err) {
+            return res.json({
+                status: false,
+                msg: err,
+            })
+        }
+        res.json({
+            status: true,
+            user: data
+        });
     });
 };
 module.exports = UserCtr;
