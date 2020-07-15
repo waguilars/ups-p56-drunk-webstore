@@ -17,8 +17,10 @@ router.post('/login', user_controller.loginUser);
 
 router.post('/auth', [checkToken], user_controller.logedIn);
 
-router.get('/list', user_controller.getUsers)
+router.get('/list', user_controller.getUsers);
 
-router.get('/user/:id', user_controller.getUser)
+router.get('/user/:id', user_controller.getUser);
+
+router.delete('/block/:id', user_controller.deleteUser);
 
 module.exports = router;

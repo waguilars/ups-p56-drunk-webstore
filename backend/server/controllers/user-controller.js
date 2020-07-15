@@ -144,4 +144,34 @@ UserCtr.getUser = (req, res) => {
         });
     });
 };
+
+UserCtr.deleteUser = (req, res) => {
+    let id = req.params.id;
+
+    user_model.findByIdAndUpdate(id, { status: false },
+        (err, data) => {
+            if (err) {
+                return res.json({
+                    status: false,
+                    msg: err
+                });
+            }
+            if (data.status) {
+                data.status = false;
+            } else {
+                return res.json({
+                    status: false,
+                    msg: "Este usuario ya se encuentra bloqueado"
+                });
+            }
+            res.json({
+                status: true,
+                user: data,
+                msg: "Usuario bloqueado"
+            });
+        });
+};
+
+
+
 module.exports = UserCtr;
