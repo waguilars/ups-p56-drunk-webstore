@@ -1,10 +1,7 @@
 const { Router } = require('express');
 const router = Router();
-const { any } = require('underscore');
-const { body, check } = require('express-validator');
-const user_model = require('../models/user-model');
 const user_controller = require('../controllers/user-controller');
-const v = require('../helpers/user-model-validation');
+const v = require('../helpers/validation');
 const { checkToken } = require('../middlewares/auth');
 
 // Registrar un usuario

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const URI = 'mongodb://localhost/data-licores';
+// const URI = 'mongodb://localhost/data-licores';
 
 // const URI2 = 'mongodb+srv://MongoUser:<Password>@cluster0.wbaqo.mongodb.net/<dbname>?retryWrites=true&w=majority';
 
