@@ -7,26 +7,20 @@ const user_controller = require('../controllers/user-controller');
 const v = require('../helpers/user-model-validation');
 const { checkToken } = require('../middlewares/auth');
 
-// Lista de Usuarios
-// router.get('/', user_controller.getUser)
-// Insertar Usuario
-router.post('/', user_controller.createUser);
-// Seleccionar un usuario
-router.get('/:id', user_controller.selectUser);
-// Editar un usuario
-router.put('/:id', user_controller.editUser);
-// Eliminar un Usuario
-router.delete('/:id', user_controller.deleteUser);
-
 // Registrar un usuario
 router.post(
-  '/registro',
-  [v.name, v.lastname, v.email, v.password],
-  user_controller.insertUser
+    '/registro', [v.name, v.lastname, v.email, v.password],
+    user_controller.insertUser
 );
 
 router.post('/login', user_controller.loginUser);
 
 router.post('/auth', [checkToken], user_controller.logedIn);
+
+router.get('/list', user_controller.getUsers);
+
+router.get('/user/:id', user_controller.getUser);
+
+router.delete('/block/:id', user_controller.deleteUser);
 
 module.exports = router;

@@ -35,7 +35,7 @@ export class UserService {
   }
 
   logout(): void {
-    this.getAuthUser.emit(false);
+    this.getAuthUser.error('logout');
     localStorage.removeItem('token');
   }
 
