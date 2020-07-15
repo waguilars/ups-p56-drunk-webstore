@@ -10,6 +10,7 @@ import { AlertService } from '../../services/alert.service';
 })
 export class NavbarHomeComponent implements OnInit {
   user: UserModel;
+  timer: boolean;
 
   constructor(
     private userSv: UserService,
@@ -18,31 +19,45 @@ export class NavbarHomeComponent implements OnInit {
   ) {
     this.userSv.getAuthUser.subscribe(
       (data: any) => {
-        this.user = new UserModel();
-        this.user = data;
+        if (data) {
+          this.user = new UserModel();
+          this.user = data;
+          // this.timer = data;
+        }
       },
       (err: any) => {
+        // console.log(err);
         this.user = null;
+        this.timer = false;
       }
     );
   }
 
   ngOnInit(): void {
-    this.userSv.isAuth().subscribe(
-      (res) => {
-        const timer = res.data.exp - Math.floor(new Date().getTime() / 1000);
+    if (this.userSv.getToken()) {
+      this.userSv.isAuth().subscribe(
+        (res) => {
+          const timer = res.data.exp - Math.floor(new Date().getTime() / 1000);
 
-        setTimeout(() => {
-          // console.log(timer);
-          this.userSv.logout();
-          this.alertSv.showError('La sesion ha expirado').then(() => {
-            this.router.navigateByUrl('/home');
-          });
-        }, timer * 1000);
-      },
-      (err) => {
-        this.user = null;
-      }
-    );
+          setTimeout(() => {
+            // console.log(timer);
+            if (this.timer) {
+              this.userSv.logout();
+              this.alertSv.showError('La sesion ha expirado').then(() => {
+                console.log(this.timer);
+                this.router.navigateByUrl('/home');
+              });
+            }
+          }, timer * 1000);
+        },
+        (err) => {
+          this.user = null;
+        }
+      );
+    }
+  }
+
+  logout(): void {
+    this.userSv.logout();
   }
 }
