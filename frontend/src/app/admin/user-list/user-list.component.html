@@ -24,5 +24,45 @@
   </li>
 </ul>
 <div class="container">
-  <h1>listado</h1>
+  <h3 class="text-center mt-3">Usuarios del sistema</h3>
+  <table class="table">
+    <thead class="thead-dark text-center">
+      <tr>
+        <th>#</th>
+        <th>Foto</th>
+        <th>Nombres</th>
+        <th>Rol</th>
+        <th>Estado</th>
+        <th>Opciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="text-center" *ngFor="let item of [1, 2, 3, 4]">
+        <td>1</td>
+        <td>
+          <div class="profile-img">
+            <img
+              src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80"
+              class="inline"
+              alt="default"
+            />
+          </div>
+        </td>
+        <td>Wilson Aguilar</td>
+        <td>Role_USER</td>
+        <td>
+          <i class="fa fa-2x fa-times-circle text-danger"></i>
+          <i class="fa fa-2x fa-check-circle text-success"></i>
+        </td>
+        <td>
+          <button class="btn btn-primary mx-1">
+            <i class="fa fa-user-edit"></i>
+          </button>
+          <button class="btn btn-danger mx-1">
+            <i class="fa fa-user-slash"></i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>
