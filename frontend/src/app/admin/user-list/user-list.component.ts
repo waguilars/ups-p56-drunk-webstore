@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { UserModel } from '../../models/user.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-list',
@@ -11,7 +12,7 @@ export class UserListComponent implements OnInit {
   users: UserModel[];
   loading: boolean;
 
-  constructor(private userSV: UserService) {
+  constructor(private userSV: UserService, private router: Router) {
     this.listUsers();
     this.loading = true;
   }
@@ -26,5 +27,10 @@ export class UserListComponent implements OnInit {
       },
       (err) => {}
     );
+  }
+
+  editUser(index: number): void {
+    const editUser = this.users[index];
+    this.router.navigate(['/dashboard', 'users', 'edit', editUser.id]);
   }
 }

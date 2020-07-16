@@ -9,6 +9,7 @@ import {
 import { UserService } from '../../services/user.service';
 import { UserModel } from '../../models/user.model';
 import { AlertService } from '../../services/alert.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-new',
@@ -19,18 +20,56 @@ export class UserNewComponent implements OnInit {
   rf: FormGroup;
   validRoles: string[];
   user: UserModel;
+  pageData: { title: string; text: string };
+
+  isEditForm: boolean;
 
   constructor(
     private fb: FormBuilder,
     private userSv: UserService,
-    private alertSv: AlertService
+    private alertSv: AlertService,
+    private route: ActivatedRoute,
+    private router: Router
   ) {
+    this.checkPage();
     this.validRoles = ['USER_ROLE', 'ADMIN_ROLE'];
     this.createForm();
     this.loadFormData();
   }
 
   ngOnInit(): void {}
+
+  checkPage(): void {
+    const id = this.route.snapshot.paramMap.get('id');
+
+    if (id) {
+      this.pageData = {
+        title: 'EDICION DE USUARIOS',
+        text: 'Edita los campos que quieras cambiar.',
+      };
+
+      this.userSv.get(id).subscribe(
+        (res) => {
+          this.user = res;
+          this.isEditForm = true;
+          this.loadFormData();
+          // console.log(res);
+        },
+        (err) => {
+          // console.log(err.error.msg);
+          this.alertSv.showError(err.error.msg).then(() => {
+            this.router.navigate(['/dashboard']);
+          });
+        }
+      );
+    } else {
+      this.isEditForm = false;
+      this.pageData = {
+        title: 'REGISTRO DE USUARIOS',
+        text: 'Ingrese los campos para agregar un nuevo usuario',
+      };
+    }
+  }
 
   submit(): void {
     if (this.rf.invalid) {
@@ -57,16 +96,23 @@ export class UserNewComponent implements OnInit {
 
     /* falta imagen */
 
-    this.userSv.register(this.user).subscribe(
-      (res) => {
-        this.user = res.user;
-        this.alertSv.showSuccess(this.user, 'Usuario registrado correctamente');
-      },
-      (err) => {
-        const msg = err.error.msg;
-        this.alertSv.showError(msg);
-      }
-    );
+    if (this.isEditForm) {
+      console.log('do edit');
+    } else {
+      this.userSv.register(this.user).subscribe(
+        (res) => {
+          this.user = res.user;
+          this.alertSv.showSuccess(
+            this.user,
+            'Usuario registrado correctamente'
+          );
+        },
+        (err) => {
+          const msg = err.error.msg;
+          this.alertSv.showError(msg);
+        }
+      );
+    }
   }
 
   fileChange(evt: Event): void {
@@ -92,10 +138,20 @@ export class UserNewComponent implements OnInit {
   }
 
   loadFormData(): void {
-    this.rf.reset({
-      status: true,
-      role: this.validRoles[0],
-    });
+    if (this.isEditForm) {
+      this.rf.reset({
+        name: this.user.name,
+        lastname: this.user.lastname,
+        email: this.user.email,
+        status: this.user.status,
+        role: this.validRoles[0],
+      });
+    } else {
+      this.rf.reset({
+        status: true,
+        role: this.validRoles[0],
+      });
+    }
   }
 
   get name(): AbstractControl {

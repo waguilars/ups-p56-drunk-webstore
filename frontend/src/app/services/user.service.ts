@@ -4,9 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { UserModel } from '../models/user.model';
 
-import { Observable } from 'rxjs';
+import { Observable, throwError, of } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { AlertService } from './alert.service';
 
 @Injectable({
   providedIn: 'root',
@@ -30,6 +29,18 @@ export class UserService {
         this.saveToken(res.token);
         this.getAuthUser.emit(res.user);
         return res;
+      })
+    );
+  }
+
+  get(id: string): Observable<UserModel | any> {
+    return this.http.get(`${this.apiURI}/${id}`).pipe(
+      map((res: any) => {
+        // console.log(res);
+        const user = res.user;
+        user.id = res.user._id;
+        delete user._id;
+        return user;
       })
     );
   }
