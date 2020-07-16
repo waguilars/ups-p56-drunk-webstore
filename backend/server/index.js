@@ -6,9 +6,7 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 
 
-const userRoutes = require('./routes/user-routes');
-// const prodRoutes = require('./routes/product-routes');
-const categRoutes = require('./routes/category-routes');
+
 
 
 const app = express();
@@ -19,9 +17,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 // Routers
-app.use('/api/user', userRoutes);
-// app.use('/api/prod', prodRoutes);
-app.use('/api/categ', categRoutes)
+app.use(require('./routes/index'))
 
 app.listen(process.env.PORT, () => {
     console.log(
