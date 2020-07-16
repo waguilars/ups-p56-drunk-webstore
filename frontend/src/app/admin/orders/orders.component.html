@@ -1,1 +1,43 @@
-<p>orders works!</p>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Numero</th>
+            <th scope="col">Usuario</th>
+            <th scope="col">Total</th>
+            <th scope="col">Detalle</th>
+        </tr>
+    </thead>
+    <tbody>
+
+
+        <tr class="table-light" *ngFor="let i of [1,2,3]">
+            <th scope="row"> Numero de cliente</th>
+            <td>Pepito perez</td>
+            <td>$ 10,99</td>
+            <td> <a class="nav-link" [routerLink]="['orders-detail']">Detalle URL </a> </td>
+        </tr>
+
+    </tbody>
+</table>
+
+<table class="table table-info">
+    <thead>
+        <tr>
+            <th scope="col">Total</th>
+            <th scope="col"> </th>
+            <th scope="col">Total</th>
+            <th scope="col"> <a class="nav-link" [routerLink]="['orders-detail']">Detalle</a></th>
+        </tr>
+    </thead>
+    <tbody>
+
+
+        <tr class="table-light">
+            <th scope="row"> Numero de cliente</th>
+            <td> </td>
+            <td>$ 1100.00</td>
+            <td><a class="nav-link" [routerLink]="['orders-detail']">Detalle URL</a> </td>
+        </tr>
+
+    </tbody>
+</table>

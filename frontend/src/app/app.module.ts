@@ -18,6 +18,7 @@ import { ProductListComponent } from './components/product-list/product-list.com
 import { CartComponent } from './components/cart/cart.component';
 import { LoginComponent } from './components/login/login.component';
 
+
 // Routing
 import { AppRoutingModule } from './app.routing';
 import { NotFoundComponent } from './shared/not-found/not-found.component';

@@ -9,9 +9,10 @@ import { UserNewComponent } from './user-new/user-new.component';
 import { ProductNewComponent } from './product-new/product-new.component';
 import { ProductListComponent } from './product-list/product-list.component';
 import { OrdersComponent } from './orders/orders.component';
+import { OrdersDetailComponent } from './orders-detail/orders-detail.component';
 
 @NgModule({
-  declarations: [DashboardComponent, UserListComponent, UserNewComponent, ProductNewComponent, ProductListComponent, OrdersComponent],
+  declarations: [DashboardComponent, UserListComponent, UserNewComponent, ProductNewComponent, ProductListComponent, OrdersComponent, OrdersDetailComponent],
   imports: [CommonModule, AdminRoutingModule],
 })
 export class AdminModule {}
