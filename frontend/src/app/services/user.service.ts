@@ -34,6 +34,20 @@ export class UserService {
     );
   }
 
+  getAll(): Observable<UserModel[]> {
+    return this.http.get(`${this.apiURI}/`).pipe(
+      map((res: any) => {
+        let users = res.user;
+        users = users.map((user: any) => {
+          user.id = user._id;
+          delete user._id;
+          return user;
+        });
+        return users;
+      })
+    );
+  }
+
   logout(): void {
     this.getAuthUser.error('logout');
     localStorage.removeItem('token');

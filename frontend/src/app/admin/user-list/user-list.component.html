@@ -25,7 +25,7 @@
 </ul>
 <div class="container">
   <h3 class="text-center my-3">Usuarios del sistema</h3>
-  <table class="table table-hover">
+  <table class="table table-hover" *ngIf="!loading">
     <thead class="thead-dark text-center">
       <tr>
         <th>#</th>
@@ -37,8 +37,8 @@
       </tr>
     </thead>
     <tbody>
-      <tr class="text-center" *ngFor="let item of [1, 2, 3, 4]">
-        <td>1</td>
+      <tr class="text-center" *ngFor="let user of users; let i = index">
+        <td>{{ i }}</td>
         <td>
           <div class="profile-img">
             <img
@@ -48,11 +48,17 @@
             />
           </div>
         </td>
-        <td>Wilson Aguilar</td>
-        <td>Role_USER</td>
+        <td>{{ user.name }}</td>
+        <td>{{ user.role }}</td>
         <td>
-          <i class="fa fa-2x fa-times-circle text-danger"></i>
-          <i class="fa fa-2x fa-check-circle text-success"></i>
+          <i
+            *ngIf="user.status"
+            class="fa fa-2x fa-check-circle text-success"
+          ></i>
+          <i
+            *ngIf="!user.status"
+            class="fa fa-2x fa-times-circle text-danger"
+          ></i>
         </td>
         <td>
           <button class="btn btn-primary mx-1">
@@ -65,4 +71,9 @@
       </tr>
     </tbody>
   </table>
+
+  <div class="alert alert-info text-center" *ngIf="loading">
+    <i class="fa fa-3x fa-circle-notch fa-spin mt-2"></i>
+    <h5 class="alert-heading my-3">Cargando usuarios...</h5>
+  </div>
 </div>
