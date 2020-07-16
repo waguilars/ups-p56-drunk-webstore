@@ -1,7 +1,5 @@
-const express = require('express');
 const category_model = require('../models/category-model');
 const { validationResult } = require('express-validator');
-const { param } = require('../routes/user-routes');
 
 const CategCrt = {};
 
@@ -23,7 +21,7 @@ CategCrt.insertCategory = (req, res) => {
         };
         category_model.find({}, 'name', (err, data) => {
             if (err) {
-                return res.status(400).json({
+                return res.status(500).json({
                     status: false,
                     error: err
                 });
@@ -45,7 +43,8 @@ CategCrt.insertCategory = (req, res) => {
                 }
                 return res.status(201).json({
                     status: true,
-                    data
+                    msg: "Categoria registrada",
+                    category: data
                 });
             })
 
@@ -63,5 +62,19 @@ CategCrt.insertCategory = (req, res) => {
     }
 };
 
+CategCrt.getCategories = (req, res) => {
+    category_model.find({}, (err, data) => {
+        if (err) {
+            return res.status(500).json({
+                status: false,
+                error: err
+            });
+        }
+        res.json({
+            status: true,
+            categories: data
+        });
+    });
+};
 
 module.exports = CategCrt;
