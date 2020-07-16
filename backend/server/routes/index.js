@@ -6,7 +6,7 @@ const categRoutes = require('./category-routes');
 
 
 router.use('/api/user', userRoutes);
-router.use('/api/prod', prodRoutes);
-router.use('/api/categ', categRoutes)
+router.use('/api/product', prodRoutes);
+router.use('/api/category', categRoutes)
 
 module.exports = router;

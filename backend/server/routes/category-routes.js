@@ -4,8 +4,8 @@ const router = Router();
 
 const category_controller = require('../controllers/category-controller');
 
-router.post('/catinsert', [v.name], category_controller.insertCategory)
+router.post('/insert', [v.name], category_controller.insertCategory)
 
-router.get('/categories', category_controller.getCategories)
+router.get('/list', category_controller.getCategories)
 
 module.exports = router;
