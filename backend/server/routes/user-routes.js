@@ -21,4 +21,10 @@ router.get('/:id', user_controller.getUser);
 
 router.delete('/block/:id', user_controller.deleteUser);
 
+router.put(
+  '/:id',
+  [checkToken, v.name, v.lastname, v.email, v.password],
+  user_controller.updateUser
+);
+
 module.exports = router;

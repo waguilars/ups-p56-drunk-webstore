@@ -26,6 +26,9 @@ UserCtr.insertUser = (req, res) => {
       lastname: order_text(body.lastname),
       password: bcrypt.hashSync(body.password, 10),
       email: body.email,
+      img: body.img,
+      role: body.role,
+      status: body.status,
     };
     let new_user = new user_model(param);
     user_model.find({}, 'email').then((resp) => {
@@ -166,6 +169,56 @@ UserCtr.deleteUser = (req, res) => {
       msg: 'Usuario bloqueado',
     });
   });
+};
+
+UserCtr.updateUser = (req, res) => {
+  const id = req.params.id;
+  let errores = validationResult(req);
+  if (!errores.isEmpty()) {
+    return res.status(400).json({
+      status: false,
+      err: errores.errors,
+    });
+  }
+
+  let body = req.body;
+  let param = {
+    name: order_text(body.name),
+    lastname: order_text(body.lastname),
+    password: bcrypt.hashSync(body.password, 10),
+    email: body.email,
+    img: body.img,
+    role: body.role,
+    status: body.status,
+  };
+
+  userModel.findOneAndUpdate(
+    { _id: id },
+    param,
+    {
+      new: true,
+      runValidators: 'query',
+    },
+    (err, updatedUser) => {
+      if (err)
+        return res.status(500).json({
+          status: false,
+          err,
+        });
+
+      if (!updatedUser)
+        return res.status(404).json({
+          status: false,
+          err,
+        });
+
+      return res.json({
+        status: true,
+        user: updatedUser,
+        msg: 'Datos actualizados correctamente.',
+      });
+    }
+  );
 };
 
 module.exports = UserCtr;
