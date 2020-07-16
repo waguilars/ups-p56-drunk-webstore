@@ -5,6 +5,10 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { AdminModule } from './admin/admin.module';
 
+import { NgProgressModule } from 'ngx-progressbar';
+import { NgProgressHttpModule } from 'ngx-progressbar/http';
+import { NgProgressRouterModule } from 'ngx-progressbar/router';
+
 // Components
 import { LicoresComponent } from './components/licores/licores.component';
 
@@ -17,7 +21,6 @@ import { NavbarHomeComponent } from './shared/navbar-home/navbar-home.component'
 import { ProductListComponent } from './components/product-list/product-list.component';
 import { CartComponent } from './components/cart/cart.component';
 import { LoginComponent } from './components/login/login.component';
-
 
 // Routing
 import { AppRoutingModule } from './app.routing';
@@ -46,6 +49,11 @@ import { TokenInterceptor } from './interceptors/token.interceptor';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    NgProgressModule.withConfig({
+      color: '#97302c',
+    }),
+    NgProgressHttpModule,
+    NgProgressRouterModule,
   ],
   providers: [
     {

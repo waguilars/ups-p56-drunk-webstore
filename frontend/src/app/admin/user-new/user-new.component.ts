@@ -144,7 +144,7 @@ export class UserNewComponent implements OnInit {
         lastname: this.user.lastname,
         email: this.user.email,
         status: this.user.status,
-        role: this.validRoles[0],
+        role: this.user.role,
       });
     } else {
       this.rf.reset({
