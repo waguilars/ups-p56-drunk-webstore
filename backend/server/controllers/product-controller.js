@@ -1,5 +1,6 @@
 const product_model = require('../models/product-model');
 const { validationResult } = require('express-validator');
+const { get } = require('mongoose');
 
 const prodCtr = {};
 
@@ -81,4 +82,35 @@ prodCtr.insertProduct = (req, res) => {
     }
 };
 
+prodCtr.getProducts = (req, res) => {
+    product_model.find({}, (err, data) => {
+        if (err) {
+            return res.status(500).json({
+                status: false,
+                msg: err
+            });
+        }
+        res.status(201).json({
+            status: true,
+            product: data
+        });
+    });
+}
+
+
+prodCtr.getproduct = (req, res) => {
+    let id = req.params.id;
+    product_model.findById(id, (err, data) => {
+        if (err) {
+            return res.status(404).json({
+                status: false,
+                msg: 'producto no encontrado'
+            });
+        }
+        res.status(200).json({
+            status: true,
+            product: data
+        });
+    })
+};
 module.exports = prodCtr;
