@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AdminRoutingModule } from './admin.routing';
 
@@ -12,7 +13,14 @@ import { OrdersComponent } from './orders/orders.component';
 import { OrdersDetailComponent } from './orders-detail/orders-detail.component';
 
 @NgModule({
-  declarations: [DashboardComponent, UserListComponent, UserNewComponent, ProductNewComponent, ProductListComponent, OrdersComponent, OrdersDetailComponent],
-  imports: [CommonModule, AdminRoutingModule],
+  declarations: [
+    DashboardComponent,
+    UserListComponent,
+    UserNewComponent,
+    ProductNewComponent,
+    ProductListComponent,
+    OrdersComponent,
+  ],
+  imports: [CommonModule, AdminRoutingModule, FormsModule, ReactiveFormsModule],
 })
 export class AdminModule {}

@@ -23,103 +23,128 @@
     </a>
   </li>
 </ul>
+
 <div class="container animate__animated animate__fadeIn animate__fast">
   <h3 class="text-center my-3">Registro de usuarios</h3>
   <div class="container">
-    <form>
+    <form [formGroup]="rf" (ngSubmit)="submit()">
       <fieldset>
         <legend class="text-center">
           Ingrese los campos para agregar un nuevo usuario
         </legend>
         <div class="form-group">
-          <label class="col-form-label" for="nameUser">Nombre</label>
+          <label class="col-form-label" for="name">Nombre</label>
           <input
             type="text"
             class="form-control"
             placeholder="Ingrese el nombre"
-            id="nameUser"
+            id="name"
+            formControlName="name"
+            [class.is-invalid]="name.invalid && name.touched"
           />
+          <div class="text-danger" *ngIf="name.invalid && name.touched">
+            <small *ngIf="name.errors.required">El nombre es obligatorio</small>
+            <small *ngIf="name.errors.pattern">
+              El nombre solo puede contener letras
+            </small>
+          </div>
         </div>
         <div class="form-group">
-          <label class="col-form-label" for="lastUser">Apellido</label>
+          <label class="col-form-label" for="lastname">Apellido</label>
           <input
             type="text"
             class="form-control"
             placeholder="Ingrese el apellido"
-            id="lastUser"
+            id="lastname"
+            formControlName="lastname"
+            [class.is-invalid]="lastname.invalid && lastname.touched"
           />
+          <div class="text-danger" *ngIf="lastname.invalid && lastname.touched">
+            <small *ngIf="lastname.errors.required">
+              El apellido es obligatorio
+            </small>
+            <small *ngIf="lastname.errors.pattern">
+              El apellido solo puede contener letras
+            </small>
+          </div>
         </div>
         <div class="form-group">
-          <label for="emailUser">Dirrecion de correo electronico</label>
+          <label for="email">Dirrecion de correo electronico</label>
           <input
             type="email"
             class="form-control"
-            id="emailUser"
+            id="email"
             aria-describedby="emailHelp"
             placeholder="Enter email"
-            style="
-              background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABHklEQVQ4EaVTO26DQBD1ohQWaS2lg9JybZ+AK7hNwx2oIoVf4UPQ0Lj1FdKktevIpel8AKNUkDcWMxpgSaIEaTVv3sx7uztiTdu2s/98DywOw3Dued4Who/M2aIx5lZV1aEsy0+qiwHELyi+Ytl0PQ69SxAxkWIA4RMRTdNsKE59juMcuZd6xIAFeZ6fGCdJ8kY4y7KAuTRNGd7jyEBXsdOPE3a0QGPsniOnnYMO67LgSQN9T41F2QGrQRRFCwyzoIF2qyBuKKbcOgPXdVeY9rMWgNsjf9ccYesJhk3f5dYT1HX9gR0LLQR30TnjkUEcx2uIuS4RnI+aj6sJR0AM8AaumPaM/rRehyWhXqbFAA9kh3/8/NvHxAYGAsZ/il8IalkCLBfNVAAAAABJRU5ErkJggg==');
-              background-repeat: no-repeat;
-              background-attachment: scroll;
-              background-size: 16px 18px;
-              background-position: 98% 50%;
-              cursor: auto;
-            "
+            formControlName="email"
+            [class.is-invalid]="email.invalid && email.touched"
           />
           <small id="emailHelp" class="form-text text-muted">
-            Recuerde no compartir el correo con nadie mas.</small
-          >
+            Recuerde no compartir el correo con nadie mas.
+          </small>
+          <div class="text-danger" *ngIf="email.invalid && email.touched">
+            <small *ngIf="email.errors.required">
+              El email es obligatorio
+            </small>
+            <small *ngIf="email.errors.pattern">
+              El email no es valido
+            </small>
+          </div>
         </div>
         <div class="form-group">
-          <label for="userPassword">Password</label>
+          <label for="password">Password</label>
           <input
             type="password"
             class="form-control"
-            id="userPassword"
+            id="password"
             placeholder="Password"
-            style="
-              background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAACIUlEQVQ4EX2TOYhTURSG87IMihDsjGghBhFBmHFDHLWwSqcikk4RRKJgk0KL7C8bMpWpZtIqNkEUl1ZCgs0wOo0SxiLMDApWlgOPrH7/5b2QkYwX7jvn/uc//zl3edZ4PPbNGvF4fC4ajR5VrNvt/mo0Gr1ZPOtfgWw2e9Lv9+chX7cs64CS4Oxg3o9GI7tUKv0Q5o1dAiTfCgQCLwnOkfQOu+oSLyJ2A783HA7vIPLGxX0TgVwud4HKn0nc7Pf7N6vV6oZHkkX8FPG3uMfgXC0Wi2vCg/poUKGGcagQI3k7k8mcp5slcGswGDwpl8tfwGJg3xB6Dvey8vz6oH4C3iXcFYjbwiDeo1KafafkC3NjK7iL5ESFGQEUF7Sg+ifZdDp9GnMF/KGmfBdT2HCwZ7TwtrBPC7rQaav6Iv48rqZwg+F+p8hOMBj0IbxfMdMBrW5pAVGV/ztINByENkU0t5BIJEKRSOQ3Aj+Z57iFs1R5NK3EQS6HQqF1zmQdzpFWq3W42WwOTAf1er1PF2USFlC+qxMvFAr3HcexWX+QX6lUvsKpkTyPSEXJkw6MQ4S38Ljdbi8rmM/nY+CvgNcQqdH6U/xrYK9t244jZv6ByUOSiDdIfgBZ12U6dHEHu9TpdIr8F0OP692CtzaW/a6y3y0Wx5kbFHvGuXzkgf0xhKnPzA4UTyaTB8Ph8AvcHi3fnsrZ7Wore02YViqVOrRXXPhfqP8j6MYlawoAAAAASUVORK5CYII=');
-              background-repeat: no-repeat;
-              background-attachment: scroll;
-              background-size: 16px 18px;
-              background-position: 98% 50%;
-              cursor: auto;
-            "
+            formControlName="password"
+            [class.is-invalid]="password.invalid && password.touched"
           />
+          <div class="text-danger" *ngIf="password.invalid && password.touched">
+            <small *ngIf="password.errors.required">
+              La contraseña es obligatoria
+            </small>
+          </div>
         </div>
         <div class="form-group">
-          <label for="userFile">Subir una imagen</label>
+          <label for="img">Subir una imagen</label>
           <input
             type="file"
             class="form-control-file"
-            id="userFile"
+            id="img"
             aria-describedby="fileHelp"
+            (change)="fileChange($event)"
           />
-          <small id="fileHelp" class="form-text text-muted"
-            >Escoja una imagen de perfil</small
-          >
+          <small id="fileHelp" class="form-text text-muted">
+            Escoja una imagen de perfil
+          </small>
         </div>
 
         <div class="form-group">
-          <label for="userRoll">Example select</label>
-          <select class="form-control" id="userRoll">
-            <option>Rol 1</option>
-            <option>Ral 2</option>
-            <option>Eol 3</option>
+          <label for="userRoll">Seleccione el rol</label>
+          <select
+            class="form-control"
+            id="userRoll"
+            [value]="'USER_ROLE'"
+            formControlName="role"
+          >
+            <option [value]="role" *ngFor="let role of validRoles">
+              {{ role }}
+            </option>
           </select>
         </div>
 
         <fieldset class="form-group">
-          <legend>Status</legend>
+          <legend class="control-label">Status</legend>
           <div class="form-check">
             <label class="form-check-label">
               <input
                 type="radio"
                 class="form-check-input"
-                name="optionsRadios"
                 id="trueState"
-                value="option1"
-                checked=""
+                [value]="true"
+                formControlName="status"
               />
               Activado
             </label>
@@ -129,9 +154,9 @@
               <input
                 type="radio"
                 class="form-check-input"
-                name="optionsRadios"
                 id="flaseState"
-                value="option2"
+                [value]="false"
+                formControlName="status"
               />
               Desactivado
             </label>
@@ -143,7 +168,8 @@
           class="btn btn-primary"
           style="border-radius: 8px;"
         >
-          Agregar
+          <i class="fa fa-save mr-1"></i>
+          Guardar cambios
         </button>
       </fieldset>
     </form>
