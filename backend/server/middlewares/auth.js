@@ -18,7 +18,8 @@ let checkToken = (req, res, next) => {
     }
 
     req.user = decoded;
-    console.log(decoded);
+    // console.log(decoded);
+    // console.log(process.env.TOKEN_EXPIRATION);
     return next();
   });
 };
