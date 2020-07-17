@@ -10,4 +10,5 @@ router.post('/insert', [v.name_prod, v.desc_short, v.desc_long, v.price, v.stock
 router.get('/:id', product_controller.getproduct);
 
 router.get('/', product_controller.getProducts);
+router.get('/img/:name', product_controller.defineImage);
 module.exports = router;
