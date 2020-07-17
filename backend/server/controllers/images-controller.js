@@ -6,9 +6,26 @@ const fs = require('fs');
 const ctrl = {};
 
 ctrl.uploadUser = async (req, res) => {
-  const user = req.user.user;
+  const logedUser = req.user.user;
   let image = req.img;
-  const fileName = `${user._id}-${new Date().getMilliseconds()}.${image.ext}`;
+
+  console.log(logedUser);
+
+  const paramID = req.params.id;
+
+  let id;
+  if (paramID && !(logedUser.role === 'ADMIN_ROLE')) {
+    return res.status(401).json({
+      status: false,
+      err: {
+        msg: 'No tiene permisos para realizar esta accion.',
+      },
+    });
+  }
+
+  id = paramID ? paramID : logedUser._id;
+
+  const fileName = `${id}-${new Date().getMilliseconds()}.${image.ext}`;
 
   image = image.file;
   const outDir = path.resolve(
@@ -23,7 +40,7 @@ ctrl.uploadUser = async (req, res) => {
         err,
       });
 
-    updateUserImg(res, user._id, fileName);
+    updateUserImg(res, id, fileName);
   });
 };
 
