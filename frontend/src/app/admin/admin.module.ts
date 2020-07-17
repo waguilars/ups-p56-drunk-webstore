@@ -10,7 +10,8 @@ import { UserNewComponent } from './user-new/user-new.component';
 import { ProductNewComponent } from './product-new/product-new.component';
 import { ProductListComponent } from './product-list/product-list.component';
 import { OrdersComponent } from './orders/orders.component';
-import { OrdersDetailComponent } from './orders-detail/orders-detail.component';
+
+import { ImgPipe } from '../pipes/img.pipe';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,9 @@ import { OrdersDetailComponent } from './orders-detail/orders-detail.component';
     ProductNewComponent,
     ProductListComponent,
     OrdersComponent,
+    ImgPipe,
   ],
   imports: [CommonModule, AdminRoutingModule, FormsModule, ReactiveFormsModule],
+  exports: [ImgPipe],
 })
 export class AdminModule {}
