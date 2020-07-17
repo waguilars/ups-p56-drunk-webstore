@@ -75,7 +75,11 @@ const updateProductImg = (response, productID, imgName) => {
             });
         }
 
-        deleteImg(productDB.img, 'products');
+
+        if (productDB.img) {
+
+            deleteImg(procutDB.img, 'products');
+        }
 
         productDB.img = imgName;
         productDB.save((err, saved) => {
@@ -120,12 +124,16 @@ const updateUserImg = (response, userID, imgName) => {
             });
         }
 
-        deleteImg(userDB.img, 'users');
+        if (userDB.img) {
+
+            deleteImg(userDB.img, 'users');
+        }
+
 
         userDB.img = imgName;
         userDB.save((err, saved) => {
             if (err) {
-                deleteImg(userDB.img, 'products');
+                deleteImg(userDB.img, 'users');
                 return response.status(500).json({
                     status: false,
                     err: {

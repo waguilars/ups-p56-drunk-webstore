@@ -18,7 +18,7 @@ app.use(fileupload());
 app.use(require('./routes/index'));
 
 app.listen(process.env.PORT, () => {
-  console.log(
-    `The server is running at port http://localhost:${process.env.PORT}`
-  );
+    console.log(
+        `The server is running at port http://localhost:${process.env.PORT}`
+    );
 });
