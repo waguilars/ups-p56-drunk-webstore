@@ -146,6 +146,7 @@ export class UserNewComponent implements OnInit {
         status: this.user.status,
         role: this.user.role,
       });
+      this.email.disable();
     } else {
       this.rf.reset({
         status: true,
