@@ -10,4 +10,6 @@ router.use('/api/product', prodRoutes);
 router.use('/api/category', categRoutes);
 router.use('/api/upload', imgRoutes);
 
+
+
 module.exports = router;
