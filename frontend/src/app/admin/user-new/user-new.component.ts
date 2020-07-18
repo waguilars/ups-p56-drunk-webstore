@@ -10,6 +10,7 @@ import { UserService } from '../../services/user.service';
 import { UserModel } from '../../models/user.model';
 import { AlertService } from '../../services/alert.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-user-new',
@@ -50,7 +51,7 @@ export class UserNewComponent implements OnInit {
 
       this.userSv.get(id).subscribe(
         (res) => {
-          this.user = res;
+          this.user = UserModel.getInstance(res);
           this.isEditForm = true;
           this.loadFormData();
           // console.log(res);
@@ -63,6 +64,7 @@ export class UserNewComponent implements OnInit {
         }
       );
     } else {
+      this.user = UserModel.getInstance({});
       this.isEditForm = false;
       this.pageData = {
         title: 'REGISTRO DE USUARIOS',
@@ -84,29 +86,29 @@ export class UserNewComponent implements OnInit {
       });
       return;
     }
+
     this.alertSv.loading();
     const formData = this.rf.value;
-    this.user = UserModel.getInstance(formData);
-    /* falta imagen */
 
-    if (this.isEditForm) {
-      console.log('do edit');
-    } else {
-      this.userSv.register(this.user).subscribe(
-        (res) => {
-          this.user = res.user;
-          this.alertSv
-            .showSuccess(this.user, 'Usuario registrado correctamente')
-            .then(() => {
-              this.router.navigate(['/dashboard']);
-            });
-        },
-        (err) => {
-          const msg = err.error.msg;
-          this.alertSv.showError(msg);
-        }
-      );
-    }
+    this.user.edit(formData);
+
+    const request = this.isEditForm
+      ? this.userSv.update(this.user)
+      : this.userSv.register(this.user);
+
+    request.subscribe(
+      (res) => {
+        this.alertSv
+          .showSuccess(this.user, 'Usuario registrado correctamente')
+          .then(() => {
+            this.router.navigate(['/dashboard']);
+          });
+      },
+      (err) => {
+        const msg = err.error.msg;
+        this.alertSv.showError(msg);
+      }
+    );
   }
 
   fileChange(evt: Event): void {
@@ -141,6 +143,7 @@ export class UserNewComponent implements OnInit {
         role: this.user.role,
       });
       this.email.disable();
+      this.password.disable();
     } else {
       this.rf.reset({
         status: true,

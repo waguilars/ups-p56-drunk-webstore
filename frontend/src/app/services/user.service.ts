@@ -45,6 +45,11 @@ export class UserService {
     return this.http.post(`${this.apiURI}/registro`, newUser);
   }
 
+  update(user: UserModel): Observable<any> {
+    // console.log(user);
+    return this.http.put(`${this.apiURI}/${user.id}`, user);
+  }
+
   get(id: string): Observable<UserModel | any> {
     return this.http.get(`${this.apiURI}/${id}`).pipe(
       map((res: any) => {

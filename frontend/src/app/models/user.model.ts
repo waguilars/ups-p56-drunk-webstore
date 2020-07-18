@@ -22,6 +22,17 @@ export class UserModel {
       obj.status
     );
   }
+
+  edit(obj: any): void {
+    this.id = obj.id || this.id;
+    this.name = obj.name || this.name;
+    this.lastname = obj.lastname || this.lastname;
+    this.email = obj.email || this.email;
+    this.password = obj.password || this.password;
+    this.img = obj.img || this.img;
+    this.role = obj.role || this.role;
+    this.status = obj.status;
+  }
 }
 
 export interface ResponseLogin {
