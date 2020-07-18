@@ -197,7 +197,7 @@ UserCtr.defineImage = (req, res) => {
 };
 
 
-UserCtr.updatetest = (req, res) => {
+UserCtr.updateUser = (req, res) => {
     let mistakes = validationResult(req);
     if (!(mistakes.isEmpty())) {
         let new_err = {};
@@ -262,7 +262,38 @@ UserCtr.updatetest = (req, res) => {
     }
 }
 
+UserCtr.deteletest = (req, res) => {
+    let mistakes = validationResult(req);
+    if (!(mistakes.isEmpty())) {
+        let new_err = {};
+        mistakes.errors.forEach((element) => {
+            let param = element.param;
+            let msg_param = element.msg;
+            new_err[param] = msg_param;
+        });
+        return res.status(400).json({
+            status: false,
+            msg: 'Credenciales no validas',
+            error: new_err,
+        });
+    }
+    let id = req.params.id;
+    user_model.findOneAndUpdate({ _id: id }, { status: false }, { new: true }, (err, data) => {
+        if (err) {
+            return res.status(500).json({
+                status: false,
+                msg: "Error del servidor",
+                error: err
+            });
+        }
 
+        return res.status(200).json({
+            status: true,
+            msg: "Usuario bloqueado",
+            user: data
+        });
+    });
+};
 
 
 module.exports = UserCtr;

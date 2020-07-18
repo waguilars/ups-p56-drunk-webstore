@@ -1,4 +1,4 @@
-const { check } = require('express-validator');
+const { check, param } = require('express-validator');
 const { exists } = require('../models/user-model');
 
 const validator = {};
@@ -51,5 +51,8 @@ validator.category = check('category')
     .isMongoId()
     .withMessage("Es necesario elegir una categoria valida");
 
+validator.param_id = param('id')
+    .isMongoId()
+    .withMessage("Id no valido");
 
 module.exports = validator;
