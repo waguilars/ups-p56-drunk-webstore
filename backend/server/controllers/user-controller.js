@@ -7,6 +7,8 @@ const user_model = require('../models/user-model');
 const userModel = require('../models/user-model');
 const path = require('path');
 const fs = require('fs');
+const { isValidObjectId } = require('mongoose');
+const { email } = require('../helpers/validation');
 const UserCtr = {};
 
 let order_text = (text) => {
@@ -172,53 +174,54 @@ UserCtr.deleteUser = (req, res) => {
     });
 };
 
-UserCtr.updateUser = (req, res) => {
-    const id = req.params.id;
-    let errores = validationResult(req);
-    if (!errores.isEmpty()) {
-        return res.status(400).json({
-            status: false,
-            err: errores.errors,
-        });
-    }
+// UserCtr.updateUser = (req, res) => {
 
-    let body = req.body;
-    let param = {
-        name: order_text(body.name),
-        lastname: order_text(body.lastname),
-        password: bcrypt.hashSync(body.password, 10),
-        email: body.email,
-        img: body.img,
-        role: body.role,
-        status: body.status,
-    };
+//     const id = req.params.id;
+//     let errores = validationResult(req);
+//     if (!errores.isEmpty()) {
+//         return res.status(400).json({
+//             status: false,
+//             err: errores.errors,
+//         });
+//     }
 
-    userModel.findOneAndUpdate({ _id: id },
-        param, {
-            new: true,
-            runValidators: 'query',
-        },
-        (err, updatedUser) => {
-            if (err)
-                return res.status(500).json({
-                    status: false,
-                    err,
-                });
+//     let body = req.body;
+//     let param = {
+//         name: order_text(body.name),
+//         lastname: order_text(body.lastname),
+//         password: bcrypt.hashSync(body.password, 10),
+//         email: body.email,
+//         img: body.img,
+//         role: body.role,
+//         status: body.status,
+//     };
 
-            if (!updatedUser)
-                return res.status(404).json({
-                    status: false,
-                    err,
-                });
+//     userModel.findOneAndUpdate({ _id: id },
+//         param, {
+//             new: true,
+//             runValidators: 'query',
+//         },
+//         (err, updatedUser) => {
+//             if (err)
+//                 return res.status(500).json({
+//                     status: false,
+//                     err,
+//                 });
 
-            return res.json({
-                status: true,
-                user: updatedUser,
-                msg: 'Datos actualizados correctamente.',
-            });
-        }
-    );
-};
+//             if (!updatedUser)
+//                 return res.status(404).json({
+//                     status: false,
+//                     err,
+//                 });
+
+//             return res.json({
+//                 status: true,
+//                 user: updatedUser,
+//                 msg: 'Datos actualizados correctamente.',
+//             });
+//         }
+//     );
+// };
 // metodo define default profile picture
 UserCtr.defineImage = (req, res) => {
 
@@ -237,6 +240,72 @@ UserCtr.defineImage = (req, res) => {
 
 
 };
+
+
+UserCtr.updatetest = (req, res) => {
+    let mistakes = validationResult(req);
+    if (!(mistakes.isEmpty())) {
+        let new_err = {};
+        mistakes.errors.forEach((element) => {
+            let param = element.param;
+            let msg_param = element.msg;
+            new_err[param] = msg_param;
+        });
+        return res.status(400).json({
+            status: false,
+            msg: 'Credenciales no admitidas',
+            error: new_err,
+        });
+    } else {
+        let id = req.params.id;
+        if (!(isValidObjectId(id))) {
+            return res.status(400).json({
+                status: false,
+                msg: "Peticion no valida"
+            });
+        }
+        if (!id) {
+            id = req.user.user._id
+        }
+        let body = req.body;
+        let param = {
+            name: order_text(body.name),
+            lastname: order_text(body.lastname),
+            email: body.email,
+            img: body.img,
+            role: body.role,
+            status: body.status
+        }
+        user_model.find({ email: param.email }, (err, data) => {
+            if (err) {
+                return res.status(500), json({
+                    status: false,
+                    err
+                });
+            }
+
+            user_model.findByIdAndUpdate(id, param,
+                (err, data) => {
+                    if (err) {
+                        return res.status(500).json({
+                            status: false,
+                            msg: "Credencailes no validas",
+                            error: {
+                                email: "El correo ya se encuentra registrado a nombre de otro propietario"
+                            }
+                        });
+                    }
+                    return res.status(200).json({
+                        status: true,
+                        msg: "Usuario actualizado"
+                    });
+
+                });
+
+
+        });
+    }
+}
 
 
 
