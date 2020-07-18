@@ -28,7 +28,7 @@ export class RegisterComponent implements OnInit {
     private alertSv: AlertService,
     private router: Router
   ) {
-    this.user = new UserModel();
+    this.user = UserModel.getInstance({});
     this.createForm();
     this.loadFormData();
   }
