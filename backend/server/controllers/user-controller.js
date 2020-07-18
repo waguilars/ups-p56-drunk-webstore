@@ -75,19 +75,19 @@ UserCtr.loginUser = (req, res) => {
 
     userModel.findOne({ email: body.email }, (err, userDB) => {
         if (err)
-            return res.status(400).json({
+            return res.status(401).json({
                 status: false,
                 msg: 'Credenciales no validas.',
             });
 
         if (!userDB)
-            return res.status(400).json({
+            return res.status(401).json({
                 status: false,
                 msg: 'Credenciales no validas.',
             });
 
         if (!bcrypt.compareSync(body.password, userDB.password)) {
-            return res.json({
+            return res.status(401).json({
                 status: false,
                 msg: 'Credenciales no validas',
             });
@@ -224,21 +224,24 @@ UserCtr.deleteUser = (req, res) => {
 // };
 // metodo define default profile picture
 UserCtr.defineImage = (req, res) => {
-
     let fileName = req.params.name;
     console.log(fileName);
 
-    let imagePath = path.resolve(__dirname, `../../uploads/images/users/${fileName}`);
+    let imagePath = path.resolve(
+        __dirname,
+        `../../uploads/images/users/${fileName}`
+    );
     console.log(imagePath);
 
     if (fs.existsSync(imagePath)) {
         res.sendFile(imagePath);
     } else {
-        let noImagePath = path.resolve(__dirname, '../../public/assets/img/defaultUser.png');
+        let noImagePath = path.resolve(
+            __dirname,
+            '../../public/assets/img/defaultUser.png'
+        );
         res.sendFile(noImagePath);
     }
-
-
 };
 
 

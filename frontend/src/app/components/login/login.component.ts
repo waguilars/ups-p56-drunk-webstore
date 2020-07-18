@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit {
     private alertSv: AlertService,
     private router: Router
   ) {
-    this.user = new UserModel();
+    this.user = UserModel.getInstance({});
     this.createForm();
     this.loadFormData();
   }
@@ -52,33 +52,16 @@ export class LoginComponent implements OnInit {
     this.user.email = this.email.value;
     this.user.password = this.password.value;
 
-    // this.loginForm.reset();
-    this.alertSv.loading('Verificando credenciales.');
-    this.userSv.login(this.user).subscribe(
-      (res: any) => {
-        this.alertSv.showSuccess(res.user, 'Has iniciado sesion con exito.');
-        this.checkAuth();
+    this.userSv.signIn(this.user).subscribe(
+      (user) => {
+        this.user = user;
+        this.alertSv.showSuccess(user, 'Bienvenido a Drunk WebStore');
+        this.router.navigateByUrl('/home');
       },
-      (err: any) => {
+      (err) => {
+        // console.log(err);
         this.alertSv.showError(err.error.msg);
       }
-    );
-  }
-
-  checkAuth(): void {
-    this.userSv.isAuth().subscribe(
-      (res) => {
-        const timer = res.data.exp - Math.floor(new Date().getTime() / 1000);
-
-        setTimeout(() => {
-          // console.log(timer);
-          this.userSv.logout();
-          this.alertSv.showError('La sesion ha expirado').then(() => {
-            this.router.navigateByUrl('/home');
-          });
-        }, timer * 1000);
-      },
-      (err) => {}
     );
   }
 
