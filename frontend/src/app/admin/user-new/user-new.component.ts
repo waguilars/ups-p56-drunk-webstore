@@ -86,14 +86,7 @@ export class UserNewComponent implements OnInit {
     }
     this.alertSv.loading();
     const formData = this.rf.value;
-    this.user = new UserModel();
-    this.user.name = formData.name;
-    this.user.lastname = formData.lastname;
-    this.user.email = formData.email;
-    this.user.password = formData.password;
-    this.user.role = formData.role;
-    this.user.status = formData.status;
-
+    this.user = UserModel.getInstance(formData);
     /* falta imagen */
 
     if (this.isEditForm) {
@@ -102,10 +95,11 @@ export class UserNewComponent implements OnInit {
       this.userSv.register(this.user).subscribe(
         (res) => {
           this.user = res.user;
-          this.alertSv.showSuccess(
-            this.user,
-            'Usuario registrado correctamente'
-          );
+          this.alertSv
+            .showSuccess(this.user, 'Usuario registrado correctamente')
+            .then(() => {
+              this.router.navigate(['/dashboard']);
+            });
         },
         (err) => {
           const msg = err.error.msg;
