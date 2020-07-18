@@ -41,6 +41,10 @@ export class UserService {
     return false;
   }
 
+  block(user: UserModel): Observable<any> {
+    return this.http.delete(`${this.apiURI}/${user.id}`);
+  }
+
   register(newUser: UserModel): Observable<any> {
     return this.http.post(`${this.apiURI}/registro`, newUser);
   }

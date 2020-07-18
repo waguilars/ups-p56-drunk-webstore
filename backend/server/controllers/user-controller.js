@@ -86,6 +86,12 @@ UserCtr.loginUser = (req, res) => {
         msg: 'Credenciales no validas.',
       });
 
+    if (!userDB.status)
+      return res.status(401).json({
+        status: false,
+        msg: 'La cuenta se encuentra deshabilitada.',
+      });
+
     if (!bcrypt.compareSync(body.password, userDB.password)) {
       return res.status(401).json({
         status: false,

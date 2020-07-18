@@ -16,6 +16,14 @@ export class AlertService {
     });
   }
 
+  async showInfo(user: UserModel, msg: string): Promise<any> {
+    return Swal.fire({
+      title: `${user.name}`,
+      text: msg,
+      icon: 'info',
+    });
+  }
+
   async showError(msg: string): Promise<any> {
     return Swal.fire({
       icon: 'error',
