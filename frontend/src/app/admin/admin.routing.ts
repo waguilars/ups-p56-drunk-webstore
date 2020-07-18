@@ -7,11 +7,13 @@ import { UserNewComponent } from './user-new/user-new.component';
 import { ProductListComponent } from './product-list/product-list.component';
 import { ProductNewComponent } from './product-new/product-new.component';
 import { OrdersComponent } from './orders/orders.component';
+import { OnlyAdminGuard } from '../services/only-admin.guard';
 
 export const routes: Routes = [
   {
     path: 'dashboard/users',
     component: DashboardComponent,
+    canActivate: [OnlyAdminGuard],
     children: [
       { path: 'list', component: UserListComponent },
       { path: 'new', component: UserNewComponent },
@@ -37,7 +39,12 @@ export const routes: Routes = [
       { path: '', pathMatch: 'full', redirectTo: 'list' },
     ],
   },
-  { path: 'dashboard', pathMatch: 'full', redirectTo: 'dashboard/users' },
+  {
+    path: 'dashboard',
+    pathMatch: 'full',
+    canActivate: [OnlyAdminGuard],
+    redirectTo: 'dashboard/users',
+  },
 ];
 
 @NgModule({
