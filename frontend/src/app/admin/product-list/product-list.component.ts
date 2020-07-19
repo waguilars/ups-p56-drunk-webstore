@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../../services/product.service';
 import { Product } from '../../models/product.model';
 import { AlertService } from '../../services/alert.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-product-list',
@@ -12,7 +13,11 @@ export class ProductListComponent implements OnInit {
   loading: boolean;
   products: Product[];
 
-  constructor(private prodSv: ProductService, private alertSV: AlertService) {
+  constructor(
+    private prodSv: ProductService,
+    private alertSV: AlertService,
+    private router: Router
+  ) {
     this.products = [];
     this.loading = false;
   }
@@ -28,11 +33,16 @@ export class ProductListComponent implements OnInit {
         this.products = res.product;
         this.loading = false;
       },
-      (err) => this.alertSV.showError('Recarga la página.')
+      (err) => {
+        this.alertSV.showError('Recarga la página.');
+      }
     );
   }
 
-  edit(): void {}
+  edit(index: number): void {
+    const prod = this.products[index];
+    this.router.navigate(['/dashboard', 'products', 'edit', prod.id]);
+  }
 
-  delete(): void {}
+  delete(index: number): void {}
 }

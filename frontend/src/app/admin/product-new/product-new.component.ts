@@ -10,6 +10,7 @@ import {
 import { ProductService } from '../../services/product.service';
 import { CategoryService } from '../../services/category.service';
 import { AlertService } from '../../services/alert.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-product-new',
@@ -49,6 +50,16 @@ export class ProductNewComponent implements OnInit {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
       this.isEdit = true;
+      this.prodSv.getById(id).subscribe(
+        (product) => {
+          this.product = product;
+          this.loadFormData();
+        },
+        (err) => {
+          this.alertSv.showError(err.error.msg);
+          this.router.navigateByUrl('/dashboard/products');
+        }
+      );
     } else {
       this.isEdit = false;
     }
@@ -65,17 +76,16 @@ export class ProductNewComponent implements OnInit {
     });
   }
 
-  loadDataTest(): void {
+  loadFormData(): void {
+    // console.log(this.product);
     this.pf.reset({
-      name: 'vino',
-      descShort:
-        'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repellat corrupti quae vel atque delectus',
-      descLong:
-        'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repellat corrupti quae vel atque delectus temporibus iure at molestiae ut a, tenetur quaerat, esse id accusantium similique autem praesentium vitae ipsum! Ad eveniet repellat saepe, aliquid neque praesentium quo impedit. Quia temporibus ducimus cum pariatur fugiat nisi suscipit sed cumque. Dolores!',
-      price: 25.6,
-
-      stock: 22,
+      name: this.product.name,
+      descShort: this.product.desc_short,
+      descLong: this.product.desc_long,
+      price: this.product.price,
+      stock: this.product.stock,
     });
+    this.category.setValue(this.product.category);
   }
 
   submit(): void {
@@ -83,17 +93,30 @@ export class ProductNewComponent implements OnInit {
       this.pf.markAllAsTouched();
       return;
     }
-    this.product = new Product(this.pf.value);
-    this.prodSv.addNew(this.product, this.img).subscribe(
+
+    let request: Observable<any>;
+
+    if (this.isEdit) {
+      const id = this.product.id;
+      const newData = new Product(this.pf.value);
+      newData.id = id;
+      request = this.prodSv.updateProduct(newData, this.img);
+    } else {
+      this.product = new Product(this.pf.value);
+      request = this.prodSv.addNew(this.product, this.img);
+    }
+
+    request.subscribe(
       (res) => {
-        this.product = new Product(res.product);
-        this.alertSv
-          .showSuccess(
-            this.product,
-            `Haz agregado ${this.product.name} a la tienda`,
-            true
-          )
-          .then(() => this.router.navigate(['/dashboard', 'products']));
+        const msg = this.isEdit
+          ? 'Se ha actualizado correctamente'
+          : `Haz agregado ${res.product.name} a la tienda`;
+
+        const alert = !this.isEdit
+          ? this.alertSv.showSuccess(res.product, msg, true)
+          : this.alertSv.showSuccess(res.data, msg, true);
+
+        alert.then(() => this.router.navigate(['/dashboard', 'products']));
       },
       (err) => {
         console.log(err);
@@ -117,7 +140,9 @@ export class ProductNewComponent implements OnInit {
     this.catSv.getAll().subscribe(
       (categories) => {
         this.categories = categories;
-        this.category.setValue(this.categories[0]._id);
+        if (!this.isEdit) {
+          this.category.setValue(this.categories[0]._id);
+        }
       },
       (err) => {}
     );

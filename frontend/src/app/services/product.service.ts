@@ -17,8 +17,46 @@ export class ProductService {
     this.api += '/product';
   }
 
-  getAll(): Observable<ProductResponse> {
-    return this.http.get<ProductResponse>(this.api);
+  getAll(): Observable<any> {
+    return this.http.get(this.api).pipe(
+      map((res: any) => {
+        const prods: [] = res.product;
+        res.product = prods.map((prod) => new Product(prod));
+        return res;
+      })
+    );
+  }
+
+  getById(id: string): Observable<Product> {
+    return this.http.get(`${this.api}/${id}`).pipe(
+      map((res: ProductResponse) => {
+        return new Product(res.product);
+      })
+    );
+  }
+
+  updateProduct(product: Product, img: File): Observable<any> {
+    if (img) {
+      const data = new FormData();
+      data.append('img', img, img.name);
+      return this.http
+        .put<ProductResponse>(`${this.api}/${product.id}`, product)
+        .pipe(
+          mergeMap((res: any) => {
+            const newProduct = new Product(res.data);
+
+            return this.http.put(
+              `${environment.api}/upload/product/${newProduct.id}`,
+              data
+            );
+          })
+        );
+    } else {
+      return this.http.put<ProductResponse>(
+        `${this.api}/${product.id}`,
+        product
+      );
+    }
   }
 
   addNew(product: Product, img: File): Observable<any> {
@@ -34,7 +72,6 @@ export class ProductService {
           );
         })
       );
-
       // 2 request first register, after upload
     } else {
       return this.http.post<ProductResponse>(`${this.api}`, product);
