@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Product, Category } from '../../models/product.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
@@ -9,6 +9,7 @@ import {
 } from '@angular/forms';
 import { ProductService } from '../../services/product.service';
 import { CategoryService } from '../../services/category.service';
+import { AlertService } from '../../services/alert.service';
 
 @Component({
   selector: 'app-product-new',
@@ -22,12 +23,15 @@ export class ProductNewComponent implements OnInit {
   img: File;
   pf: FormGroup;
 
+  @ViewChild('prodImg') prodImg: ElementRef;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private fb: FormBuilder,
     private prodSv: ProductService,
-    private catSv: CategoryService
+    private catSv: CategoryService,
+    private alertSv: AlertService
   ) {
     this.product = new Product({});
     this.categories = [];
@@ -38,6 +42,7 @@ export class ProductNewComponent implements OnInit {
     this.checkPage();
     this.createForm();
     this.loadCategories();
+    // this.loadDataTest();
   }
 
   checkPage(): void {
@@ -60,17 +65,51 @@ export class ProductNewComponent implements OnInit {
     });
   }
 
+  loadDataTest(): void {
+    this.pf.reset({
+      name: 'vino',
+      descShort:
+        'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repellat corrupti quae vel atque delectus',
+      descLong:
+        'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repellat corrupti quae vel atque delectus temporibus iure at molestiae ut a, tenetur quaerat, esse id accusantium similique autem praesentium vitae ipsum! Ad eveniet repellat saepe, aliquid neque praesentium quo impedit. Quia temporibus ducimus cum pariatur fugiat nisi suscipit sed cumque. Dolores!',
+      price: 25.6,
+
+      stock: 22,
+    });
+  }
+
   submit(): void {
     if (this.pf.invalid) {
       this.pf.markAllAsTouched();
       return;
     }
     this.product = new Product(this.pf.value);
+    this.prodSv.addNew(this.product, this.img).subscribe(
+      (res) => {
+        this.product = new Product(res.product);
+        this.alertSv
+          .showSuccess(
+            this.product,
+            `Haz agregado ${this.product.name} a la tienda`,
+            true
+          )
+          .then(() => this.router.navigate(['/dashboard', 'products']));
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
     // console.log(this.product);
   }
 
   loadImage(evt: Event): void {
     const img = (evt.target as HTMLInputElement).files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(img);
+    reader.onload = (ev) => {
+      // console.log(this.prodImg);
+      this.prodImg.nativeElement.src = reader.result;
+    };
     this.img = img;
   }
 

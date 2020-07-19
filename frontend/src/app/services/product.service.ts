@@ -1,8 +1,11 @@
 import { Injectable } from '@angular/core';
-import { environment } from '../../environments/environment';
-import { Observable } from 'rxjs';
-import { ProductResponse } from '../models/product.model';
 import { HttpClient } from '@angular/common/http';
+
+import { Observable, forkJoin } from 'rxjs';
+import { map, mergeMap } from 'rxjs/operators';
+
+import { ProductResponse, Product } from '../models/product.model';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -16,5 +19,26 @@ export class ProductService {
 
   getAll(): Observable<ProductResponse> {
     return this.http.get<ProductResponse>(this.api);
+  }
+
+  addNew(product: Product, img: File): Observable<any> {
+    if (img) {
+      const data = new FormData();
+      data.append('img', img, img.name);
+      return this.http.post<ProductResponse>(`${this.api}`, product).pipe(
+        mergeMap((res: ProductResponse) => {
+          const newProduct = new Product(res.product);
+          return this.http.put(
+            `${environment.api}/upload/product/${newProduct.id}`,
+            data
+          );
+        })
+      );
+
+      // 2 request first register, after upload
+    } else {
+      return this.http.post<ProductResponse>(`${this.api}`, product);
+      // only create
+    }
   }
 }

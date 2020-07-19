@@ -148,7 +148,12 @@
           >
         </div>
         <div class="col-md-6 text-center">
-          <img class="w-25" [src]="product.img | img: 'product'" alt="" />
+          <img
+            class="w-25"
+            #prodImg
+            [src]="product.img | img: 'product'"
+            alt=""
+          />
         </div>
       </div>
 

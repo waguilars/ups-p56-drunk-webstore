@@ -15,19 +15,11 @@ export class CategoryService {
   }
 
   getAll(): Observable<Category[]> {
-    return this.http.get(`${this.api}/list`).pipe(
+    return this.http.get(`${this.api}`).pipe(
       map((res: any) => {
         const categories: Category[] = res.categories;
         return categories;
       })
     );
-  }
-
-  addNew(img: File) {
-    if (img) {
-      // 2 request first register, after upload
-    } else {
-      // only create
-    }
   }
 }

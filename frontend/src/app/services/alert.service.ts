@@ -1,6 +1,7 @@
 import { Injectable, Output, EventEmitter } from '@angular/core';
 import Swal from 'sweetalert2';
 import { UserModel } from '../models/user.model';
+import { Product } from '../models/product.model';
 
 @Injectable({
   providedIn: 'root',
@@ -8,9 +9,20 @@ import { UserModel } from '../models/user.model';
 export class AlertService {
   constructor() {}
 
-  async showSuccess(user: UserModel, msg: string): Promise<any> {
+  async showSuccess(
+    item: UserModel | Product,
+    msg: string,
+    isProduct = false
+  ): Promise<any> {
+    if (isProduct) {
+      return Swal.fire({
+        title: `Producto agregado`,
+        text: msg,
+        icon: 'success',
+      });
+    }
     return Swal.fire({
-      title: `Bienvenido ${user.name}`,
+      title: `Bienvenido ${item.name}`,
       text: msg,
       icon: 'success',
     });
