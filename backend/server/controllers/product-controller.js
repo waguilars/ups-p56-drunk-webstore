@@ -162,6 +162,13 @@ prodCtr.updateProduct = (req, res) => {
                     }
                 });
             }
+            if (data.length === 0) {
+                return res.status(404).json({
+                    status: false,
+                    msg: "producto no encontrado",
+                    error: err
+                });
+            }
             return res.status(200).json({
                 status: true,
                 msg: "Producto Actualizado",
@@ -169,4 +176,50 @@ prodCtr.updateProduct = (req, res) => {
             });
         });
 };
+
+prodCtr.getProductsCategory = (req, res) => {
+    let mistakes = validationResult(req);
+    if (!(mistakes.isEmpty())) {
+        let new_err = {};
+        mistakes.errors.forEach((element) => {
+            let param = element.param;
+            let msg_param = element.msg;
+            new_err[param] = msg_param;
+        });
+        return res.status(400).json({
+            status: false,
+            msg: "parametros no admitidos",
+            error: new_err
+        });
+    }
+    let id = req.params.id;
+    product_model.find({ category: id }, (err, data) => {
+        if (err) {
+            return res.status(500).json({
+                status: false,
+                msg: "Error en el servidor",
+                error: {
+                    err
+                }
+            });
+        }
+        console.log(data);
+        if (data.length === 0) {
+            return res.status(500).json({
+                status: false,
+                msg: "Cateogoria no registrada",
+                error: {
+                    err
+                }
+            });
+        }
+        res.status(200).json({
+            status: true,
+            msg: `Productos de esta categoria`,
+            products: data
+        });
+
+    });
+};
+
 module.exports = prodCtr;

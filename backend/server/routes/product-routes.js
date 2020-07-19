@@ -4,8 +4,10 @@ const router = Router();
 const { checkToken, onlyAdmin } = require('../middlewares/auth');
 const product_controller = require('../controllers/product-controller');
 
-router.post('/insert', [v.name_prod, v.desc_short, v.desc_long, v.price, v.stock, v.category],
+router.post('/', [v.name_prod, v.desc_short, v.desc_long, v.price, v.stock, v.category],
     product_controller.insertProduct);
+
+router.get('/category/:id', [v.param_id], product_controller.getProductsCategory);
 
 router.get('/:id', product_controller.getproduct);
 
