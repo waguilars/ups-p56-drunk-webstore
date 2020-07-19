@@ -44,10 +44,10 @@ validator.stock = check('stock')
 
 validator.name_prod = check('name')
     .exists()
+    .isLength({ min: 1 })
     .withMessage("Es necesario introducir el nombre del producto")
 
 validator.category = check('category')
-    .exists()
     .isMongoId()
     .withMessage("Es necesario elegir una categoria valida");
 
