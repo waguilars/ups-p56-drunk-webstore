@@ -10,12 +10,15 @@ import { Router } from '@angular/router';
 })
 export class NavbarHomeComponent implements OnInit {
   timer: boolean;
+  isAdmin: boolean;
 
   constructor(
     private userSv: UserService,
     private alertSv: AlertService,
     private router: Router
-  ) {}
+  ) {
+    this.isAdmin = false;
+  }
 
   ngOnInit(): void {
     this.userSv.isAuth().subscribe(
@@ -39,6 +42,11 @@ export class NavbarHomeComponent implements OnInit {
   }
 
   get user(): UserModel {
-    return this.userSv.user;
+    const user = this.userSv.user;
+    if (user) {
+      const role = user.role || null;
+      this.isAdmin = role && role === 'ADMIN_ROLE' ? true : false;
+    }
+    return user;
   }
 }

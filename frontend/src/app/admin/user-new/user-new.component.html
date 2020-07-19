@@ -107,18 +107,23 @@
             </small>
           </div>
         </div>
-        <div class="form-group">
-          <label for="img">Subir una imagen</label>
-          <input
-            type="file"
-            class="form-control-file"
-            id="img"
-            aria-describedby="fileHelp"
-            (change)="fileChange($event)"
-          />
-          <small id="fileHelp" class="form-text text-muted">
-            Escoja una imagen de perfil
-          </small>
+        <div class="form-row" *ngIf="isEditForm">
+          <div class="col-md-6">
+            <label for="img">Subir una imagen</label>
+            <input
+              type="file"
+              class="form-control-file"
+              id="img"
+              aria-describedby="fileHelp"
+              (change)="fileChange($event)"
+            />
+            <small id="fileHelp" class="form-text text-muted">
+              Escoja una imagen de perfil
+            </small>
+          </div>
+          <div class="col-md-6 text-center">
+            <img class="w-25" [src]="user.img | img" alt="" />
+          </div>
         </div>
 
         <div class="form-group">

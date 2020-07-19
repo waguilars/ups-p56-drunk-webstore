@@ -9,7 +9,7 @@ ctrl.uploadUser = async (req, res) => {
   const logedUser = req.user.user;
   let image = req.img;
 
-  console.log(logedUser);
+  // console.log(logedUser);
 
   const paramID = req.params.id;
 

@@ -87,6 +87,13 @@
             class="dropdown-menu dropdown-menu-right"
             aria-labelledby="dropdownMenuLink"
           >
+            <a
+              class="dropdown-item"
+              *ngIf="isAdmin"
+              [routerLink]="['/dashboard']"
+            >
+              Panel de administracion.
+            </a>
             <a class="dropdown-item" [routerLink]="['/me']">Mi perfil</a>
             <a class="dropdown-item" [routerLink]="['/compras']">Mis compras</a>
             <div class="dropdown-divider"></div>

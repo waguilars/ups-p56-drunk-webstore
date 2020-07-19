@@ -32,6 +32,7 @@ export class UserNewComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router
   ) {
+    this.user = UserModel.getInstance({});
     this.checkPage();
     this.validRoles = ['USER_ROLE', 'ADMIN_ROLE'];
     this.createForm();
@@ -112,7 +113,13 @@ export class UserNewComponent implements OnInit {
   }
 
   fileChange(evt: Event): void {
-    console.log(evt.target);
+    const img = (evt.target as HTMLInputElement).files[0];
+    this.userSv.uploadImage(img, this.user).subscribe(
+      (res) => (this.user = res),
+      (err) => {
+        console.log(err);
+      }
+    );
   }
 
   createForm(): void {
