@@ -42,19 +42,23 @@
         <td>{{ i + 1 }}</td>
         <td>
           <div class="profile-img">
-            <!-- <img [src]="user.img | img" class="inline" alt="default" /> -->
+            <img
+              [src]="product.img | img: 'product'"
+              class="inline"
+              alt="default"
+            />
           </div>
         </td>
-        <td>{{ product }}</td>
-        <td>{{ product }}</td>
+        <td>{{ product.name }}</td>
+        <td>{{ product.price | currency }}</td>
         <td>
-          {{ product }}
+          {{ product.stock }}
         </td>
         <td>
-          <button class="btn btn-primary mx-1">
+          <button class="btn btn-primary mx-1 my-1" (click)="edit(i)">
             <i class="fa fa-edit"></i>
           </button>
-          <button class="btn btn-danger mx-1">
+          <button class="btn btn-danger mx-1 my-1" (click)="delete(i)">
             <i class="fas fa-trash-alt"></i>
           </button>
         </td>

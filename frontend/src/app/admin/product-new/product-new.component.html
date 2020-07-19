@@ -1,32 +1,36 @@
-<h2>
-  Modulo de Productos
-</h2>
+<div>
+  <h2>
+    Modulo de Productos
+  </h2>
 
-<ul class="nav nav-tabs">
-  <li class="nav-item">
-    <a
-      class="nav-link"
-      routerLinkActive="active"
-      [routerLink]="['/dashboard', 'products', 'list']"
-    >
-      Lista de productos
-    </a>
-  </li>
+  <ul class="nav nav-tabs">
+    <li class="nav-item">
+      <a
+        class="nav-link"
+        routerLinkActive="active"
+        [routerLink]="['/dashboard', 'products', 'list']"
+      >
+        Lista de productos
+      </a>
+    </li>
 
-  <li class="nav-item">
-    <a
-      class="nav-link"
-      routerLinkActive="active"
-      [routerLink]="['/dashboard', 'products', 'new']"
-    >
-      Nuevo producto.
-    </a>
-  </li>
-</ul>
+    <li class="nav-item">
+      <a
+        class="nav-link"
+        routerLinkActive="active"
+        [routerLink]="['/dashboard', 'products', 'new']"
+      >
+        Nuevo producto.
+      </a>
+    </li>
+  </ul>
+</div>
+
 <div class="container animate__animated animate__fadeIn animate__fast">
-  <form>
+  <form [formGroup]="pf" (ngSubmit)="submit()">
     <fieldset>
       <legend>Ingrese los campos para agregar un nuevo Producto</legend>
+
       <div class="form-group">
         <label class="col-form-label" for="nameProduct">Nombre</label>
         <input
@@ -34,8 +38,16 @@
           class="form-control"
           placeholder="Ingrese el nombre del producto"
           id="nameProduct"
+          formControlName="name"
+          [class.is-invalid]="name.invalid && name.touched"
         />
+        <div class="text-danger" *ngIf="name.invalid && name.touched">
+          <small *ngIf="name.errors.required">
+            El nombre del producto es obligatorio.
+          </small>
+        </div>
       </div>
+
       <div class="form-group">
         <label class="col-form-label" for="shortDesc">Descripcion Corta</label>
         <input
@@ -43,7 +55,14 @@
           class="form-control"
           placeholder="Ingrese una descripcion corta"
           id="shortDesc"
+          formControlName="descShort"
+          [class.is-invalid]="descShort.invalid && descShort.touched"
         />
+        <div class="text-danger" *ngIf="descShort.invalid && descShort.touched">
+          <small *ngIf="descShort.errors.required">
+            Ingrese una breve descripcion del producto.
+          </small>
+        </div>
       </div>
 
       <div class="form-group">
@@ -53,7 +72,14 @@
           id="productTextarea"
           placeholder="Ingrese una descripcion detallada del producto ...."
           rows="3"
+          formControlName="descLong"
+          [class.is-invalid]="descLong.invalid && descLong.touched"
         ></textarea>
+        <div class="text-danger" *ngIf="descLong.invalid && descLong.touched">
+          <small *ngIf="descLong.errors.required">
+            Ingrese una descripcion detallada del producto.
+          </small>
+        </div>
       </div>
 
       <div class="form-group">
@@ -64,37 +90,66 @@
               <span class="input-group-text">$</span>
             </div>
             <input
-              type="text"
+              type="number"
+              min="1.00"
+              max="1000.00"
+              step="0.01"
               class="form-control"
               aria-label="Amount (to the nearest dollar)"
+              formControlName="price"
+              [class.is-invalid]="price.invalid && price.touched"
             />
             <div class="input-group-append">
               <span class="input-group-text">c/u</span>
             </div>
+          </div>
+          <div class="text-danger" *ngIf="price.invalid && price.touched">
+            <small *ngIf="price.errors.required">
+              Ingrese el precio.
+            </small>
           </div>
         </div>
       </div>
 
       <div class="form-group">
         <label for="category">Seleccione una Categoria</label>
-        <select class="form-control" id="category">
-          <option>Wiskye</option>
-          <option>Vodka</option>
-          <option>Shumir</option>
+        <select
+          class="form-control"
+          id="category"
+          formControlName="category"
+          [class.is-invalid]="category.invalid && category.touched"
+        >
+          <option
+            [value]="category._id"
+            *ngFor="let category of categories; let i = index"
+          >
+            {{ category.name }}
+          </option>
         </select>
+        <div class="text-danger" *ngIf="category.invalid && category.touched">
+          <small *ngIf="category.errors.required">
+            Seleccione una categoria.
+          </small>
+        </div>
       </div>
 
-      <div class="form-group">
-        <label for="productInputFile">Subir una imagen del Producto</label>
-        <input
-          type="file"
-          class="form-control-file"
-          id="productInputFile"
-          aria-describedby="fileHelp"
-        />
-        <small id="fileHelp" class="form-text text-muted"
-          >Escoja una imagen del producto</small
-        >
+      <div class="form-row">
+        <div class="col-md-6">
+          <label for="productInputFile">Subir una imagen del Producto</label>
+          <input
+            type="file"
+            class="form-control-file"
+            id="productInputFile"
+            aria-describedby="fileHelp"
+            (change)="loadImage($event)"
+          />
+          <small id="fileHelp" class="form-text text-muted"
+            >Escoja una imagen del producto</small
+          >
+        </div>
+        <div class="col-md-6 text-center">
+          <img class="w-25" [src]="product.img | img: 'product'" alt="" />
+        </div>
       </div>
 
       <div class="form-group">
@@ -105,7 +160,17 @@
           value="10"
           placeholder="Ingrese numero de elementos en stock"
           id="stockProduct"
+          formControlName="stock"
+          [class.is-invalid]="stock.invalid && stock.touched"
         />
+        <div class="text-danger" *ngIf="stock.invalid && stock.touched">
+          <small *ngIf="stock.errors.required">
+            Ingrese el stock actual de producto.
+          </small>
+          <small *ngIf="stock.errors.min">
+            Cantidad no valida.
+          </small>
+        </div>
       </div>
 
       <button type="submit" class="btn btn-primary" style="border-radius: 8px;">
