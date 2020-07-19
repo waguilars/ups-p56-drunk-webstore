@@ -31,4 +31,8 @@ export class ProductListComponent implements OnInit {
       (err) => this.alertSV.showError('Recarga la página.')
     );
   }
+
+  edit(): void {}
+
+  delete(): void {}
 }
