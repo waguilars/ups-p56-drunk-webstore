@@ -1,7 +1,9 @@
-const product_model = require('../models/product-model');
 const { validationResult } = require('express-validator');
 const path = require('path');
 const fs = require('fs');
+
+const product_model = require('../models/product-model');
+
 const prodCtr = {};
 
 let order_text = (texto) => {
@@ -215,6 +217,21 @@ prodCtr.getProductsCategory = (req, res) => {
       msg: `Productos de esta categoria`,
       products: data,
     });
+  });
+};
+
+prodCtr.getLast = async (req, res) => {
+  const limit = +req.query.limit || 5;
+  const page = +req.query.page || 1;
+
+  const lastProds = await product_model.paginate(
+    {},
+    { limit, page, populate: 'category', sort: { name: 'desc' } }
+  );
+
+  res.json({
+    status: true,
+    data: lastProds,
   });
 };
 
