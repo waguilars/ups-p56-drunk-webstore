@@ -9,6 +9,22 @@ import { Product } from '../models/product.model';
 export class AlertService {
   constructor() {}
 
+  async showInput(title: string): Promise<any> {
+    return Swal.fire({
+      title,
+      input: 'text',
+      inputValue: '',
+      showCancelButton: true,
+      inputValidator: (value) => {
+        if (!value) {
+          return 'El campo esta vacio!';
+        }
+      },
+      confirmButtonColor: '#343a40',
+      cancelButtonColor: '#d9534f',
+    });
+  }
+
   async showSuccess(
     item: UserModel | Product,
     msg: string,
@@ -31,6 +47,13 @@ export class AlertService {
   async showInfo(user: UserModel, msg: string): Promise<any> {
     return Swal.fire({
       title: `${user.name}`,
+      text: msg,
+      icon: 'info',
+    });
+  }
+  async showInfo2(title: string, msg: string): Promise<any> {
+    return Swal.fire({
+      title,
       text: msg,
       icon: 'info',
     });

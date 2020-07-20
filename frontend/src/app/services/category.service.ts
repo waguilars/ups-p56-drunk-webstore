@@ -22,4 +22,10 @@ export class CategoryService {
       })
     );
   }
+
+  newCategory(name: string): Observable<Category> {
+    return this.http
+      .post(this.api, { name })
+      .pipe(map((res: any) => res.category));
+  }
 }

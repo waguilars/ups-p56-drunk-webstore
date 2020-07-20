@@ -111,29 +111,42 @@
         </div>
       </div>
 
-      <div class="form-group">
-        <label for="category">Seleccione una Categoria</label>
-        <select
-          class="form-control"
-          id="category"
-          formControlName="category"
-          [class.is-invalid]="category.invalid && category.touched"
-        >
-          <option
-            [value]="category._id"
-            *ngFor="let category of categories; let i = index"
+      <div class="form-row justify-content-between">
+        <div class="col-md-4">
+          <label for="category">Seleccione una Categoria</label>
+          <select
+            class="form-control"
+            id="category"
+            formControlName="category"
+            [class.is-invalid]="category.invalid && category.touched"
           >
-            {{ category.name }}
-          </option>
-        </select>
-        <div class="text-danger" *ngIf="category.invalid && category.touched">
-          <small *ngIf="category.errors.required">
-            Seleccione una categoria.
-          </small>
+            <option
+              [value]="category._id"
+              *ngFor="let category of categories; let i = index"
+            >
+              {{ category.name }}
+            </option>
+          </select>
+          <div class="text-danger" *ngIf="category.invalid && category.touched">
+            <small *ngIf="category.errors.required">
+              Seleccione una categoria.
+            </small>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <label for="newCat">¿Necesitas otra categoria?</label>
+          <button
+            type="button"
+            class="btn btn-sm btn-primary btn-block w-25"
+            (click)="newCategory()"
+          >
+            <i class="fa fa-plus"></i>
+            Agregar otra
+          </button>
         </div>
       </div>
 
-      <div class="form-row">
+      <div class="form-row my-3">
         <div class="col-md-6">
           <label for="productInputFile">Subir una imagen del Producto</label>
           <input

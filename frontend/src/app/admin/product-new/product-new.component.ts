@@ -125,6 +125,25 @@ export class ProductNewComponent implements OnInit {
     // console.log(this.product);
   }
 
+  newCategory(): void {
+    this.alertSv
+      .showInput('Escriba el nombre de la categoria')
+      .then((catName) => {
+        const category = catName.value;
+        if (!category) {
+          return;
+        }
+
+        this.catSv.newCategory(category).subscribe((cat) => {
+          this.alertSv.showInfo2(
+            'Categoria agregada!',
+            `${cat.name} ha sido agregada a la lsita de categorias.`
+          );
+          this.categories.push(cat);
+        });
+      });
+  }
+
   loadImage(evt: Event): void {
     const img = (evt.target as HTMLInputElement).files[0];
     const reader = new FileReader();
