@@ -1,5 +1,7 @@
 import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { OwlOptions } from 'ngx-owl-carousel-o';
+import { ProductService } from '../../services/product.service';
+import { Product } from '../../models/product.model';
 
 @Component({
   selector: 'app-home',
@@ -8,28 +10,28 @@ import { OwlOptions } from 'ngx-owl-carousel-o';
 })
 export class HomeComponent implements OnInit {
   customOptions: OwlOptions;
+  products: any[];
 
   uri = 'http://localhost:4200/assets/img/licor.jpg';
 
-  constructor() {}
+  constructor(private prodSv: ProductService) {}
 
   ngOnInit(): void {
-    this.setCarouselOpts();
+    // this.setCarouselOpts();
+    this.loadLastProducts();
   }
 
   setCarouselOpts(): void {
     // setTimeout(() => {
     this.customOptions = {
-      loop: false,
       mouseDrag: true,
       touchDrag: true,
       pullDrag: false,
       dots: true,
       navSpeed: 700,
-      autoHeight: true,
+      autoHeight: false,
       autoWidth: true,
-      navText: ['Atras', 'Siguiente'],
-      items: 4,
+
       responsive: {
         0: {
           items: 1,
@@ -44,9 +46,14 @@ export class HomeComponent implements OnInit {
           items: 4,
         },
       },
-
-      nav: false,
     };
     // }, 1000);
+  }
+
+  loadLastProducts(): void {
+    this.prodSv.getLast().subscribe((res) => {
+      this.products = res.data.docs;
+      console.log(this.products);
+    });
   }
 }

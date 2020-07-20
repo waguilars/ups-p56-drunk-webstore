@@ -27,6 +27,10 @@ export class ProductService {
     );
   }
 
+  getLast(): Observable<any> {
+    return this.http.get(this.api + '/last?limit=10');
+  }
+
   getById(id: string): Observable<Product> {
     return this.http.get(`${this.api}/${id}`).pipe(
       map((res: ProductResponse) => {
