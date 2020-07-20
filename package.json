@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node backend/server/index.js",
     "dev": "nodemon backend/server/index.js",
-    "build": "cd frontend && ng build --prod"
+    "build": "cd frontend && npm install && ng build --prod"
   },
   "keywords": [],
   "author": "",
