@@ -1,44 +1,45 @@
-<div class="container">
-    <div class="row">
-        <div class="col-sm">
-            <div class="card" style="width: 18rem;">
-                <img class="card-img-top" src="assets/img/botellas.png" alt="Card image cap">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p> Categoria: Cervezas 28,5%acl. 750 ml
-
-
-
-                    </p>
-                </div>
-            </div>
+<div class="container animate__animated animate__fadeIn" *ngIf="liquor">
+  <div class="row">
+    <div class="col-md-4">
+      <div class="card" style="width: 18rem;">
+        <img
+          class="card-img-top"
+          [src]="liquor.img | img: 'product'"
+          alt="Card image cap"
+        />
+        <div class="card-body">
+          <h5 class="card-title">{{ liquor.name }}</h5>
+          <p>Categoria: {{ liquor.category.name }}</p>
         </div>
-        <div class="col-sm">
-            <div class="jumbotron">
-                <h1>Cerveza</h1>
-                <div class="container">
-                    <div class="row">
-                        <div class="col-sm">
-                            <h3> Precio:$9.99 </h3>
-                        </div>
-                        <div class="col-sm">
-                            <button class="btn btn-dark fas fa-cart-plus">Agregar al carrito</button>
-                        </div>
-
-                    </div>
-                </div>
-                <h3>descripcion:</h3>
-                <p class="lead">El único representante de la firma en nuestro mercado, con 10 años de añejamiento, es una excelente opción con una inmejorable relación calidad-precio. Compite con Grand Macnish, Famous Grouse y Cutty Sark.</p>
-                <hr class="my-4">
-                <ul class="list-group">
-                    <li class="list-group-item fa fa-check"> Entrega confiable</li>
-                    <li class="list-group-item fa fa-key"> Prohibida la venta a menos de edad</li>
-                    <li class="list-group-item fa fa-heart"> Precios accesibles</li>
-
-                </ul>
-
-            </div>
-        </div>
-
+      </div>
     </div>
+
+    <div class="col-md-8">
+      <div class="jumbotron p-5">
+        <h1>{{ liquor.name }}</h1>
+        <div class="container">
+          <div class="row">
+            <div class="col-sm">
+              <h3>Precio: {{ liquor.price | currency }}</h3>
+            </div>
+            <div class="col-sm">
+              <button class="btn btn-dark fas fa-cart-plus">
+                Agregar al carrito
+              </button>
+            </div>
+          </div>
+        </div>
+        <h3>Descripcion:</h3>
+        <p class="lead">{{ liquor.desc_long }}.</p>
+        <hr class="my-4" />
+        <ul class="list-group">
+          <li class="list-group-item fa fa-check">Entrega confiable</li>
+          <li class="list-group-item fa fa-key">
+            Prohibida la venta a menos de edad
+          </li>
+          <li class="list-group-item fa fa-heart">Precios accesibles</li>
+        </ul>
+      </div>
+    </div>
+  </div>
 </div>
