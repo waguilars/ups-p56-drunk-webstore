@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node backend/server/index.js",
     "dev": "nodemon backend/server/index.js",
-    "build": "cd frontend && npm install && npm run build"
+    "heroku-postbuild": "cd frontend && npm install"
   },
   "keywords": [],
   "author": "",
