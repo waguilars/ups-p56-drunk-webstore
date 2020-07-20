@@ -226,7 +226,7 @@ prodCtr.getLast = async (req, res) => {
 
   const lastProds = await product_model.paginate(
     {},
-    { limit, page, populate: 'category', sort: { name: 'desc' } }
+    { limit, page, populate: 'category', sort: { updatedAt: 'desc' } }
   );
 
   res.json({

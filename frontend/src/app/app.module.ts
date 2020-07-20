@@ -1,14 +1,17 @@
 import { AppComponent } from './app.component';
+
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 import { AdminModule } from './admin/admin.module';
 
 import { NgProgressModule } from 'ngx-progressbar';
 import { NgProgressHttpModule } from 'ngx-progressbar/http';
 import { NgProgressRouterModule } from 'ngx-progressbar/router';
-
+import { CarouselModule } from 'ngx-owl-carousel-o';
 // Components
 import { LicoresComponent } from './components/licores/licores.component';
 
@@ -54,6 +57,8 @@ import { TokenInterceptor } from './interceptors/token.interceptor';
     }),
     NgProgressHttpModule,
     NgProgressRouterModule,
+    BrowserAnimationsModule,
+    CarouselModule,
   ],
   providers: [
     {
