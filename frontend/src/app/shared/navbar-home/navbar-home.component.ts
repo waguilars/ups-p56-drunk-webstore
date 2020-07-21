@@ -21,18 +21,21 @@ export class NavbarHomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userSv.isAuth().subscribe(
-      (res) => {},
-      (err) => {
-        // console.log(err);
-        if (this.userSv.logout()) {
-          this.alertSv.showError(
-            'La sesion no es valida, vuelva a iniciar sesion.'
-          );
+    const token = this.userSv.getToken();
+    if (token) {
+      this.userSv.isAuth().subscribe(
+        (res) => {},
+        (err) => {
+          // console.log(err);
+          if (this.userSv.logout()) {
+            this.alertSv.showError(
+              'La sesion no es valida, vuelva a iniciar sesion.'
+            );
+          }
+          this.router.navigateByUrl('/home');
         }
-        this.router.navigateByUrl('/home');
-      }
-    );
+      );
+    }
   }
 
   logout(): void {

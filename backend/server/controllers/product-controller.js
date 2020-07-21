@@ -101,18 +101,21 @@ prodCtr.getProducts = (req, res) => {
 
 prodCtr.getproduct = (req, res) => {
   let id = req.params.id;
-  product_model.findById(id, (err, data) => {
-    if (err) {
-      return res.status(404).json({
-        status: false,
-        msg: 'producto no encontrado',
+  product_model
+    .findById(id)
+    .populate('category')
+    .exec((err, data) => {
+      if (err) {
+        return res.status(404).json({
+          status: false,
+          msg: 'producto no encontrado',
+        });
+      }
+      res.status(200).json({
+        status: true,
+        product: data,
       });
-    }
-    res.status(200).json({
-      status: true,
-      product: data,
     });
-  });
 };
 
 prodCtr.defineImage = (req, res) => {
