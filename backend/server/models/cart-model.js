@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const categoryModel = require('./category-model');
+const { schema } = require('./category-model');
 
 const Schema = mongoose.Schema;
 
@@ -19,8 +20,13 @@ const cartSchema = new Schema({
     items: [cartItem],
     totalPrice: {
         type: Number,
-        required: true,
+        default: 0
     },
+    user: {
+        type: Schema.Types.ObjectId,
+        ref: 'Usuario',
+        require: true
+    }
 });
 
 module.exports = mongoose.model('Carrito', cartSchema);

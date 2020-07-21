@@ -55,4 +55,7 @@ validator.param_id = param('id')
     .isMongoId()
     .withMessage("Id no valido");
 
+validator.quantity = check('quantity')
+    .isNumeric()
+    .withMessage("El valor ingresado debe ser un numero");
 module.exports = validator;
