@@ -22,8 +22,8 @@
     </ng-template>
   </owl-carousel-o> -->
 
-  <div class="row row-cols-4">
-    <div class="col mb-4" *ngFor="let prod of products">
+  <div class="row">
+    <div class="col-md-3 mb-4" *ngFor="let prod of products">
       <div class="card">
         <img
           [src]="prod.img | img: 'product'"

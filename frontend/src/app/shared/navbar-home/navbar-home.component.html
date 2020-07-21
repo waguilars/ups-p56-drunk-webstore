@@ -43,7 +43,7 @@
       </div>
     </form>
 
-    <ul class="navbar-nav navbar-right text-center">
+    <ul class="navbar-nav navbar-right text-center" *ngIf="user">
       <li class="nav-item" routerLinkAcctive="active">
         <a class="nav-link shopping-cart" [routerLink]="['cart']">
           <i class="icon fas fa-shopping-cart mr-2"></i>
