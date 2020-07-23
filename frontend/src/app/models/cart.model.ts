@@ -5,12 +5,14 @@ import { UserModel } from './user.model';
 export interface CartResponse {
   status: boolean;
   guardado: Cart;
+  carrito?: Cart;
 }
 
 export interface Cart {
   totalPrice: number;
   _id: string;
   items: Item[];
+  totalItems: number;
   user: UserModel;
 }
 

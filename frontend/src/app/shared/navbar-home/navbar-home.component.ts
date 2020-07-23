@@ -3,6 +3,8 @@ import { UserService } from '../../services/user.service';
 import { UserModel } from '../../models/user.model';
 import { AlertService } from '../../services/alert.service';
 import { Router } from '@angular/router';
+import { CartService } from '../../services/cart.service';
+import { Cart } from '../../models/cart.model';
 
 @Component({
   selector: 'app-navbar-home',
@@ -11,20 +13,25 @@ import { Router } from '@angular/router';
 export class NavbarHomeComponent implements OnInit {
   timer: boolean;
   isAdmin: boolean;
+  cart: Cart;
 
   constructor(
     private userSv: UserService,
     private alertSv: AlertService,
+    private cartSv: CartService,
     private router: Router
   ) {
     this.isAdmin = false;
+    this.cart = null;
   }
 
   ngOnInit(): void {
     const token = this.userSv.getToken();
     if (token) {
       this.userSv.isAuth().subscribe(
-        (res) => {},
+        (res) => {
+          this.getCart();
+        },
         (err) => {
           // console.log(err);
           if (this.userSv.logout()) {
@@ -51,5 +58,9 @@ export class NavbarHomeComponent implements OnInit {
       this.isAdmin = role && role === 'ADMIN_ROLE' ? true : false;
     }
     return user;
+  }
+
+  getCart(): void {
+    this.cartSv.getCart().subscribe((res) => (this.cart = res));
   }
 }

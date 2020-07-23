@@ -31,7 +31,7 @@
           [alt]="prod.name"
         />
         <div class="card-body">
-          <h5 class="card-title">
+          <h5 class="card-title text-truncate">
             <a [routerLink]="['/licores', prod._id]">
               {{ prod.name }}
             </a>
@@ -41,9 +41,7 @@
               {{ prod.category.name }}
             </small>
           </p>
-          <p class="card-text">
-            {{ prod.desc_short }}
-          </p>
+          <p class="card-text">Precio: {{ prod.price | currency }}</p>
           <button
             type="button"
             class="btn btn-sm btn-outline-dark d-block mx-auto"

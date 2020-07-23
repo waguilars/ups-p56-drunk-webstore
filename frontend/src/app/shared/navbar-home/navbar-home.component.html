@@ -47,7 +47,11 @@
       <li class="nav-item" routerLinkAcctive="active">
         <a class="nav-link shopping-cart" [routerLink]="['cart']">
           <i class="icon fas fa-shopping-cart mr-2"></i>
-          <span class="badge badge-pill badge-danger cart-count">4</span>
+          <span
+            class="badge badge-pill badge-danger cart-count"
+            *ngIf="cart && cart.totalItems"
+            >4</span
+          >
           Carrito
         </a>
       </li>
