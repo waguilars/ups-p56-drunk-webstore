@@ -76,4 +76,29 @@ orderCTR.insertOrder = (req, res) => {
         });
 }
 
+orderCTR.getOrders = (req, res) => {
+    let user_id = req.user.user._id;
+    order_model.findOne({ user: user_id }).exec((err, order) => {
+        if (err) {
+            return res.status(500).json({
+                status: false,
+                msg: "Error en el servidor",
+                err
+            });
+        }
+        if (!order) {
+            return res.status(404).json({
+                status: false,
+                msg: "El usuario no ha realizado ninguna compra",
+                err
+            });
+        }
+        return res.json({
+            status: true,
+            msg: "Ordenes realizadas por el usuario",
+            order
+        });
+    });
+};
+
 module.exports = orderCTR
