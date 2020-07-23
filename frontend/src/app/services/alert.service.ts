@@ -25,6 +25,17 @@ export class AlertService {
     });
   }
 
+  async showGenericSuccess(title: string, msg: string): Promise<any> {
+    return Swal.fire({
+      title,
+      text: msg,
+      icon: 'success',
+      showCancelButton: true,
+      confirmButtonText: 'Ir al carrito',
+      cancelButtonText: 'Continuar comprando',
+    });
+  }
+
   async showSuccess(
     item: UserModel | Product,
     msg: string,

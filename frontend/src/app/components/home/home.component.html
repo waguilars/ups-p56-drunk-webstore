@@ -44,7 +44,11 @@
           <p class="card-text">
             {{ prod.desc_short }}
           </p>
-          <button class="btn btn-sm btn-outline-dark d-block mx-auto">
+          <button
+            type="button"
+            class="btn btn-sm btn-outline-dark d-block mx-auto"
+            (click)="addToCart(prod._id)"
+          >
             <i class="fa fa-cart-plus"></i>
             Agregar
           </button>
