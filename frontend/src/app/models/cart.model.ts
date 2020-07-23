@@ -14,6 +14,7 @@ export interface Cart {
   items: Item[];
   totalItems: number;
   user: UserModel;
+  total: number;
 }
 
 export interface Item {
