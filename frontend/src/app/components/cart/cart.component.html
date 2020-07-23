@@ -27,7 +27,7 @@
                       class="quantity"
                       min="0"
                       name="quantity"
-                      value="1"
+                      [value]="item.quantity"
                       type="number"
                     />
                     <button
@@ -55,9 +55,7 @@
       </ul>
       <div class="container">
         <div class="row">
-          <div class="col-sm">
-            Elementos (3)
-          </div>
+          <div class="col-sm">Elementos ({{ cart.total }})</div>
           <div class="col-sm">
             Total a Pagar
           </div>
