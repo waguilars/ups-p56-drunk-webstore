@@ -94,9 +94,17 @@ cartCTR.insertAndUpdateCart = (req, res) => {
                                 err,
                             });
                         }
+                        let carrito = {
+                            totalPrice: cart_new.totalPrice,
+                            _id: cart_new._id,
+                            items: cart_new.items,
+                            user: cart_new.user,
+                            total: req.body.quantity
+                        };
+                        // console.log(cart_new);
                         return res.status(200).json({
-                            msg: 'Crear cart',
-                            cart_new,
+                            msg: 'Producto ingresado al carrito',
+                            carrito
                         });
                     });
                 } else {
@@ -122,10 +130,23 @@ cartCTR.insertAndUpdateCart = (req, res) => {
                                 err,
                             });
                         }
+                        let cantidad = guardado.items
+                        let cantidades = [];
+                        cantidad.forEach(cant => {
+                            cantidades.push(parseInt(cant.quantity));
+                        });
+                        let total = cantidades.reduce((a, b) => a + b, 0);
+                        let carrito = {
+                            totalPrice: guardado.totalPrice,
+                            _id: guardado._id,
+                            items: guardado.items,
+                            user: guardado.user,
+                            total: total
+                        };
+                        // console.log(carrito);
                         res.status(200).json({
                             status: true,
-                            guardado
-
+                            carrito
                         });
                     });
                 }
