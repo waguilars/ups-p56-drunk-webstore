@@ -7,7 +7,7 @@ cartCTR.getCart = (req, res) => {
     let user_id = req.user.user._id;
     cart_model.findOne({ user: user_id })
         .populate('user')
-        .populate('items.product', 'name price category')
+        .populate('items.product', 'name price category img', )
         .exec((err, carrito) => {
             if (err) {
                 return res.status(500).json({
@@ -16,9 +16,30 @@ cartCTR.getCart = (req, res) => {
                     err
                 });
             }
+            console.log(carrito.items);
+            if (!carrito) {
+                return res.status(404).json({
+                    status: false,
+                    msg: "El carrito se encuentra vacio",
+                    err
+                });
+            }
+            let cantidad = carrito.items
+            let cantidades = [];
+            cantidad.forEach(cant => {
+                cantidades.push(parseInt(cant.quantity));
+            });
+            let total = cantidades.reduce((a, b) => a + b, 0);
+            let new_cart = {
+                totalPrice: carrito.totalPrice,
+                _id: carrito._id,
+                items: carrito.items,
+                total,
+                user: carrito.user
+            };
             return res.json({
                 status: 200,
-                carrito
+                carrito: new_cart
             });
         });
 };
@@ -65,7 +86,7 @@ cartCTR.insertAndUpdateCart = (req, res) => {
         cart_model
             .findOne({ user: req.user.user._id })
             .populate('user')
-            .populate('items.product', 'name price category')
+            .populate('items.product', 'name price category img')
             .exec((err, cart) => {
                 if (err) {
                     return res.status(500).json({
