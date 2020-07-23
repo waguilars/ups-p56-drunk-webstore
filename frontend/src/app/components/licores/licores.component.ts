@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../../services/product.service';
-import { ActivatedRoute } from '@angular/router';
-import { Product } from '../../models/product.model';
+import { ActivatedRoute, Router } from '@angular/router';
+
+import { AlertService } from '../../services/alert.service';
+import { CartService } from '../../services/cart.service';
 
 @Component({
   selector: 'app-licores',
@@ -10,7 +12,13 @@ import { Product } from '../../models/product.model';
 export class LicoresComponent implements OnInit {
   liquor: any;
 
-  constructor(private prodSv: ProductService, private route: ActivatedRoute) {}
+  constructor(
+    private prodSv: ProductService,
+    private route: ActivatedRoute,
+    private alertSv: AlertService,
+    private cartSv: CartService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.showLiquor();
@@ -23,5 +31,24 @@ export class LicoresComponent implements OnInit {
       this.liquor = res;
       console.log(res);
     });
+  }
+
+  addToCart(prodId: string): void {
+    this.alertSv.loading();
+    this.cartSv.addToCart(prodId).subscribe(
+      (res) => {
+        this.alertSv
+          .showGenericSuccess('Carrito de compras', 'Producto agregado!')
+          .then((val) => {
+            if (val.isConfirmed) {
+              this.router.navigateByUrl('/cart');
+            }
+          });
+      },
+      (err) => {
+        this.alertSv.showError('Algo salio mal! Intentalo de nuevo.');
+        console.log(err);
+      }
+    );
   }
 }
