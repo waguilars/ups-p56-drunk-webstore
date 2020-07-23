@@ -3,6 +3,25 @@ const { validationResult } = require('express-validator');
 const product_model = require('../models/product-model');
 
 const cartCTR = {};
+cartCTR.getCart = (req, res) => {
+    let user_id = req.user.user._id;
+    cart_model.findOne({ user: user_id })
+        .populate('user')
+        .populate('items.product', 'name price category')
+        .exec((err, carrito) => {
+            if (err) {
+                return res.status(500).json({
+                    status: false,
+                    msg: "Error en el servidor",
+                    err
+                });
+            }
+            return res.json({
+                status: 200,
+                carrito
+            });
+        });
+};
 
 cartCTR.insertAndUpdateCart = (req, res) => {
     let mistakes = validationResult(req);
