@@ -30,6 +30,7 @@ import { AppRoutingModule } from './app.routing';
 import { NotFoundComponent } from './shared/not-found/not-found.component';
 import { TokenInterceptor } from './interceptors/token.interceptor';
 import { UserOrdersComponent } from './pages/user-orders/user-orders.component';
+import { SearchComponent } from './components/search/search.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { UserOrdersComponent } from './pages/user-orders/user-orders.component';
     NotFoundComponent,
     CartComponent,
     UserOrdersComponent,
+    SearchComponent,
   ],
   imports: [
     BrowserModule,

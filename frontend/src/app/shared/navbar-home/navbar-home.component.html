@@ -27,7 +27,8 @@
         <a class="nav-link" [routerLink]="['about']">NOSOTROS</a>
       </li>
     </ul>
-    <form class="form-inline my-lg-0 d-block">
+
+    <form class="form-inline my-lg-0 d-block" [formGroup]="sf">
       <div class="d-flex justify-content-center h-100">
         <div class="searchbar nav-item mr-0">
           <input
@@ -35,6 +36,7 @@
             type="text"
             name=""
             placeholder="Search..."
+            formControlName="term"
           />
           <a href="javascript:void(0);" class="nav-link search_icon"
             ><i class="icon fas fa-search"></i

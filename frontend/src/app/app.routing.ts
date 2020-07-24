@@ -10,6 +10,7 @@ import { CartComponent } from './components/cart/cart.component';
 import { NotFoundComponent } from './shared/not-found/not-found.component';
 import { LoggedInGuard } from './services/logged-in.guard';
 import { UserOrdersComponent } from './pages/user-orders/user-orders.component';
+import { SearchComponent } from './components/search/search.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -27,6 +28,7 @@ const routes: Routes = [
   },
   { path: 'cart', component: CartComponent },
   { path: 'compras', component: UserOrdersComponent },
+  { path: 'search/:token', component: SearchComponent },
   { path: '', pathMatch: 'full', redirectTo: '/home' },
   { path: '**', component: NotFoundComponent },
 ];
