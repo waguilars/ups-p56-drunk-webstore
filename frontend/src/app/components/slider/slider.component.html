@@ -16,14 +16,27 @@
     >
       <div class="slider-wraper">
         <img
-          src="https://images.pexels.com/photos/1283219/pexels-photo-1283219.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+          [src]="'assets/img/slide-' + (i + 1) + '.jpg'"
           class="d-block w-100 slider-item"
           alt="..."
         />
       </div>
       <div class="carousel-caption d-none d-md-block" *ngIf="showCaption">
-        <h5>Second slide label</h5>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        <h5 *ngIf="i === 0">Drunk WebStore</h5>
+        <h5 *ngIf="i === 1">Drunk WebStore</h5>
+        <h5 *ngIf="i === 2">Drunk WebStore</h5>
+        <p *ngIf="i === 0">
+          Los mejores licores a tu alcance.
+        </p>
+        <p *ngIf="i === 1">
+          Al ser una empresa de tradición en el mercado quiteño, hemos
+          acompañado sus eventos con la más alta calidad y variedad de licores
+        </p>
+        <p *ngIf="i === 2">
+          Nuestra carta incluye más de 70 productos de reconocidas marcas de las
+          más importantes regiones del mundo, finos whiskies de 12 y 21 años,
+          vinos, cerveza nacional e importada, brandy, ron , etc.
+        </p>
       </div>
     </div>
 

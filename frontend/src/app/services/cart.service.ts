@@ -60,4 +60,8 @@ export class CartService {
       })
     );
   }
+
+  updateItem(prodID: string, quantity: number): Observable<any> {
+    return this.http.put(`${this.api}/${prodID}`, { quantity });
+  }
 }

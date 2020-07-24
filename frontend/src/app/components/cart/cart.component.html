@@ -3,7 +3,7 @@
     <h1>Carrito de compra</h1>
     <div class="" *ngIf="cart">
       <ul class="list-unstyled">
-        <li class="media" *ngFor="let item of cart.items">
+        <li class="media" *ngFor="let item of cart.items; let i = index">
           <div class="container">
             <div class="row">
               <div class="col-sm">
@@ -22,6 +22,7 @@
                     <button
                       onclick="this.parentNode.querySelector('input[type=number]').stepDown()"
                       class="minus"
+                      (click)="updateQuantity(item, '-')"
                     ></button>
                     <input
                       class="quantity"
@@ -29,10 +30,12 @@
                       name="quantity"
                       [value]="item.quantity"
                       type="number"
+                      [(ngModel)]="item.quantity"
                     />
                     <button
                       onclick="this.parentNode.querySelector('input[type=number]').stepUp()"
                       class="plus"
+                      (click)="updateQuantity(item, '+')"
                     ></button>
                   </div>
                 </div>

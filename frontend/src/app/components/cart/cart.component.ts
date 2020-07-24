@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CartService } from '../../services/cart.service';
 import { Cart } from 'src/app/models/cart.model';
 import { AlertService } from '../../services/alert.service';
+import { Item } from '../../models/cart.model';
 
 @Component({
   selector: 'app-cart',
@@ -10,6 +11,7 @@ import { AlertService } from '../../services/alert.service';
 })
 export class CartComponent implements OnInit {
   cart: Cart;
+
   constructor(private cartSv: CartService, private alertSv: AlertService) {
     this.cart = null;
   }
@@ -43,6 +45,22 @@ export class CartComponent implements OnInit {
     this.cartSv.removeAll().subscribe((res) => {
       this.cart = null;
     });
+  }
+
+  updateQuantity(item: Item, type: string): void {
+    if (type === '+') {
+      item.quantity += 1;
+    }
+
+    if (type === '-' && item.quantity) {
+      item.quantity -= 1;
+    }
+    this.cartSv.updateItem(item.product._id, item.quantity).subscribe(
+      (res) => {
+        this.cart = res.nuevo;
+      },
+      (err) => {}
+    );
   }
 
   buy(): void {
