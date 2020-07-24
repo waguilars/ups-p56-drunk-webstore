@@ -6,7 +6,7 @@ const orderCTR = {};
 
 orderCTR.insertOrder = (req, res) => {
     let user_id = req.user.user._id;
-    cart_model.find({ user: user_id })
+    cart_model.findOne({ user: user_id })
         .populate('user')
         .populate('items.product', 'name price category')
         .exec((err, carrito) => {
@@ -77,7 +77,7 @@ orderCTR.insertOrder = (req, res) => {
 
 orderCTR.getOrders = (req, res) => {
     let user_id = req.user.user._id;
-    order_model.findOne({ user: user_id }).exec((err, order) => {
+    order_model.find({ user: user_id }).exec((err, order) => {
         if (err) {
             return res.status(500).json({
                 status: false,
