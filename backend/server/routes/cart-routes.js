@@ -8,6 +8,8 @@ router.post('/:id', [checkToken, v.param_id, v.quantity], cart_controller.insert
 
 router.get('/', [checkToken], cart_controller.getCart);
 
+router.delete('/:id', [checkToken, v.param_id], cart_controller.deleteProduct)
+
 router.delete('/', [checkToken], cart_controller.emptyCart);
 
 module.exports = router;

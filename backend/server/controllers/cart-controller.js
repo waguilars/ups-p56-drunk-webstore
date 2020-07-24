@@ -215,4 +215,79 @@ cartCTR.emptyCart = (req, res) => {
     });
 };
 
+cartCTR.deleteProduct = (req, res) => {
+    let mistakes = validationResult(req);
+    if (!mistakes.isEmpty()) {
+        let new_err = {};
+        mistakes.errors.forEach((element) => {
+            let param = element.param;
+            let msg_param = element.msg;
+            new_err[param] = msg_param;
+        });
+        return res.status(400).json({
+            status: false,
+            msg: 'Parametros mal enviados',
+            error: new_err,
+        });
+    }
+    let user_id = req.user.user._id;
+    cart_model.findOne({ user: user_id }).populate('items.product', '_id price').exec((err, carrito) => {
+        if (err) {
+            return res.status(500).json({
+                status: false,
+                msg: 'Error en el servidor',
+                err,
+            });
+        }
+        if (!carrito) {
+            return res.status(404).json({
+                status: false,
+                msg: 'El carrito se encuantra vacio',
+                err,
+            });
+        }
+        let product_id = req.params.id
+        let items = carrito.items
+        let index = items.findIndex(item => `${item.product._id}` === `${product_id}`);
+        if (index < 0) {
+            return res.status(404).json({
+                status: false,
+                msg: "El producto a remover no existe",
+                err
+            });
+        }
+
+        let restar = items[index].product.price * items[index].quantity;
+        let totalPrice = carrito.totalPrice - restar;
+        items.splice(index, 1);
+        let cantidades = [];
+        items.forEach((cant) => {
+            cantidades.push(parseInt(cant.quantity));
+        });
+        let total = cantidades.reduce((a, b) => a + b, 0);
+        cart_model.findByIdAndUpdate(carrito._id, { totalPrice: totalPrice, items: items }, { new: true },
+            (err, guardado) => {
+                if (err) {
+                    return res.status(500).json({
+                        status: false,
+                        msg: 'Error en el servidor',
+                        err,
+                    });
+                }
+                let new_carrito = {
+                    totalPrice: guardado.totalPrice,
+                    _id: guardado.id,
+                    items: guardado.items,
+                    total,
+                    user: guardado.user
+                };
+                res.json({
+                    status: true,
+                    msg: "El elemento ha sido removido",
+                    carrito: new_carrito
+                });
+            });
+    });
+};
+
 module.exports = cartCTR;

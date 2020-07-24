@@ -204,7 +204,7 @@ UserCtr.defineImage = (req, res) => {
 
 UserCtr.updateUser = (req, res) => {
     let mistakes = validationResult(req);
-    if (!mistakes.isEmpty()) {
+    if (!(mistakes.isEmpty())) {
         let new_err = {};
         mistakes.errors.forEach((element) => {
             let param = element.param;
