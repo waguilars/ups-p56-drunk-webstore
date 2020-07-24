@@ -1,10 +1,10 @@
-import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
-import { OwlOptions } from 'ngx-owl-carousel-o';
+import { Component, OnInit } from '@angular/core';
+
 import { ProductService } from '../../services/product.service';
-import { Product } from '../../models/product.model';
+
 import { CartService } from '../../services/cart.service';
 import { AlertService } from '../../services/alert.service';
-import { Route } from '@angular/compiler/src/core';
+
 import { Router } from '@angular/router';
 
 @Component({
@@ -13,10 +13,13 @@ import { Router } from '@angular/router';
   styles: [],
 })
 export class HomeComponent implements OnInit {
-  customOptions: OwlOptions;
   products: any[];
-
-  uri = 'http://localhost:4200/assets/img/licor.jpg';
+  pagination: {
+    next: number;
+    prev: number;
+    page: number;
+    total: number[];
+  };
 
   constructor(
     private prodSv: ProductService,
@@ -30,39 +33,13 @@ export class HomeComponent implements OnInit {
     this.loadLastProducts();
   }
 
-  setCarouselOpts(): void {
-    // setTimeout(() => {
-    this.customOptions = {
-      mouseDrag: true,
-      touchDrag: true,
-      pullDrag: false,
-      dots: true,
-      navSpeed: 700,
-      autoHeight: false,
-      autoWidth: true,
-
-      responsive: {
-        0: {
-          items: 1,
-        },
-        400: {
-          items: 2,
-        },
-        740: {
-          items: 3,
-        },
-        940: {
-          items: 4,
-        },
-      },
-    };
-    // }, 1000);
-  }
-
-  loadLastProducts(): void {
-    this.prodSv.getLast().subscribe((res) => {
+  loadLastProducts(p = 1): void {
+    this.prodSv.getLast(16, p).subscribe((res) => {
       this.products = res.data.docs;
-      console.log(this.products);
+      const { nextPage: next, prevPage: prev, page, totalPages } = res.data;
+      const total = Array.from({ length: totalPages }, (_, index) => index + 1);
+      this.pagination = { next, prev, page, total };
+      console.log(p);
     });
   }
 
