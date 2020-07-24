@@ -136,6 +136,13 @@ cartCTR.insertAndUpdateCart = (req, res) => {
                     if (flag >= 0) {
                         let quantity =
                             parseInt(cart.items[flag].quantity) + parseInt(req.body.quantity);
+                        if (quantity < 0) {
+                            return res.status(404).json({
+                                status: false,
+                                msg: "El producto ya esta retirado",
+                                err
+                            });
+                        }
                         cart.items[flag].quantity = quantity;
                     } else {
                         cart.items.push(product);
@@ -281,7 +288,7 @@ cartCTR.deleteProduct = (req, res) => {
                     total,
                     user: guardado.user
                 };
-                res.json({
+                return res.status(200).json({
                     status: true,
                     msg: "El elemento ha sido removido",
                     carrito: new_carrito
