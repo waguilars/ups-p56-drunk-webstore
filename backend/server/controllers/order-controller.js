@@ -6,7 +6,7 @@ const orderCTR = {};
 
 orderCTR.insertOrder = (req, res) => {
     let user_id = req.user.user._id;
-    cart_model.findOne({ user: user_id })
+    cart_model.find({ user: user_id })
         .populate('user')
         .populate('items.product', 'name price category')
         .exec((err, carrito) => {
@@ -68,8 +68,7 @@ orderCTR.insertOrder = (req, res) => {
                     return res.status(201).json({
                         status: true,
                         msg: "Compra realizada con exito",
-                        order: payment,
-                        carrito_id
+                        order: payment
                     });
                 });
             });
