@@ -9,6 +9,7 @@ import { LicoresComponent } from './components/licores/licores.component';
 import { CartComponent } from './components/cart/cart.component';
 import { NotFoundComponent } from './shared/not-found/not-found.component';
 import { LoggedInGuard } from './services/logged-in.guard';
+import { UserOrdersComponent } from './pages/user-orders/user-orders.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -25,6 +26,7 @@ const routes: Routes = [
     component: RegisterComponent,
   },
   { path: 'cart', component: CartComponent },
+  { path: 'compras', component: UserOrdersComponent },
   { path: '', pathMatch: 'full', redirectTo: '/home' },
   { path: '**', component: NotFoundComponent },
 ];
