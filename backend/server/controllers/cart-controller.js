@@ -284,7 +284,7 @@ cartCTR.deleteProduct = (req, res) => {
                 let new_carrito = {
                     totalPrice: guardado.totalPrice,
                     _id: guardado.id,
-                    items: guardado.items,
+                    items: items,
                     total,
                     user: guardado.user
                 };
@@ -313,7 +313,7 @@ cartCTR.updateCart = (req, res) => {
             error: new_err,
         });
     }
-    let user_id = req.user.user_id
+    let user_id = req.user.user.id
     res.json({
         status: true,
         msg: "si funca"
