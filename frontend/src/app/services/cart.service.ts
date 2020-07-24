@@ -51,4 +51,13 @@ export class CartService {
       })
     );
   }
+
+  buy(): Observable<any> {
+    return this.http.post('/api/order', null).pipe(
+      map((res: any) => {
+        this.cart = null;
+        return res.order;
+      })
+    );
+  }
 }
