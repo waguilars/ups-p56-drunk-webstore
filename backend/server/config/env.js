@@ -14,6 +14,7 @@ const PASS = process.env.MONGO_PASS;
 
 // console.log(USER);
 process.env.MONGO_URI = `mongodb+srv://${USER}:${PASS}@cafe.wbaqo.mongodb.net/LICORES`;
+console.log(process.env.MONGO_URI);
 
 // ========================================
 //                 JWT
