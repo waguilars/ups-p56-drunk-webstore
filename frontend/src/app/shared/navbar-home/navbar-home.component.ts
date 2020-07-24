@@ -5,6 +5,7 @@ import { AlertService } from '../../services/alert.service';
 import { Router } from '@angular/router';
 import { CartService } from '../../services/cart.service';
 import { Cart } from '../../models/cart.model';
+import { FormGroup, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-navbar-home',
@@ -13,17 +14,22 @@ import { Cart } from '../../models/cart.model';
 export class NavbarHomeComponent implements OnInit {
   timer: boolean;
   isAdmin: boolean;
+  sf: FormGroup;
 
   constructor(
     private userSv: UserService,
     private alertSv: AlertService,
     private cartSv: CartService,
-    private router: Router
+    private router: Router,
+    private fb: FormBuilder
   ) {
     this.isAdmin = false;
   }
 
   ngOnInit(): void {
+    this.sf = this.fb.group({ term: [''] });
+    this.search();
+
     const token = this.userSv.getToken();
     if (token) {
       this.userSv.isAuth().subscribe(
@@ -63,6 +69,14 @@ export class NavbarHomeComponent implements OnInit {
       (res) => {},
       (err) => {}
     );
+  }
+
+  search(): void {
+    this.sf.get('term').valueChanges.subscribe((value) => {
+      if (value) {
+        this.router.navigate(['search', value]);
+      }
+    });
   }
 
   get cart(): Cart {
