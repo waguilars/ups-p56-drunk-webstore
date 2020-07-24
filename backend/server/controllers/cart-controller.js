@@ -238,7 +238,7 @@ cartCTR.deleteProduct = (req, res) => {
         });
     }
     let user_id = req.user.user._id;
-    cart_model.findOne({ user: user_id }).populate('items.product', '_id price').exec((err, carrito) => {
+    cart_model.findOne({ user: user_id }).populate('items.product').exec((err, carrito) => {
         if (err) {
             return res.status(500).json({
                 status: false,
@@ -296,5 +296,28 @@ cartCTR.deleteProduct = (req, res) => {
             });
     });
 };
+
+
+cartCTR.updateCart = (req, res) => {
+    let mistakes = validationResult(req);
+    if (!mistakes.isEmpty()) {
+        let new_err = {};
+        mistakes.errors.forEach((element) => {
+            let param = element.param;
+            let msg_param = element.msg;
+            new_err[param] = msg_param;
+        });
+        return res.status(400).json({
+            status: false,
+            msg: 'Parametros mal enviados',
+            error: new_err,
+        });
+    }
+    let user_id = req.user.user_id
+    res.json({
+        status: true,
+        msg: "si funca"
+    });
+}
 
 module.exports = cartCTR;

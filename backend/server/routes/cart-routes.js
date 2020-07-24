@@ -12,4 +12,6 @@ router.delete('/:id', [checkToken, v.param_id], cart_controller.deleteProduct)
 
 router.delete('/', [checkToken], cart_controller.emptyCart);
 
+router.put('/:id', [checkToken, v.param_id], cart_controller.updateCart);
+
 module.exports = router;
