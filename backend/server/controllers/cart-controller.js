@@ -95,6 +95,14 @@ cartCTR.insertAndUpdateCart = (req, res) => {
                         err,
                     });
                 }
+                let quantity = parseInt(req.body.quantity);
+                if (quantity < 0) {
+                    return res.status(400).json({
+                        status: false,
+                        msg: "La cantidad ingresada es invalida",
+                        err
+                    });
+                }
                 let product = {
                     product: req.params.id,
                     quantity: req.body.quantity,
@@ -313,10 +321,74 @@ cartCTR.updateCart = (req, res) => {
             error: new_err,
         });
     }
-    let user_id = req.user.user.id
-    res.json({
-        status: true,
-        msg: "si funca"
+    let user_id = req.user.user._id
+    cart_model.findOne({ user: user_id }).populate('items.product').exec((err, carrito) => {
+        if (err) {
+            return res.status(500).json({
+                status: false,
+                msg: 'Error en el servidor',
+                err,
+            });
+        }
+        if (!carrito) {
+            return res.status(404).json({
+                status: false,
+                msg: "El usuario no tiene ningun carrito",
+                err
+            });
+        }
+        let items = carrito.items;
+        let index = items.findIndex(product => `${product.product._id}` === `${req.params.id}`);
+        if (index < 0) {
+            return res.status(400).json({
+                status: false,
+                msg: "El producto no se encuentra registrado en el carrito",
+                err
+            });
+        }
+        let quantity = req.body.quantity;
+        if (quantity < 0 || !quantity) {
+            return res.status(404).json({
+                status: false,
+                msg: "La cantida a ingresar no es valida",
+                err
+            });
+        }
+        items[index].quantity = quantity
+        let cantidades = [];
+        let price = []
+        items.forEach((cant) => {
+            cantidades.push(parseInt(cant.quantity));
+            price.push(parseFloat(cant.product.price))
+        });
+        let precios = [];
+        price.forEach((carnt, idx) => {
+            precios.push((price[idx] * cantidades[idx]));
+        })
+        let total = cantidades.reduce((a, b) => a + b, 0);
+        let totalPrice = precios.reduce((a, b) => a + b, 0);
+        cart_model.findByIdAndUpdate(carrito._id, { items: items, totalPrice: totalPrice }, { new: true },
+            (err, guardado) => {
+                if (err) {
+                    return res.status(500).json({
+                        status: false,
+                        msg: "Error con el servidor",
+                        err
+                    });
+                }
+                let nuevo = {
+                    totalPrice: guardado.totalPrice,
+                    _id: guardado._id,
+                    items: items,
+                    total,
+                    user: guardado.user
+                }
+                return res.status(202).json({
+                    status: true,
+                    msg: "Carrito actualizado",
+                    nuevo
+                });
+            });
     });
 }
 
