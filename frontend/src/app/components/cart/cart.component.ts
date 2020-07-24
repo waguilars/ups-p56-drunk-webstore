@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CartService } from '../../services/cart.service';
 import { Cart } from 'src/app/models/cart.model';
+import { AlertService } from '../../services/alert.service';
 
 @Component({
   selector: 'app-cart',
@@ -9,7 +10,7 @@ import { Cart } from 'src/app/models/cart.model';
 })
 export class CartComponent implements OnInit {
   cart: Cart;
-  constructor(private cartSv: CartService) {
+  constructor(private cartSv: CartService, private alertSv: AlertService) {
     this.cart = null;
   }
 
@@ -41,6 +42,16 @@ export class CartComponent implements OnInit {
   clearCart(): void {
     this.cartSv.removeAll().subscribe((res) => {
       this.cart = null;
+    });
+  }
+
+  buy(): void {
+    this.cartSv.buy().subscribe((res) => {
+      this.cart = null;
+      this.alertSv.Swal.fire({
+        title: 'Compra realizada con exito!',
+        icon: 'success',
+      });
     });
   }
 }

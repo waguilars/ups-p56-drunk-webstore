@@ -29,6 +29,7 @@ import { LoginComponent } from './components/login/login.component';
 import { AppRoutingModule } from './app.routing';
 import { NotFoundComponent } from './shared/not-found/not-found.component';
 import { TokenInterceptor } from './interceptors/token.interceptor';
+import { UserOrdersComponent } from './pages/user-orders/user-orders.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { TokenInterceptor } from './interceptors/token.interceptor';
     ProductListComponent,
     NotFoundComponent,
     CartComponent,
+    UserOrdersComponent,
   ],
   imports: [
     BrowserModule,

@@ -70,7 +70,10 @@
       <br />
     </div>
 
-    <div class="alert alert-info text-center" *ngIf="!cart">
+    <div
+      class="alert alert-info text-center"
+      *ngIf="!cart || cart.items.length === 0"
+    >
       <h5 class="text-center text-uppercase">
         No hay Productos en el carrito
       </h5>
@@ -83,6 +86,7 @@
           type="button"
           class="btn btn-success fas fa-check"
           style="margin-right: 5px; border-radius: 8px;"
+          (click)="buy()"
         >
           Comprar
         </button>
