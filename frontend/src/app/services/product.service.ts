@@ -31,6 +31,10 @@ export class ProductService {
     return this.http.get(this.api + `/last?limit=${limit}&page=${p}`);
   }
 
+  search(token: string): Observable<any> {
+    return this.http.get(`${this.api}/search/${token}`);
+  }
+
   getById(id: string): Observable<Product> {
     return this.http.get(`${this.api}/${id}`).pipe(
       map((res: ProductResponse) => {
