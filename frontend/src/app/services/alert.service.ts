@@ -87,4 +87,9 @@ export class AlertService {
     });
     Swal.showLoading();
   }
+
+  // tslint:disable-next-line: typedef
+  get Swal() {
+    return Swal;
+  }
 }

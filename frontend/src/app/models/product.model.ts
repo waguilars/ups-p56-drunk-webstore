@@ -14,6 +14,8 @@ export class Product {
   category: string;
   img: string;
   stock: number;
+  // tslint:disable-next-line: variable-name
+  _id: string;
 
   constructor(obj: any) {
     this.id = obj.id || obj._id;

@@ -49,9 +49,10 @@
           <i class="icon fas fa-shopping-cart mr-2"></i>
           <span
             class="badge badge-pill badge-danger cart-count"
-            *ngIf="cart && cart.totalItems"
-            >4</span
+            *ngIf="cart && cart.total"
           >
+            {{ cart.total }}
+          </span>
           Carrito
         </a>
       </li>

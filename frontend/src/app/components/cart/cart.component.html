@@ -43,8 +43,10 @@
                 </div>
 
                 <button
+                  type="button"
                   class="button btn-danger align-conte"
                   style="border-radius: 8px;"
+                  (click)="deleteProduct(item.product._id)"
                 >
                   X
                 </button>
@@ -67,12 +69,24 @@
 
       <br />
     </div>
+
+    <div
+      class="alert alert-info text-center"
+      *ngIf="!cart || cart.items.length === 0"
+    >
+      <h5 class="text-center text-uppercase">
+        No hay Productos en el carrito
+      </h5>
+      <i class="fa fa-3x fa-info-circle"></i>
+    </div>
+
     <div class="d-flex flex-row-reverse">
       <div class="row-1 row-cols-md-1">
         <button
           type="button"
           class="btn btn-success fas fa-check"
           style="margin-right: 5px; border-radius: 8px;"
+          (click)="buy()"
         >
           Comprar
         </button>
@@ -82,6 +96,7 @@
           type="button"
           class="btn btn-danger fas fa-trash"
           style="margin-right: 5px; border-radius: 8px;"
+          (click)="clearCart()"
         >
           Vaciar Carrito
         </button>
