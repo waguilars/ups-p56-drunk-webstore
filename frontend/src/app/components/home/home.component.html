@@ -5,31 +5,17 @@
 
   <h2 class="text-center h3 mt-4">Ultimos Licores</h2>
   <hr />
-  <!-- <owl-carousel-o class="card-deck" [options]="customOptions">
-    <ng-template carouselSlide *ngFor="let prod of products">
-      <div class="card">
-        <img src="..." class="card-img-top" alt="..." />
-        <div class="card-body">
-          <h5 class="card-title">Card title</h5>
-          <p class="card-text">
-            {{ prod.desc_short }}
-          </p>
-          <p class="card-text">
-            <small class="text-muted">Last updated 3 mins ago</small>
-          </p>
-        </div>
-      </div>
-    </ng-template>
-  </owl-carousel-o> -->
 
   <div class="row">
     <div class="col-md-3 mb-4" *ngFor="let prod of products">
       <div class="card">
-        <img
-          [src]="prod.img | img: 'product'"
-          class="card-img-top img-fluid h-50"
-          [alt]="prod.name"
-        />
+        <div class="img-wrapper">
+          <img
+            [src]="prod.img | img: 'product'"
+            class="card-img-top img-fluid h-100"
+            [alt]="prod.name"
+          />
+        </div>
         <div class="card-body">
           <h5 class="card-title text-truncate">
             <a [routerLink]="['/licores', prod._id]">
@@ -55,7 +41,43 @@
     </div>
   </div>
 
-  <!-- <h2 class="text-center h3 mt-4">Todos los productos</h2>
-  <hr />
-  <app-product-list class="mb-5"></app-product-list> -->
+  <nav aria-label="Page navigation example" *ngIf="pagination">
+    <ul class="pagination justify-content-center">
+      <li class="page-item">
+        <button
+          [disabled]="!pagination.prev"
+          class="page-link"
+          type="button"
+          aria-label="Previous"
+          (click)="loadLastProducts(pagination.prev)"
+        >
+          <span aria-hidden="true">&laquo;</span>
+        </button>
+      </li>
+      <li
+        class="page-item"
+        [class.active]="page === pagination.page"
+        *ngFor="let page of pagination.total"
+      >
+        <button
+          class="page-link"
+          type="button"
+          (click)="loadLastProducts(page)"
+        >
+          {{ page }}
+        </button>
+      </li>
+      <li class="page-item">
+        <button
+          [disabled]="!pagination.next"
+          class="page-link"
+          type="button"
+          aria-label="Next"
+          (click)="loadLastProducts(pagination.next)"
+        >
+          <span aria-hidden="true">&raquo;</span>
+        </button>
+      </li>
+    </ul>
+  </nav>
 </div>

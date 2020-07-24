@@ -133,6 +133,10 @@ td > .profile-img {
 
 /* Home - main Slider*/
 
+.img-wrapper {
+  height: 200px;
+}
+
 .slider-wraper {
   max-height: 300px;
 }

@@ -11,7 +11,7 @@ import { AdminModule } from './admin/admin.module';
 import { NgProgressModule } from 'ngx-progressbar';
 import { NgProgressHttpModule } from 'ngx-progressbar/http';
 import { NgProgressRouterModule } from 'ngx-progressbar/router';
-import { CarouselModule } from 'ngx-owl-carousel-o';
+
 // Components
 import { LicoresComponent } from './components/licores/licores.component';
 
@@ -58,7 +58,6 @@ import { TokenInterceptor } from './interceptors/token.interceptor';
     NgProgressHttpModule,
     NgProgressRouterModule,
     BrowserAnimationsModule,
-    CarouselModule,
   ],
   providers: [
     {
