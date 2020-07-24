@@ -85,7 +85,7 @@ export class ProductNewComponent implements OnInit {
       price: this.product.price,
       stock: this.product.stock,
     });
-    this.category.setValue(this.product.category);
+    this.category.setValue(this.product.category._id);
   }
 
   submit(): void {

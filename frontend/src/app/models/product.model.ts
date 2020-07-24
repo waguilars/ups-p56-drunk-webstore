@@ -11,7 +11,7 @@ export class Product {
   // tslint:disable-next-line: variable-name
   desc_long: string;
   price: number;
-  category: string;
+  category: any;
   img: string;
   stock: number;
   // tslint:disable-next-line: variable-name
