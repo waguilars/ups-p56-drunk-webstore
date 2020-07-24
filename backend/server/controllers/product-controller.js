@@ -205,7 +205,7 @@ prodCtr.getProductsCategory = (req, res) => {
                 },
             });
         }
-        console.log(data);
+        // console.log(data);
         if (data.length === 0) {
             return res.status(500).json({
                 status: false,
@@ -238,7 +238,7 @@ prodCtr.getLast = async(req, res) => {
 //find a token 
 prodCtr.findToken = (req, res) => {
     let token = req.params.token;
-    console.log(token);
+    // console.log(token);
     product_model.find({
             $or: [
                 { name: { $regex: token, $options: 'i' } },

@@ -20,20 +20,20 @@ app.use(require('./routes/index'));
 
 // MAIN APP
 app.use(
-  express.static(path.resolve(__dirname, '../../frontend/dist/frontend'))
+    express.static(path.resolve(__dirname, '../../frontend/dist/frontend'))
 );
 
 app.get('/*', (req, res) => {
-  const appPath = path.resolve(
-    __dirname,
-    '../../frontend/dist/frontend/index.html'
-  );
+    const appPath = path.resolve(
+        __dirname,
+        '../../frontend/dist/frontend/index.html'
+    );
 
-  res.sendFile(appPath);
+    res.sendFile(appPath);
 });
 
 app.listen(process.env.PORT, () => {
-  console.log(
-    `The server is running at port http://localhost:${process.env.PORT}`
-  );
+    console.log(
+        `The server is running at port http://localhost:${process.env.PORT}`
+    );
 });
