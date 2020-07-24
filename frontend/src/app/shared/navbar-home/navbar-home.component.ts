@@ -13,7 +13,6 @@ import { Cart } from '../../models/cart.model';
 export class NavbarHomeComponent implements OnInit {
   timer: boolean;
   isAdmin: boolean;
-  cart: Cart;
 
   constructor(
     private userSv: UserService,
@@ -22,7 +21,6 @@ export class NavbarHomeComponent implements OnInit {
     private router: Router
   ) {
     this.isAdmin = false;
-    this.cart = null;
   }
 
   ngOnInit(): void {
@@ -61,6 +59,13 @@ export class NavbarHomeComponent implements OnInit {
   }
 
   getCart(): void {
-    this.cartSv.getCart().subscribe((res) => (this.cart = res));
+    this.cartSv.getCart().subscribe(
+      (res) => {},
+      (err) => {}
+    );
+  }
+
+  get cart(): Cart {
+    return this.cartSv.cart;
   }
 }

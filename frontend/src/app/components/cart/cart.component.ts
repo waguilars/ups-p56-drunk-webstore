@@ -18,10 +18,13 @@ export class CartComponent implements OnInit {
   }
 
   getCart(): void {
-    this.cartSv.getCart().subscribe((res) => {
-      console.log(res);
-      this.cart = res;
-    });
+    this.cartSv.getCart().subscribe(
+      (res) => {
+        console.log(res);
+        this.cart = res;
+      },
+      (err) => {}
+    );
   }
 
   deleteProduct(prodID: string): void {
@@ -33,5 +36,11 @@ export class CartComponent implements OnInit {
       },
       (err) => {}
     );
+  }
+
+  clearCart(): void {
+    this.cartSv.removeAll().subscribe((res) => {
+      this.cart = null;
+    });
   }
 }

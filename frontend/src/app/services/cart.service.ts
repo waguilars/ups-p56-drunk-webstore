@@ -18,7 +18,14 @@ export class CartService {
   }
 
   addToCart(prodID: string, quantity: number = 1): Observable<CartResponse> {
-    return this.http.post<CartResponse>(`${this.api}/${prodID}`, { quantity });
+    return this.http
+      .post<CartResponse>(`${this.api}/${prodID}`, { quantity })
+      .pipe(
+        map((res) => {
+          this.cart = res.carrito;
+          return res;
+        })
+      );
   }
 
   getCart(): Observable<Cart> {
@@ -28,6 +35,20 @@ export class CartService {
   }
 
   removeFromTheCart(prodID: string): Observable<any> {
-    return this.http.delete<CartResponse>(`${this.api}/${prodID}`);
+    return this.http.delete<CartResponse>(`${this.api}/${prodID}`).pipe(
+      map((res) => {
+        this.cart = res.carrito;
+        return res;
+      })
+    );
+  }
+
+  removeAll(): Observable<any> {
+    return this.http.delete<CartResponse>(`${this.api}`).pipe(
+      map((res) => {
+        this.cart = null;
+        return res;
+      })
+    );
   }
 }
