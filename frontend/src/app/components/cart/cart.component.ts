@@ -18,6 +18,20 @@ export class CartComponent implements OnInit {
   }
 
   getCart(): void {
-    this.cartSv.getCart().subscribe((res) => (this.cart = res));
+    this.cartSv.getCart().subscribe((res) => {
+      console.log(res);
+      this.cart = res;
+    });
+  }
+
+  deleteProduct(prodID: string): void {
+    console.log(prodID);
+    this.cartSv.removeFromTheCart(prodID).subscribe(
+      (res) => {
+        console.log(res);
+        this.cart = res.carrito;
+      },
+      (err) => {}
+    );
   }
 }

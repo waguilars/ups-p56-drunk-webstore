@@ -26,4 +26,8 @@ export class CartService {
       .get<CartResponse>(`${this.api}`)
       .pipe(map((res) => res.carrito));
   }
+
+  removeFromTheCart(prodID: string): Observable<any> {
+    return this.http.delete<CartResponse>(`${this.api}/${prodID}`);
+  }
 }
