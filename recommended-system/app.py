@@ -33,6 +33,11 @@ mongo = PyMongo(app)
 #############################################
 
 
+@app.route('/', methods=['GET'])
+def index():
+    return Response('Works!!!')
+
+
 @app.route('/recommended/<id>', methods=['POST'])
 def recommended_products(id):
     if not ObjectId.is_valid(id):
