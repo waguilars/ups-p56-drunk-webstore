@@ -8,6 +8,8 @@ from bson.objectid import ObjectId
 from decouple import config as config_decouple
 from config import config
 
+import pandas as pd
+
 
 def create_app(enviroment):
     app = Flask(__name__)
@@ -45,14 +47,24 @@ def recommended_products(id):
 
     id = ObjectId(id)
     # print(id)
-    data = ['ricky', 'will', 'gabo']
-    return Response(data)
+    prods = mongo.db.productos.find()
+    prods = [str(prod['_id']) for prod in prods]
+
+    users = mongo.db.usuarios.find()
+    users = [str(user['_id']) for user in users]
+
+    utility_mtx = pd.DataFrame(int(0), columns=users, index=prods)
+    # print(utility_mtx)
+
+    data = ['will', 'ricky', 'gabo']
+
+    return Response(['prods'], mimetype='application/json')
 
 
 @app.errorhandler(404)
 def not_found(error=None):
     message = {
-        'message': 'Resource Not Found ' + request.url,
+        'message': 'Resource Not Found ',
         'status': 404
     }
     response = jsonify(message)
