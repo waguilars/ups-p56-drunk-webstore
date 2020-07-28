@@ -53,10 +53,20 @@ def recommended_products(id):
     users = mongo.db.usuarios.find()
     users = [str(user['_id']) for user in users]
 
-    utility_mtx = pd.DataFrame(int(0), columns=users, index=prods)
+    mtx = pd.DataFrame(int(0), columns=users, index=prods)
     # print(utility_mtx)
+    sales = mongo.db.ordens.find()
+    for sale in sales:
+        user_id = str(sale['user'])
+        data = sale['cart']
+        data = data['products']
+        for prod in data:
+            prod_id = str(prod['_id'])
+            quantity = prod['quantity']
+            mtx[user_id][prod_id] = mtx[user_id][prod_id] + quantity
 
-    data = ['will', 'ricky', 'gabo']
+    print(mtx)
+    #data = ['will', 'ricky', 'gabo']
 
     return Response(['prods'], mimetype='application/json')
 
