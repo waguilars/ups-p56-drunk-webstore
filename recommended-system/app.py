@@ -3,7 +3,7 @@ from flask import Flask, Response, jsonify
 from flask_pymongo import PyMongo
 from bson import json_util
 from bson.objectid import ObjectId
-
+from sklearn.metrics.pairwise import pairwise_distances,cosine_distances
 
 from decouple import config as config_decouple
 from config import config
@@ -64,9 +64,14 @@ def recommended_products(id):
             prod_id = str(prod['_id'])
             quantity = prod['quantity']
             mtx[user_id][prod_id] = mtx[user_id][prod_id] + quantity
-
-    print(mtx)
-    #data = ['will', 'ricky', 'gabo']
+    ### MATRIZ SIMILITUD
+    ### JACKARD
+    jac_sim = 1 - pairwise_distances(mtx.T, metric = "hamming")
+    jac_sim = pd.DataFrame(jac_sim, index=users, columns=users)
+    ### COSENO
+    sim_matrix = 1 - cosine_distances(mtx.T)
+    sim_matrix = pd.DataFrame(sim_matrix, index=users, columns=users)
+    print(sim_matrix)
 
     return Response(['prods'], mimetype='application/json')
 
