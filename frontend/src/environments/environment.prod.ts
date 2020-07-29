@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
   api: '/api',
-  ml: 'url',
+  ml: 'https://drunk-recommender.herokuapp.com',
 };
