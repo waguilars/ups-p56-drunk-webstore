@@ -3,7 +3,7 @@ from flask import Flask, Response, jsonify
 from flask_pymongo import PyMongo
 from bson import json_util
 from bson.objectid import ObjectId
-from sklearn.metrics.pairwise import pairwise_distances,cosine_distances
+from sklearn.metrics.pairwise import pairwise_distances, cosine_distances
 import numpy as np
 from sklearn.decomposition import TruncatedSVD
 
@@ -59,30 +59,29 @@ def recommended_products(id):
     ordens = mongo.db.ordens.find()
     orden = []
     for order in ordens:
-        for cart,cart_value in  order.get('cart').items():
+        for cart, cart_value in order.get('cart').items():
             for products in cart_value:
-                prod=[]
-                for product,product_value in products.items():
+                prod = []
+                for product, product_value in products.items():
                     prod.append(product_value)
                 # print(prod)
-                orden.append([str(order['user']),str(prod[0]),prod[4]])
+                orden.append([str(order['user']), str(prod[0]), prod[4]])
 
                 # print("------------------------")
             break
 
-    data=pd.DataFrame(orden)
-    data.columns = ['user','product','quantity']
+    data = pd.DataFrame(orden)
+    data.columns = ['user', 'product', 'quantity']
     print(data)
+    print(data.shape)
 
-    data = pd.pivot_table(data, values='quantity', index='user', columns='product')
-    data_scaled = (data-data.min())/(data.max()-data.min())
-    data_scaled.to_csv('./data_scaled.csv')
+    scaled = data.copy()
+    q = scaled['quantity']
+    q = (q-q.min()) / (q.max()-q.min())
+    scaled['quantity'] = q
 
-    # print(data_scaled)
-    d = data_scaled.reset_index() 
-    d.index.names = ['quantity_scaled'] 
-    data_norm = pd.melt(d, id_vars=['user'], value_name='quantity_scaled').dropna()
-    print(data_norm)
+    print(scaled)
+
     return Response(['prods'], mimetype='application/json')
 
 
