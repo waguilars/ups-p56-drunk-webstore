@@ -80,8 +80,9 @@ def recommended_products(id):
     q = (q-q.min()) / (q.max()-q.min())
     scaled['quantity'] = q
 
-    print(scaled)
-
+    scaled.to_csv('./scaled.csv',index=False)
+    data.to_csv('./data.csv',index=False)
+    
     return Response(['prods'], mimetype='application/json')
 
 
