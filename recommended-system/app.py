@@ -2,6 +2,7 @@
 from flask import Flask, Response, jsonify
 from flask_pymongo import PyMongo
 from bson import json_util
+import json
 from bson.objectid import ObjectId
 from sklearn.metrics.pairwise import pairwise_distances, cosine_distances
 import numpy as np
@@ -79,13 +80,22 @@ def recommended_products(id):
 
     recom = model.recommend(users=[id], k=10)
     recom = recom.to_dataframe()
-    product_recomended = list(recom['product'])
+    prods_ids = list(recom['product'])
+    prods_ids = [ObjectId(prod_id) for prod_id in prods_ids]
+    prods = mongo.db.productos.find({'_id': {'$in': prods_ids}})
+    prods_full = []
+    for prod in prods:
+        category = prod['category']
+        category = mongo.db.categorias.find({'_id': category})[0]
+        prod['category'] = category
+        prods_full.append(prod)
+
     response = {
         'status': True,
-        'products': product_recomended
+        'products': prods_full,
     }
-    res = jsonify(response)
-    return res
+    response = json_util.dumps(response)
+    return Response(response, mimetype="application/json")
 
 
 @app.route('/import', methods=['GET'])
