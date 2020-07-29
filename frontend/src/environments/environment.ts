@@ -5,6 +5,7 @@
 export const environment = {
   production: false,
   api: '/api',
+  ml: 'http://localhost:5000',
 };
 
 /*

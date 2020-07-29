@@ -1,6 +1,8 @@
 #!venv/bin/python
 from flask import Flask, Response, jsonify
 from flask_pymongo import PyMongo
+from flask_cors import CORS, cross_origin
+
 from bson import json_util
 import json
 from bson.objectid import ObjectId
@@ -19,6 +21,7 @@ import turicreate as tc
 def create_app(enviroment):
     app = Flask(__name__)
     app.config.from_object(enviroment)
+
     return app
 
 
@@ -27,6 +30,8 @@ if config_decouple('PRODUCTION', default=False):
     enviroment = config['prod']
 
 app = create_app(enviroment)
+cors = CORS(app)
+
 
 #############################################
 #							MONGO
@@ -45,7 +50,7 @@ def index():
     return Response('Works!!!')
 
 
-@app.route('/recommended/<id>', methods=['POST'])
+@app.route('/recommended/<id>', methods=['GET'])
 def recommended_products(id):
     if not ObjectId.is_valid(id):
         return invalidObjectId()
@@ -80,6 +85,7 @@ def recommended_products(id):
 
     recom = model.recommend(users=[id], k=10)
     recom = recom.to_dataframe()
+
     prods_ids = list(recom['product'])
     prods_ids = [ObjectId(prod_id) for prod_id in prods_ids]
     prods = mongo.db.productos.find({'_id': {'$in': prods_ids}})

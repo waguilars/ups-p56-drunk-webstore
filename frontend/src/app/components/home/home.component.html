@@ -3,6 +3,50 @@
   <hr />
   <app-slider></app-slider>
 
+  <div class="" *ngIf="loggedIn">
+    <h2 class="text-center h3 mt-4">Recomendados para ti</h2>
+    <hr />
+
+    <div class="row justify-content-center" *ngIf="!recommended">
+      <i class="fa fa-3x fa-circle-notch fa-spin"></i>
+    </div>
+
+    <div class="row animate__animated animate__fadeIn" *ngIf="recommended">
+      <div class="col-md-3 mb-4" *ngFor="let prod of recommended">
+        <div class="card">
+          <div class="img-wrapper">
+            <img
+              [src]="prod.img | img: 'product'"
+              class="card-img-top img-fluid h-100"
+              [alt]="prod.name"
+            />
+          </div>
+          <div class="card-body">
+            <h5 class="card-title text-truncate">
+              <a [routerLink]="['/licores', prod._id.$oid]">
+                {{ prod.name }}
+              </a>
+            </h5>
+            <p class="card-text">
+              <small class="badge badge-pill badge-primary">
+                {{ prod.category.name }}
+              </small>
+            </p>
+            <p class="card-text">Precio: {{ prod.price | currency }}</p>
+            <button
+              type="button"
+              class="btn btn-sm btn-outline-dark d-block mx-auto"
+              (click)="addToCart(prod._id.$oid)"
+            >
+              <i class="fa fa-cart-plus"></i>
+              Agregar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <h2 class="text-center h3 mt-4">Ultimos Licores</h2>
   <hr />
 

@@ -17,6 +17,11 @@ export class ProductService {
     this.api += '/product';
   }
 
+  getRecommended(id: string): Observable<any> {
+    const url = environment.ml;
+    return this.http.get(`${url}/recommended/${id}`);
+  }
+
   getAll(): Observable<any> {
     return this.http.get(this.api).pipe(
       map((res: any) => {
