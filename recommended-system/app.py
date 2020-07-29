@@ -12,6 +12,7 @@ from config import config
 
 import pandas as pd
 from sklearn.metrics import pairwise_distances
+import turicreate as tc
 
 
 def create_app(enviroment):
@@ -48,13 +49,8 @@ def recommended_products(id):
     if not ObjectId.is_valid(id):
         return invalidObjectId()
 
-    id = ObjectId(id)
-    # # print(id)
     prods = mongo.db.productos.find()
     prods = [str(prod['_id']) for prod in prods]
-
-    # users = mongo.db.usuarios.find()
-    # users = [str(user['_id']) for user in users]
 
     ordens = mongo.db.ordens.find()
     orden = []
@@ -72,17 +68,58 @@ def recommended_products(id):
 
     data = pd.DataFrame(orden)
     data.columns = ['user', 'product', 'quantity']
-    print(data)
-    print(data.shape)
 
     scaled = data.copy()
     q = scaled['quantity']
     q = (q-q.min()) / (q.max()-q.min())
     scaled['quantity'] = q
 
-    scaled.to_csv('./scaled.csv',index=False)
-    data.to_csv('./data.csv',index=False)
-    
+    model = tc.item_similarity_recommender.create(
+        tc.SFrame(scaled), 'user', 'product', 'quantity', similarity_type='pearson')
+
+    recom = model.recommend(users=[id], k=10)
+    recom = recom.to_dataframe()
+    product_recomended = list(recom['product'])
+    response = {
+        'status': True,
+        'products': product_recomended
+    }
+    res = jsonify(response)
+    return res
+
+
+@app.route('/import', methods=['GET'])
+def import_data():
+    prods = mongo.db.productos.find()
+    prods = [str(prod['_id']) for prod in prods]
+
+    ordens = mongo.db.ordens.find()
+    orden = []
+    for order in ordens:
+        for cart, cart_value in order.get('cart').items():
+            for products in cart_value:
+                prod = []
+                for product, product_value in products.items():
+                    prod.append(product_value)
+                # print(prod)
+                orden.append([str(order['user']), str(prod[0]), prod[4]])
+
+                # print("------------------------")
+            break
+
+    data = pd.DataFrame(orden)
+    data.columns = ['user', 'product', 'quantity']
+    # print(data)
+    # print(data.shape)
+
+    scaled = data.copy()
+    q = scaled['quantity']
+    q = (q-q.min()) / (q.max()-q.min())
+    scaled['quantity'] = q
+
+    scaled.to_csv('./scaled.csv', index=False)
+    data.to_csv('./data.csv', index=False)
+
     return Response(['prods'], mimetype='application/json')
 
 
