@@ -56,7 +56,9 @@ export class HomeComponent implements OnInit {
           });
       },
       (err) => {
-        this.alertSv.showError('Algo salio mal! Intentalo de nuevo.');
+        this.alertSv
+          .showError('Debes iniciar sesion antes de agregar productos.')
+          .then(() => this.router.navigate(['/login']));
         console.log(err);
       }
     );
