@@ -12,7 +12,7 @@
     </div>
 
     <div class="row animate__animated animate__fadeIn" *ngIf="recommended">
-      <div class="col-md-3 mb-4" *ngFor="let prod of recommended">
+      <div class="col-md-3 mb-4" *ngFor="let prod of recommended.slice(0, 8)">
         <div class="card">
           <div class="img-wrapper">
             <img
@@ -47,7 +47,7 @@
     </div>
   </div>
 
-  <h2 class="text-center h3 mt-4">Ultimos Licores</h2>
+  <h2 class="text-center h3 mt-4" id="last">Ultimos Licores</h2>
   <hr />
 
   <div class="row">

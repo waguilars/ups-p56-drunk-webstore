@@ -29,9 +29,12 @@ export class CartService {
   }
 
   getCart(): Observable<Cart> {
-    return this.http
-      .get<CartResponse>(`${this.api}`)
-      .pipe(map((res) => res.carrito));
+    return this.http.get<CartResponse>(`${this.api}`).pipe(
+      map((res) => {
+        this.cart = res.carrito;
+        return res.carrito;
+      })
+    );
   }
 
   removeFromTheCart(prodID: string): Observable<any> {

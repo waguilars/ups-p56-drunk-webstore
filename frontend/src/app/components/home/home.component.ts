@@ -44,6 +44,7 @@ export class HomeComponent implements OnInit {
       const { nextPage: next, prevPage: prev, page, totalPages } = res.data;
       const total = Array.from({ length: totalPages }, (_, index) => index + 1);
       this.pagination = { next, prev, page, total };
+
       // console.log(p);
     });
   }
