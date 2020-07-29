@@ -3,14 +3,19 @@ from flask import Flask, Response, jsonify
 from flask_pymongo import PyMongo
 from bson import json_util
 from bson.objectid import ObjectId
+<<<<<<< HEAD
 from sklearn.metrics.pairwise import pairwise_distances,cosine_distances
 import numpy as np
 from sklearn.decomposition import TruncatedSVD
+=======
+from sklearn.metrics.pairwise import pairwise_distances, cosine_distances
+>>>>>>> c5061bac20caa78fd3f3b06e1f2649ede1f6a69f
 
 from decouple import config as config_decouple
 from config import config
 
 import pandas as pd
+from sklearn.metrics import pairwise_distances
 
 
 def create_app(enviroment):
