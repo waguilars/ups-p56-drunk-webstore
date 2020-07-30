@@ -7,6 +7,7 @@ import { AlertService } from '../../services/alert.service';
 
 import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
+import { UserModel } from '../../models/user.model';
 
 @Component({
   selector: 'app-home',
@@ -87,5 +88,9 @@ export class HomeComponent implements OnInit {
         this.loggedIn = false;
       }
     );
+  }
+
+  get user(): UserModel {
+    return this.userSV.user;
   }
 }
