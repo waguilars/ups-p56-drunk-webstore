@@ -11,9 +11,10 @@ if (process.env.NODE_ENV === 'dev') {
 
 const USER = process.env.MONGO_USER;
 const PASS = process.env.MONGO_PASS;
+const SERVER = process.env.MONGO_SRV;
 
 // console.log(USER);
-process.env.MONGO_URI = `mongodb+srv://${USER}:${PASS}@cafe.wbaqo.mongodb.net/LICORES`;
+process.env.MONGO_URI = `mongodb+srv://${USER}:${PASS}@${SERVER}/drunk-webstore`;
 // console.log(process.env.MONGO_URI);
 
 // ========================================
