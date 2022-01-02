@@ -8,7 +8,10 @@
     "frontend"
   ],
   "scripts": {
-    "dev": "sss"
+    "app": "npm start -w frontend",
+    "api": "npm run dev -w backend",
+    "dev": "npm-run-all --parallel api app",
+    "build": "npm run build -w frontend"
   },
   "repository": {
     "type": "git",
@@ -20,5 +23,8 @@
   "bugs": {
     "url": "https://github.com/waguilars/ups-p56-drunk-webstore/issues"
   },
-  "homepage": "https://github.com/waguilars/ups-p56-drunk-webstore#readme"
+  "homepage": "https://github.com/waguilars/ups-p56-drunk-webstore#readme",
+  "devDependencies": {
+    "npm-run-all": "^4.1.5"
+  }
 }
