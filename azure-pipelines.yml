@@ -21,10 +21,3 @@ steps:
     npm run build
   displayName: 'npm install and build'
 
-jobs:  
-- deployment: VMDeploy
-  displayName: web
-  environment:
-    name:  Dev
-    resourceType: VirtualMachine
-    tags: web
