@@ -8,6 +8,7 @@
     "frontend"
   ],
   "scripts": {
+    "start": "node backend/server/index.js",
     "app": "npm start -w frontend",
     "api": "npm run dev -w backend",
     "dev": "npm-run-all --parallel api app",
